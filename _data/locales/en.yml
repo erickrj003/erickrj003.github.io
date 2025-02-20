@@ -1,0 +1,82 @@
+cover: 'The cover image is provided by'
+panel:
+  posts: 'POSTS'
+  categories: 'CATEGORIES'
+  tags: 'TAGS'
+  calendar: 'CALENDAR'
+  calendar_less: 'Less'
+  calendar_more: 'More'
+  hot_tags: 'HOT TAGS'
+  links: 'LINKS'
+  update: 'RECENT UPDATES'
+  friends: 'FRIENDS'
+  nolink: 'No any links'
+footer:
+  driver: 'Powered by <a href="//jekyllrb.com" target="_blank" class="extlinks">Jekyll</a> & <a href="https://github.com/zhonger/jekyll-theme-H2O-ac" target="_blank" class="extlinks">H2O-ac</a> (based on <a href="https://github.com/kaeyleo/jekyll-theme-H2O" target="_blank" class="extlinks">H2O</a>)'
+  views: 'Total Views'
+  visitors: 'Total Visitors'
+  upyun: 'CDN is provided by'
+  running:
+    info: 'This site has been alive for'
+    day: 'd'
+    hour: 'h'
+    minute: 'm'
+    second: 's'
+  tos:
+    left: 'In order to improve the overall experience and guarantee the site works as expected, I install cookies locally. More details in'
+    middle: 'Terms of Service'
+    right: 'page.'
+    btn: 'Accept'
+    name: 'Terms of Service'
+post:
+  outline: 'Contents'
+  cover:
+    total:
+      info: 'Total Words:'
+      unit: 'words'
+    time:
+      info: 'Read Time:'
+      unit: 'minutes'
+    view:
+      info: 'Total pageviews'
+      unit: ''
+  tips:
+    left: 'This is the latest post.'
+    right: 'This is the oldest post.'
+  copyright:
+    statement: 
+      name: 'Statement'
+      left: 'Unless otherwise specified, the copyright belongs to'
+      middle: '. Reprint please indicate the link of this article.'
+      right1: '(The content is authorized with'
+      right2: 'protocol)'
+      outdate1: 'The last update of this article was' 
+      outdate2: 'days ago, so it may be outdated!'
+    title: 'Title'
+    link: 'Link'
+  comment: 'Comment'
+archives:
+  title: 'Archives'
+  total:
+    info: 'Total Articles: '
+    unit: 'articles in this site.'
+  pin:
+    info: '('
+    unit: ' pinned articles,'
+    title: 'Pinned Articles'
+  words:
+    info: 'Total Words: '
+    unit: 'words )'
+categories:
+  title: 'Categories'
+  u_title: 'Uncategorized'
+  total: 
+    info: 'Total Articles in this Category:'
+    unit: 'articles.'
+  type:
+    info: '('
+    unit: 'categories,'
+  uncategory: 
+    info: ''
+    unit: 'uncategoried articles )'
+langs: 'All available languages: '

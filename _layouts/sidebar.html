@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>{{ site.title }}</h2>
+                <p>{{ site.description }}</p>
+            </div>
+
+            <!-- Profile Picture -->
+            <div class="sidebar-profile">
+                <img src="{{ "/assets/images/profile.jpg" | relative_url }}" alt="Profile Picture">
+            </div>
+
+            <!-- Links to Posts -->
+            <div class="sidebar-links">
+                <h3>Recent Posts</h3>
+                <ul>
+                    {% for post in site.posts %}
+                        <li>
+                            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Resume Link -->
+            <div class="sidebar-resume">
+                <h3>Resume</h3>
+                <a href="{{ "/resume" | relative_url }}">View My Resume</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            {{ content }}
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+links:
+  - name: "Github"
+    info: "Check out my GitHub!"
+    img: "https://cdn-icons-png.flaticon.com/512/1051/1051326.png"
+    url: "https://github.com/erickrj003"
+friends:
+  - name: "Mr Li"
+    info: "zhonger 的博客"
+    img: "https://lisz.me/assets/img/profile.webp"
+    url: "https://lisz.me"
