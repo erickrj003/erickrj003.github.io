@@ -1,6 +1,6 @@
 ---
 layout: page
-home-title: Welcome to erickrj.tech!
+home-title: Erick Johnson!
 description: An online resource for following the Johnson Fam's Great Adventure (built by Mr. Johnson)
 permalink: /index.html
 cover: /assets/img/wheelbarrow.jpg
@@ -8,15 +8,14 @@ langs: ["en"]
 lang: "en"
 ---
 
-# This is a website for us to post life updates or interesting things i find that I want to post about.
+# This is a website for us to post life updates or interesting things I find that I want to post about. It's also a online resource for things that I like to have handy: cool websites, important photos I like and can show off to friends, my resume, etc. I'll make posts from time to time that adds stuff like that.
 
-## To get started, click the Blog tab. You can search for blog titles under the sidebar on the right. Thanks for checking us out!
 
 ##TODO:
 
 1. Rework the header a little bit:
     Rework Blog tab:
-        Remove current Blog route
+        Remove current Blog route for now
         Turn the Blog header item into a dropdown for Categorie, Tags, and Archive
         Remove Archive
     Add a Gallery item that will contain all the pictures in a new assets/post-photos directory

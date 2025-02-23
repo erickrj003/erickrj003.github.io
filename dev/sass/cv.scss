@@ -20,9 +20,9 @@
 
 body {
     background-color: var(--bg-color);
-    font-family: "LXGW WenKai Screen", -apple-system, Verdana, "PingFang SC", "Helvetica Neue", "Arial", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    font-family: Verdana, "Helvetica Neue", "Arial", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
     line-height: 1.5;
-    text-align: justify;    
+    /* text-align: justify; */  
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -95,7 +95,7 @@ body {
                 font-size: 16px;
                 font-weight: 700;
                 color: var(--fg-color);
-            }      
+            }     
             .contact-item {
                 display: flex;
                 align-items: center;
@@ -177,9 +177,19 @@ body {
                     font-weight: 100;
                 }
             }
-            .details, .technologies {
+            .details {
                 color: var(--fg-color-body);
                 font-size: 14px;
+                .detail-points {
+                    font-size: 12px;
+                }
+            }
+            
+            .technologies {
+                color: var(--fg-color);
+                font-size: 11px;
+                font-style: italic;
+
             }
         }
         .honor-items {
@@ -292,4 +302,36 @@ body {
             }
         }
 	}	
+}
+
+/* List Items */
+
+ul {
+    list-style-type: none; 
+    padding-left: 1.5em; 
+    margin: 1em 0; 
+}
+
+ul li {
+    position: relative;
+    padding-left: 1.5em; 
+    margin-bottom: 0.5em; 
+    line-height: 1.6; 
+    background: linear-gradient(to right, #f0f0f0, #ffffff);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+ul li::before {
+    content: "•";
+    color: var(--fg-color);
+    font-size: 1.2em;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: transform 0.2s ease-in-out;
+}
+
+ul li:hover::before {
+    transform: scale(1.5); /* Enlarge bullet on hover */
 }

@@ -2,7 +2,7 @@
 version: 1.5.1
 
 # Site settings 
-title: 'Johnson Fam'
+title: "Erick Johnson"
 description: 'Stella and I have been all over the place since we got married back in October 2024. Follow along on the Great Adventure!'
 keyword: 'erickrj003'
 url: 'https://erickrj.tech' # your host
@@ -21,7 +21,7 @@ baseurl: ''
 languages: ["zh-Hans", "zh-Hant", "en", "ja"]
 default_lang: "en"
 
-# Github (commented out for now)
+# Github
 github:
   enabled: true
   owner: erickrj003
@@ -35,12 +35,14 @@ pwa:
 # Navigation links
 nav:
   home: '/'
-  blog: '/blog/index.html'
-  archives: '/archives.html'
-  tags: '/tags.html'
+  blog:
+    all posts: '/blog/index.html'
+    archives: '/archives.html'
+    tags: '/tags.html'
   about:   
-    RSS: '/rss.xml'
-    #TODO Resume: '/cv.html'
+    # RSS: '/rss.xml'
+    Resume: '/cv.html'
+    Gallery:
 
 
 
@@ -99,11 +101,11 @@ comments:
   # twikoo_lang: 'zh-CN'
 
 # MathJax 公式支持 by Ray-Eldath
-mathjax: true
+mathjax: false
 
 # Share
 social-share: true
-social-share-items: ['wechat', 'weibo', 'douban', 'twitter']
+social-share-items: ['linkedin', 'twitter', 'facebook']
 
 # theme color 主题皮肤
 theme-color: 'default'  # pink or default
@@ -117,13 +119,18 @@ sns:
   # google-scholar: 'https://scholar.google.com/citations?user=AUupIooAAAAJ'
   # researchgate: 'https://www.researchgate.net/profile/Shengzhou-Li'
   # ORCID: 'https://orcid.org/0000-0001-6973-3825'
-  # github: 'https://github.com/zhonger'
-  # linkedin: 'https://www.linkedin.com/in/shengzhouli/'
+  github: 'https://github.com/erickrj003'
+  linkedin: 'https://www.linkedin.com/in/erick-johnson-8a1624179/'
+  twitter: 'https://x.com/erickrj003'
+  facebook: 'https://www.facebook.com/erick.johnson.1272'
   # segmentfault: 'https://segmentfault.com/u/wuwozhonger'
 
 # Links 友情链接
 links:
- 'Erick Johnson': 'https://erickrj.tech'
+ 'GitHub': 'https://github.com/erickrj003'
+ 'LinkedIn': 'https://www.linkedin.com/in/erick-johnson-8a1624179/'
+ 'Twitter': 'https://x.com/erickrj003'
+ 'Facebook': 'https://www.facebook.com/erick.johnson.1272'
 
 # Calendar 日历
 calendar: true
@@ -215,7 +222,7 @@ pagination:
   title: ':title | :num of :max'
   limit: 0
   sort_field: 'date'
-  sort_reverse: true
+  sort_reverse: false
 
 exclude: ['node_modules', 'dev', 'package.json', 'webpack.config.js', '.gitignore', 'README.md', '*.gemspec', '*.gem']
 
