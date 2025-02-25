@@ -1,7 +1,7 @@
 ---
 layout: categories
-home-title: Welcome to zhonger's blog!
-description: Writing, writing, writing ...
+home-title: Categories
+description: Find blog posts by category
 permalink: /categories.html
 cover: /assets/img/wheelbarrow.jpg
 ---

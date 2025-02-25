@@ -1,7 +1,7 @@
 ---
 layout: archives
-home-title: Welcome to erickrj.tech!
-description: An online resource for following the Johnson Fam's Great Adventure (built by Mr. Johnson)
+home-title: Archives
+description: Find blog posts by date
 permalink: /archives.html
 cover: /assets/img/wheelbarrow.jpg
 permalink: /archives.html
