@@ -5,6 +5,8 @@ description: Writing, writing, writing ...
 cover: /assets/img/wheelbarrow.jpg
 permalink: /logs.html
 ---
+# The below section includes update logs from the H20-ac original author.
+
 
 # 更新日志
 
@@ -132,6 +134,10 @@ permalink: /logs.html
   - 切换 Mathjax 脚本链接到 jsDelivr
   - 修复版本号链接和备案链接
   - 修复博客导航页 `/blog/index.html` 的置顶错误
+
+### 2025
+
+- Copied this theme and developed erickrj.tech
 
 ## 节点信息
 
