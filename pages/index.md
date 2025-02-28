@@ -6,7 +6,7 @@ permalink: /index.html
 cover: /assets/img/wheelbarrow.jpg
 ---
 
-# Welcome! This is a website for us to post life updates or interesting things I find that I want to post about. 
+## Welcome! This is a website for us to post life updates or interesting things I find that I want to post about. 
 
 ### Click an option in the Blog dropdown to start reading. You can find blog posts by category, tag, or date - whatever makes the most sense to you.
 
