@@ -532,6 +532,7 @@ ul li:hover::before {
 }
 
 #scrollToTop {
+    
     position: fixed;
     bottom: 20px;
     right: 20px;

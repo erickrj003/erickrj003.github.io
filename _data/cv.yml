@@ -45,8 +45,7 @@
       content: "Years of experienced with several technologies used in a variety of full-stack applications."
     - title: "People Impact"
       content: "At the end of the day, people are so much more important than machines. Projects and organizations I've worked with make real impact on the people who need it most."
-
-  experience:
+  tech-experience:
     - role: "Computer Science Teacher"
       company: "Mooseheart Child City & School"
       time: "2024.5 - Present"
@@ -70,7 +69,7 @@
         - "Used our proprietary software alongside tools like SQL Developer and Excel to track down our customer’s most complex problems. "
         - "My team has a distinct client-first approach to everything we do. We must be team-players and great collaborators to make something greater than the sum of our parts."
       tech: "Java/Spring, Typescript/Angular, SQL, Linux"
-    - role : "Full Stack Software Developer"
+    - role: "Full Stack Software Developer"
       company: "SonSet Solutions"
       time: "2021.6 - 2023.3"
       details: 
@@ -78,7 +77,7 @@
         - "I led the charge on developing an attractive, intuitive, and featureful front-end experience using industry standard Laravel practices and tools built with JavaScript, Tailwind CSS, Laravel’s Livewire, and Alpine.js. I was responsible for designing something scalable and intuitive, based on feedback and requests from customers, and lightweight enough to work well on unstable internet connections in Sub-Saharan Africa. "
         - "Built and maintained complex back-end systems in Laravel PHP and MariaDB. My team was involved with implementing a complete back-end overhaul of the legacy SonSetLink application to Laravel 9, addressing numerous scalability, performance and maintainability problems."
       tech: "PHP/Laravel, CSS/Tailwind, Livewire, Alpine.js, MariaDB, Linux"
-    - role : "Guest Intern"
+    - role: "Guest Intern"
       company: "Rubico IT Private Limited"
       time: "2023.4 - 2023.7"
       details: 
@@ -86,7 +85,7 @@
         - "Participated in holistic cross-cultural immersion to the cultures across urban and rural India and countries in Southeast Asia. This global perspective stretched my understanding of interpersonal communication across cultures and perspectives. "
         - "I studied business leadership principles and HR concepts under acting directors and leadership staff. Joined the in-house Python team in developing internal production tools designed to optimize and streamline the work of other teams, cutting the time they had to spend on trivial/distracting tasks. I used tools like Flask, web scrapers, API callers, and Docker."
       tech: "Python/Flask, Docker, WordPress"
-    - role : "Systems Support Technician"
+    - role: "Systems Support Technician"
       company: "Olivet Nazarene University"
       time: "2018.10 - 2021.5"
       details: 
@@ -94,3 +93,34 @@
         - "Troubleshooting and repairing desktop computers and laptop computer systems in addition to other electronics like peripherals, SmartBoards, projectors, etc. in-person and over the phone. "
         - "Trained new employees and managed/supervised their work."
       tech: "IT Help Desk, Windows, Project Management"
+  other-experience:
+    - role: "Brazilian Jiu-Jitsu Wrestling Instructor"
+      company: "Cho Jiu Jitsu"
+      time: "2025.1 - Present"
+      details:
+        - "I teach a wrestling for BJJ class at my local gym. I leverage my BJJ blue belt, Judo green belt and over a decade of wrestling experience to help BJJ guys take there competition takedowns to the next level."
+    - role: "Mooseheart Wrestling Coach"
+      company: "Mooseheart Child City & School"
+      time: "2024.11 - Present"
+      details:
+        - "Head coach for the Mooseheart Red Ramblers high school wrestling team."
+        - "I also teach and coach the Rambler Wrestling Club for younger students in a co-ed environment."
+    - role: "Visual Staff/Technical Instructor"
+      company: "Herscher High School"
+      time: "2023.07 - Present"
+      details:
+        - "Team leader for visual instruction and design for a local high school marching band."
+        - "Developed choreography, drill spots, and visual marching/dancing curriculum alongside specialized brass instrumental instruction."
+        - "I leverage my history of high school marching band, college marching band, and Drum Corps International experience as alumni of both the Madison Scouts and the Boston Crusaders."
+    - role: "Visual Caption Head/Drill Writer"
+      company: "Christian Academy of Indiana"
+      time: "2022.11 - Present"
+      details:
+        - "Assisted in building an indoor (later outdoor) marching band from the ground up be creating show concepts, drill, and visual marching/dancing curriculum."
+        - "I leverage my history of high school marching band, college marching band, and Drum Corps International experience as alumni of both the Madison Scouts and the Boston Crusaders."
+    - role: "Data Annotator"
+      company: "DataAnnotation"
+      time: "2023.10 - Present"
+      details:
+        - "Train LLM's by carefully annotating usage data about various topics, but specifically in STEM fields and software engineering"
+        - "Develop careful prompts to guide various ML models to write more effective code in languages like Python, PHP, Perl, JavaScript, HTML/CSS, Ruby and more."

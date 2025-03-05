@@ -239,7 +239,7 @@ prism:
 
 # RSS
 RSS: true
-timezone: US/Chicago
+timezone: America/Chicago
 
 # Permalink
 # See: https://github.com/kaeyleo/jekyll-theme-H2O/issues/35

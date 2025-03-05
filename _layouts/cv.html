@@ -129,10 +129,33 @@
                     {% endfor %}
                 </section>
                 {% endif %}
-                {% if cv.experience %}
+                {% if cv.tech-experience %}
                 <section class="experience">
-                    <h2 class="title">Experience</h2>
-                    {% for e in cv.experience %}
+                    <h2 class="title">Technical Experience</h2>
+                    {% for e in cv.tech-experience %}
+                    <div class="experience-item">
+                        <div class="role"> {{ e.role }} </div>
+                        <div class="company">
+                            {{ e.company }} <span class="time">{{ e.time }}</span>
+                        </div>
+                        <div class="details">
+                            <ul>
+                            {% for point in e.details %}
+                                <li>{{ point }}</li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                        <p class="technologies">
+                            {{ e.tech }}
+                        </p>
+                    </div>
+                    {% endfor %}
+                </section>
+                {% endif %}
+                {% if cv.other-experience %}
+                <section class="experience">
+                    <h2 class="title">Other/Part-Time Experience</h2>
+                    {% for e in cv.other-experience %}
                     <div class="experience-item">
                         <div class="role"> {{ e.role }} </div>
                         <div class="company">
