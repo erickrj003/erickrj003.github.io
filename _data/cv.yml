@@ -99,7 +99,7 @@
       time: "2025.1 - Present"
       details:
         - "I teach a wrestling for BJJ class at my local gym. I leverage my BJJ blue belt, Judo green belt and over a decade of wrestling experience to help BJJ guys take there competition takedowns to the next level."
-    - role: "Mooseheart Wrestling Coach"
+    - role: "Head Wrestling Coach"
       company: "Mooseheart Child City & School"
       time: "2024.11 - Present"
       details:
@@ -120,7 +120,7 @@
         - "I leverage my history of high school marching band, college marching band, and Drum Corps International experience as alumni of both the Madison Scouts and the Boston Crusaders."
     - role: "Data Annotator"
       company: "DataAnnotation"
-      time: "2023.10 - Present"
+      time: "2024.1 - Present"
       details:
         - "Train LLM's by carefully annotating usage data about various topics, but specifically in STEM fields and software engineering"
         - "Develop careful prompts to guide various ML models to write more effective code in languages like Python, PHP, Perl, JavaScript, HTML/CSS, Ruby and more."
