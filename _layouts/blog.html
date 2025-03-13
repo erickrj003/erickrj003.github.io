@@ -17,7 +17,26 @@ pagination:
 
 <main class="g-container home-content">
     <div class="article-list">
-        {% include layouts/paginate.html %}
+        {% if paginator.posts %}
+            {% assign pinned_posts = paginator.posts | where: "pin", "true" %}
+            {% assign unpinned_posts = paginator.posts | where: "pin", nil %}
+
+            {% if pinned_posts %}
+                {% assign pinned_posts = pinned_posts | sort: "date" | reverse %}
+                {% for post in pinned_posts %}
+                    {% include layouts/paginate-article.html %}
+                {% endfor %}
+            {% endif %}
+
+            {% if unpinned_posts %}
+                {% assign unpinned_posts = unpinned_posts | sort: "date" | reverse %}
+                {% for post in unpinned_posts %}
+                    {% include layouts/paginate-article.html %}
+                {% endfor %}
+            {% endif %}
+        {% else %}
+            <p>No posts found.</p>
+        {% endif %}
 
         {% if paginator.total_pages > 1 %}
             {% include layouts/pageNav.html %}
