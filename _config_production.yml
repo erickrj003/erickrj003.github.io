@@ -219,6 +219,9 @@ pagination:
   sort_field: 'date'
   sort_reverse: true
 
+# Allow future posts
+future: true
+
 exclude: ['node_modules', 'dev', 'package.json', 'webpack.config.js', '.gitignore', 'README.md', '*.gemspec', '*.gem']
 
 # Markdown
