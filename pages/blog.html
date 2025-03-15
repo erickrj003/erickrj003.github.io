@@ -5,5 +5,16 @@ description: Read all about the Johnson Fam's Great Adventure (built by Mr. John
 cover: /assets/img/lake_background.jpg
 pagination: 
   enabled: true
-permalink: /blog/
+  collection: posts
+  per_page: 10
+  permalink: '/blog/page:num/'
+  title: ':title | :num of :max'
+  limit: 0
+  sort_field: 'date'
+  sort_reverse: true
+  trail:
+    before: 2
+    after: 2
+  indexpage: '/blog/'
+  extension: ''
 --- 
