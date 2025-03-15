@@ -17,7 +17,7 @@ pagination:
 
 <main class="g-container home-content">
     <div class="article-list">
-        {% if paginator.posts %}
+        {% if paginator.posts.size > 0 %}
             {% assign pinned_posts = paginator.posts | where: "pin", "true" %}
             {% assign unpinned_posts = paginator.posts | where: "pin", nil %}
 
