@@ -36,12 +36,12 @@ pwa:
 nav:
   home: '/'
   blog:
-    all posts: '/blog/index.html'
-    archives: '/archives.html'
-    tags: '/tags.html'
+    all posts: '/blog/'
+    archives: '/archives/'
+    tags: '/tags/'
   about:   
     # RSS: '/rss.xml'
-    Resume: '/cv.html'
+    Resume: '/cv/'
 
 
 # Gray for the whole site 全站灰色
