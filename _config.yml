@@ -216,7 +216,7 @@ recommend-condition-size: 12 # a tag will be recommended if the size of it is mo
 pagination:
   enabled: true
   per_page: 10
-  permalink: 'page:num/'
+  permalink: '/blog/page:num/'
   title: ':title | :num of :max'
   limit: 0
   sort_field: 'date'
