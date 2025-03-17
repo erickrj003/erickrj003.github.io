@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Welcome!"
+title:  "Welcome to erickrj.tech!"
 date:   2025-02-17 13:00:23 -0600
 categories: family coding 
 tags: fluff 
