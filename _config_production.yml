@@ -301,6 +301,6 @@ premonition:
 # Plugins
 plugins: [jekyll-paginate-v2, jekyll-feed, jekyll-sitemap, premonition, h2o-ac-jekyll-extlinks]
 
-# Ensure pagination is enabled
-paginate: 10
-paginate_path: "/blog/page:num/"
+# Remove legacy pagination settings
+# paginate: 10
+# paginate_path: "/blog/page:num/"
