@@ -16,9 +16,9 @@
                     <span class="page-link page-num active">{{ i }}</span>
                 {% else %}
                     {% if i == 1 %}
-                        <a href="/blog/" class="page-link page-num">{{ i }}</a>
+                        <a href="{{ site.baseurl }}/blog/" class="page-link page-num">{{ i }}</a>
                     {% else %}
-                        <a href="/blog/page{{ i }}/" class="page-link page-num">{{ i }}</a>
+                        <a href="{{ site.baseurl }}/blog/page{{ i }}/" class="page-link page-num">{{ i }}</a>
                     {% endif %}
                 {% endif %}
             {% endfor %}

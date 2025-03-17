@@ -203,7 +203,7 @@ google_analytics:
 google_search: 
 
 # ToS
-tos: /tos.html
+tos: /tos/
 
 # Tags 设置标签
 recommend-tags: true # whether or not display recommend-tags on the sidebar
@@ -300,3 +300,7 @@ premonition:
 
 # Plugins
 plugins: [jekyll-paginate-v2, jekyll-feed, jekyll-sitemap, premonition, h2o-ac-jekyll-extlinks]
+
+# Ensure pagination is enabled
+paginate: 10
+paginate_path: "/blog/page:num/"
