@@ -2,7 +2,7 @@
 layout: page
 home-title: Welcome!
 description: An online resource for following the Johnson Family Great Adventure
-permalink: /index.html
+permalink: /
 cover: /assets/img/wheelbarrow.jpg
 ---
 

@@ -15,7 +15,7 @@
                         {{ article.name }}
                     </a>
                     {% else %}
-                    <a href="{{ article.url | prepend: site.baseurl }}">
+                    <a href="{{ article.url | relative_url }}">
                         {{ article.name }}
                     </a>
                     {% endif %}
