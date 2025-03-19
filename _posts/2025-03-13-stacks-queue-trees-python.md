@@ -1,12 +1,11 @@
 ---
 layout: post
 title: "Stacks, Queues and Trees in Python"
-date: 2025-03-13 13:59:23 -0600
+date: 2025-03-13
 author: Erick Johnson
 categories: Python 
 tags: data-structures
 ---
-
 
 # Understanding Data Structures: Stacks, Queues, and Trees
 
