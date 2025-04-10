@@ -1,0 +1,492 @@
+---
+layout: default
+home-title: Erick Johnson
+description: Default Page Layout
+type: page
+---
+
+{% assign lang = page.lang | default: site.default_lang %}
+{% assign locales = site.data.locales[lang] %}
+
+<style>
+  /* Homepage-specific header styles */
+  .modern-homepage .g-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+  }
+
+  .modern-homepage .g-logo {
+    display: none; /* Hide logo on homepage */
+  }
+
+  .modern-homepage .g-logo a {
+    background: none !important; /* Remove any background image from the logo link */
+  }
+
+  .modern-homepage .g-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto; /* Center the nav container */
+  }
+
+  .modern-homepage .g-nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: auto; /* Allow the list to size based on content */
+  }
+
+  .modern-homepage .menu-tools {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto; /* Push tools to the right */
+  }
+
+  .modern-homepage #mode-toggle {
+    margin-left: auto;
+  }
+
+  /* Responsive adjustments for homepage header */
+  @media (max-width: 768px) {
+    .modern-homepage .g-header {
+      padding: 1rem;
+    }
+
+    .modern-homepage .g-nav ul {
+      gap: 1rem;
+    }
+  }
+
+  /* Homepage-specific dark mode styles */
+  body.night-mode .modern-homepage .main-content,
+  body.night-mode .modern-homepage .sidebar,
+  body.night-mode .modern-homepage .featured-card,
+  body.night-mode .modern-homepage .quick-link-item,
+  body.night-mode .modern-homepage .welcome-message {
+    background-color: #2a2a2a;
+    color: var(--text-color);
+  }
+
+  body.night-mode .modern-homepage .content-section {
+    background-color: var(--light-bg);
+  }
+
+  body.night-mode .modern-homepage .featured-card-title,
+  body.night-mode .modern-homepage .sidebar-title,
+  body.night-mode .modern-homepage .quick-link-title {
+    color: var(--text-color);
+  }
+
+  body.night-mode .modern-homepage .featured-card-excerpt,
+  body.night-mode .modern-homepage .bio,
+  body.night-mode .modern-homepage .sidebar-list a {
+    color: #b0b0b0;
+  }
+
+  body.night-mode .modern-homepage .tag-link,
+  body.night-mode .modern-homepage .link-item {
+    background-color: rgba(74, 107, 255, 0.2);
+  }
+
+  body.night-mode .modern-homepage .tag-link:hover,
+  body.night-mode .modern-homepage .link-item:hover {
+    background-color: var(--primary-color);
+    color: var(--dark-bg);
+  }
+
+  body.night-mode .modern-homepage .jp-widget {
+    background-color: var(--light-bg);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  body.night-mode .modern-homepage .upgotd-title,
+  body.night-mode .modern-homepage .upgotd-footer {
+    background-color: rgba(74, 107, 255, 0.2);
+  }
+
+  body.night-mode .modern-homepage .upgotd-pray {
+    background-color: rgba(255, 107, 107, 0.2);
+  }
+
+  body.night-mode .modern-homepage .upgotd-table tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+</style>
+
+<div class="modern-homepage" data-theme="{{ site.theme-color }}">
+  <section class="hero-section">
+    
+    <div class="hero-content">
+      <h1 class="hero-title">{{ page.home-title }}</h1>
+      <h2 class="hero-subtitle">{{ page.description }}</h2>
+    </div>
+    
+    {% if page.cover_author %}
+    <div class="cover-credit">
+      {% if page.cover_author_link %}
+      Photo by <a href="{{ page.cover_author_link }}" target="_blank">{{ page.cover_author }}</a>
+      {% else %}
+      Photo by {{ page.cover_author }}
+      {% endif %}
+    </div>
+    {% endif %}
+  </section>
+
+  <section id="content" class="content-section">
+    <div class="content-container">
+      <div class="main-content">
+        <article class="markdown-body">
+          {% include plugins/i18n.html %}
+          {{ content | extlinks }}
+        </article>
+        
+        <div class="featured-section">
+          <h2 class="featured-title">Recent Posts</h2>
+          <div class="featured-grid">
+            {% for post in site.posts limit:3 %}
+            <div class="featured-card">
+              <div class="featured-card-img" style="background-image: url('{{ post.cover | default: '/assets/img/wheelbarrow.jpg' | relative_url }}')"></div>
+              <div class="featured-card-content">
+                <h3 class="featured-card-title">{{ post.title }}</h3>
+                <p class="featured-card-excerpt">{{ post.excerpt | strip_html | truncate: 150 }}</p>
+                <a href="{{ post.url | relative_url }}" class="featured-card-link">Read More →</a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      
+      <div class="sidebar">
+        <section class="author-card">
+          <div class="avatar">
+            <img src="{{ site.avatar | relative_url }}" alt="{{ site.author }}">
+          </div>
+          <div class="author-name" rel="author">{{ site.author }}</div>
+          <div class="bio">
+            <p>{{ site.bio }}</p>
+          </div>
+          
+          {% if site.sns.size > 0 %}
+          <div class="social-links">
+            {% for s in site.sns %}
+            <a href="{{ s[1] }}" target="_blank" aria-label="{{ s[0] }}" class="social-link">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-{{ s[0] }}"></use>
+              </svg>
+            </a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </section>
+        
+        <h3 class="sidebar-title">Quick Links</h3>
+        <div class="quick-links">
+          <a href="/blog" class="quick-link-item">
+            <div class="quick-link-content">
+              <div class="quick-link-title">All Blog Posts</div>
+              <div class="quick-link-arrow">→</div>
+            </div>
+          </a>
+          <a href="/categories" class="quick-link-item">
+            <div class="quick-link-content">
+              <div class="quick-link-title">Browse by Category</div>
+              <div class="quick-link-arrow">→</div>
+            </div>
+          </a>
+          <a href="/tags" class="quick-link-item">
+            <div class="quick-link-content">
+              <div class="quick-link-title">Browse by Tag</div>
+              <div class="quick-link-arrow">→</div>
+            </div>
+          </a>
+          <a href="/about" class="quick-link-item">
+            <div class="quick-link-content">
+              <div class="quick-link-title">About Us</div>
+              <div class="quick-link-arrow">→</div>
+            </div>
+          </a>
+          <a href="/cv" class="quick-link-item">
+            <div class="quick-link-content">
+              <div class="quick-link-title">Resume</div>
+              <div class="quick-link-arrow">→</div>
+            </div>
+          </a>
+        </div>
+        
+        {% if site.recommend-tags and site.tags.size>0 %}
+        <h3 class="sidebar-title">Popular Tags</h3>
+        <div class="tags-cloud">
+          {% assign max_tag_count = 0 %}
+          {% for tag in site.tags %}
+            {% if tag[1].size > max_tag_count %}
+            {% assign max_tag_count = tag[1].size %}
+            {% endif %}
+          {% endfor %}
+          
+          {% assign pnum = 0 %}
+          {% for i in (1..max_tag_count) reversed %}
+            {% for tag in site.tags %}
+              {% if tag[1].size == i %}
+                {% assign pnum = pnum | plus: 1 %}
+                {% if pnum > site.recommend-condition-size %}
+                  {% break %}
+                {% endif %}
+                <a href="{{ '/tags/#tag-' | append: tag[0] | relative_url }}" class="tag-link">{{ tag[0] }}<sup>{{ i }}</sup></a>
+              {% endif %}
+            {% endfor %}
+            {% if pnum > site.recommend-condition-size %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
+        <!-- Unreached People of the Day -->
+        <h3 class="sidebar-title">Unreached People of the Day</h3>
+        <div class="jp-widget-container">
+          <div id="jp_widget" class="jp-widget">
+            <div class="upgotd-title">
+              <a href="#" class="country-link"><span class="country-name">Loading...</span></a>
+            </div>
+            <div class="upgotd-image">
+              <a href="#" class="pg-link">
+                <img src="https://api.joshuaproject.net/img/people_groups/placeholder.jpg" alt="People Group" class="pg-image" width="200" height="133">
+              </a>
+            </div>
+            <div class="upgotd-map">
+              <h4>Population Density Map</h4>
+              <div class="map-container">
+                <img src="" alt="Population Density Map" class="pg-map-image">
+              </div>
+              <div class="map-credits">
+                <span class="map-credit-text"></span>
+                <a href="#" class="map-credit-link" target="_blank">View Source</a>
+              </div>
+            </div>
+            <div class="upgotd-people">
+              <a href="#" class="pg-link"><span class="pg-name">Loading...</span></a> of <a href="#" class="country-link"><span class="country-name">Loading...</span></a>
+            </div>
+            <div class="upgotd-pray">
+              <span class="pg-prayer">Pray for the <span class="pg-name">Loading...</span> in <span class="country-name">Loading...</span></span>
+            </div>
+            <table class="upgotd-table">
+              <tr>
+                <td>Primary Language:</td>
+                <td><span class="pg-language">Loading...</span></td>
+              </tr>
+              <tr>
+                <td>Population:</td>
+                <td><span class="pg-population">Loading...</span></td>
+              </tr>
+              <tr>
+                <td>Primary Religion:</td>
+                <td><span class="pg-religion">Loading...</span></td>
+              </tr>
+              <tr>
+                <td>Percent Evangelical:</td>
+                <td><span class="pg-evangelical">Loading...</span></td>
+              </tr>
+              <tr>
+                <td>Progress Scale:</td>
+                <td><span class="pg-scale">Loading...</span> - <span class="pg-scale-text">Loading...</span></td>
+              </tr>
+              <tr>
+                <td>Bible Status:</td>
+                <td><span class="pg-bible-status">Loading...</span></td>
+              </tr>
+              <tr>
+                <td>Frontier Status:</td>
+                <td><span class="pg-frontier">Loading...</span></td>
+              </tr>
+              <tr>
+                <td>Natural Name:</td>
+                <td><span class="pg-natural-name">Loading...</span></td>
+              </tr>
+              <tr>
+                <td>Pronunciation:</td>
+                <td><span class="pg-pronunciation">Loading...</span></td>
+              </tr>
+              <tr class="scale-image-row">
+                <td colspan="2" class="scale-image-cell">
+                  <img src="" alt="Progress Scale" class="pg-scale-image">
+                </td>
+              </tr>
+            </table>
+            <div class="upgotd-summary">
+              <h4>Summary</h4>
+              <p><span class="pg-summary">Loading...</span></p>
+            </div>
+            <div class="upgotd-pray">
+              <h4>Prayer Points</h4>
+              <p><span class="pg-prayer-points">Loading...</span></p>
+            </div>
+            <div class="upgotd-more">
+              <a href="https://joshuaproject.net" target="_blank">Data provided by the Joshua Project</a>
+            </div>
+            <div class="upgotd-footer">
+              <a href="https://joshuaproject.net/unreached/" target="_blank">More Unreached People Groups</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Post data processed by Jekyll
+    const postsData = [
+      {% for post in site.posts limit:3 %}
+      {
+        title: {{ post.title | jsonify }},
+        excerpt: {{ post.excerpt | strip_html | truncate: 150 | jsonify }},
+        url: "{{ post.url | relative_url }}",
+        cover: "{{ post.cover | default: '/assets/img/wheelbarrow.jpg' | relative_url }}",
+        date: "{{ post.date | date_to_xmlschema }}"
+      }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ];
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+    
+    // Animate elements on scroll
+    const animateOnScroll = function() {
+      const elements = document.querySelectorAll('.featured-card, .sidebar');
+      
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (elementPosition < windowHeight - 100) {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }
+      });
+    };
+    
+    // Set initial styles for animation
+    document.querySelectorAll('.featured-card, .sidebar').forEach(element => {
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(20px)';
+      element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    });
+    
+    // Run animation on load and scroll
+    window.addEventListener('load', animateOnScroll);
+    window.addEventListener('scroll', animateOnScroll);
+    
+    // Load featured posts
+    const featuredGrid = document.querySelector('.featured-grid');
+    if (featuredGrid) {
+      featuredGrid.innerHTML = ''; // Clear existing content
+      postsData.forEach(post => {
+        const card = document.createElement('div');
+        card.className = 'featured-card';
+        card.innerHTML = `
+          <div class="featured-card-img" style="background-image: url('${post.cover}')"></div>
+          <div class="featured-card-content">
+            <h3 class="featured-card-title">${post.title}</h3>
+            <p class="featured-card-excerpt">${post.excerpt}</p>
+            <a href="${post.url}" class="featured-card-link">Read More →</a>
+          </div>
+        `;
+        featuredGrid.appendChild(card);
+      });
+    }
+
+    // Joshua Project API Integration
+    var DOMAIN = 'https://api.joshuaproject.net';
+    var API_KEY = "{{ site.jp_api_key }}";
+    
+    if (!API_KEY) {
+      console.error('Joshua Project API key is not configured');
+      document.querySelector('#jp_widget').innerHTML = '<div class="upgotd-title">API key not configured</div>';
+    } else {
+      fetch(`${DOMAIN}/v1/people_groups/daily_unreached.json?api_key=${API_KEY}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (data && data.length > 0) {
+            const unreached = data[0];
+            
+            // Update text content
+            document.querySelectorAll('.country-name').forEach(el => el.textContent = unreached['Ctry']);
+            document.querySelectorAll('.pg-language').forEach(el => el.textContent = unreached['PrimaryLanguageName']);
+            document.querySelectorAll('.pg-population').forEach(el => el.textContent = unreached['Population'].toLocaleString());
+            document.querySelectorAll('.pg-name').forEach(el => el.textContent = unreached['PeopNameInCountry']);
+            document.querySelectorAll('.pg-religion').forEach(el => el.textContent = unreached['PrimaryReligion']);
+            document.querySelectorAll('.pg-evangelical').forEach(el => el.textContent = unreached['PercentEvangelical'].toFixed(2) + '%');
+            document.querySelectorAll('.pg-scale').forEach(el => el.textContent = unreached['JPScale']);
+            document.querySelectorAll('.pg-scale-text').forEach(el => el.textContent = unreached['JPScaleText']);
+            document.querySelectorAll('.pg-scale-image').forEach(el => el.src = unreached['JPScaleImageURL']);
+            document.querySelectorAll('.pg-bible-status').forEach(el => el.textContent = unreached['BibleStatus'] || 'Unknown');
+            document.querySelectorAll('.pg-frontier').forEach(el => el.textContent = unreached['Frontier'] ? 'Yes' : 'No');
+            document.querySelectorAll('.pg-natural-name').forEach(el => el.textContent = unreached['NaturalName'] || unreached['PeopNameInCountry']);
+            document.querySelectorAll('.pg-pronunciation').forEach(el => el.textContent = unreached['NaturalPronunciation'] || 'Not available');
+            document.querySelectorAll('.pg-summary').forEach(el => el.textContent = unreached['Summary'] || 'No summary available');
+            document.querySelectorAll('.pg-prayer-points').forEach(el => el.textContent = unreached['PrayForPG'] || 'No specific prayer points available');
+            
+            // Update links
+            document.querySelectorAll('.country-link').forEach(el => el.href = unreached['CountryURL']);
+            document.querySelectorAll('.pg-link').forEach(el => el.href = unreached['PeopleGroupURL']);
+            
+            // Update image if available
+            const pgImage = document.querySelector('.pg-image');
+            if (pgImage && unreached['PeopleGroupPhotoURL']) {
+              pgImage.src = unreached['PeopleGroupPhotoURL'];
+              pgImage.alt = unreached['PeopNameInCountry'];
+            }
+
+            // Update map if available
+            const mapImage = document.querySelector('.pg-map-image');
+            const mapCreditText = document.querySelector('.map-credit-text');
+            const mapCreditLink = document.querySelector('.map-credit-link');
+            
+            if (mapImage && unreached['MapAddress']) {
+              mapImage.src = `https://joshuaproject.net/assets/media/profiles/maps/${unreached['MapAddress']}`;
+              mapImage.alt = `Population density map of ${unreached['PeopNameInCountry']}`;
+              
+              if (unreached['MapCredits']) {
+                mapCreditText.textContent = unreached['MapCredits'];
+              }
+              
+              if (unreached['MapCreditURL']) {
+                mapCreditLink.href = unreached['MapCreditURL'];
+              }
+            } else {
+              document.querySelector('.upgotd-map').style.display = 'none';
+            }
+          } else {
+            throw new Error('No data received from Joshua Project API');
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching Joshua Project data:', error);
+          document.querySelector('#jp_widget').innerHTML = '<div class="upgotd-title">Error loading Joshua Project data</div>';
+        });
+    }
+  });
+</script>

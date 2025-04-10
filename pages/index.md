@@ -1,16 +1,17 @@
 ---
-layout: page
-home-title: Welcome!
-description: An online resource for following the Johnson Family Great Adventure
+layout: homepage
+home-title: Erick & Stella Johnson
+description: The Johnson Family Great Adventure
 permalink: /
 cover: /assets/img/wheelbarrow.jpg
 ---
 
-## Welcome! This is a website for us to post life updates or interesting things I find that I want to post about. 
+<div class="welcome-message">
+  Hey guys, it's Erick. This is a website for us to post about life, articles for my programming students, or other interesting things I find that I want to talk about.
+</div>
 
-### Click an option in the Blog dropdown to start reading. You can find blog posts by category, tag, or date - whatever makes the most sense to you.
+### Getting Started
 
-### If you're looking for a resume, you can find it underneath the About dropdown up top. 
-
-### I'll be adding features and changing things up for a little while, but most of the design stuff is close to done. 
-
+- Browse our latest posts in the **Recent Posts** section below.
+- Use the **Quick Links** in the sidebar to navigate by category, tag, or date.
+- Want to chat? Shoot me an email at **erickrj003@gmail.com**.

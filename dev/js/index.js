@@ -7,7 +7,7 @@ $(document).ready(function () {
     var logo = $('.g-logo');
     var themeStyle = $('.g-banner').attr('data-theme');
     logo.css({
-        'background': 'url(' + baseurl + '/assets/icons/' + themeStyle + '.svg) no-repeat center',
+        'background': 'url(' + baseurl + '/assets/icons/' + (themeStyle || 'default') + '.svg) no-repeat center',
         'background-size': '100% 100%'
     });
 
@@ -67,7 +67,7 @@ $(document).ready(function () {
         var navText = nav.find('a');
         var scFlag = $(document).scrollTop();
         var logo = $('.g-logo');
-        var themeStyle = $('.g-banner').attr('data-theme');
+        var themeStyle = $('.g-banner').attr('data-theme') || 'default';
 
         $(document).scroll(function () {
             var scrollTop = $(this).scrollTop();
@@ -88,7 +88,6 @@ $(document).ready(function () {
                 nav.addClass(navClassName);
             } else {
                 header.removeClass('headerUp');
-                // console.log("rm up");
                 $('#bttb').removeClass("active");
                 header.css({
                     'background-color': 'transparent',
@@ -330,17 +329,33 @@ $(document).ready(function () {
 
         var mode = getCookie("mode");
         if (mode == "") {
-            // console.log(mode);
             if (hour <= 6 || hour >= 18) {
-                // console.log("Start night mode");
-                setCookie("mode", "night", 1)
+                setCookie("mode", "night", 1);
+                el.addClass(className);
+                $(".g-nav li.mode .night").addClass("active");
+                $("#mode-toggle .icon-night").addClass("active");
+                $(".icon.up.night").toggleClass("active");
+                $(".icon.list.night").toggleClass("active");
             }
-            // el.addClass(className);
+        } else if (mode == "night") {
+            el.addClass(className);
+            $(".g-nav li.mode .night").addClass("active");
+            $("#mode-toggle .icon-night").addClass("active");
+            $(".icon.up.night").toggleClass("active");
+            $(".icon.list.night").toggleClass("active");
         }
     }
 
     if ($('#nm-switch').val() === 'true') {
         nightMode();
+    } else {
+        // Initialize with day mode if night mode is disabled
+        setCookie("mode", "day", 1);
+        $("body").removeClass("night-mode");
+        $(".g-nav li.mode .day").addClass("active");
+        $("#mode-toggle .icon-day").addClass("active");
+        $(".icon.up.day").toggleClass("active");
+        $(".icon.list.day").toggleClass("active");
     }
 
     /**

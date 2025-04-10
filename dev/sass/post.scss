@@ -1,3 +1,5 @@
+@use 'helper';
+
 .post-no-cover {
     height: 360px;
 
@@ -7,27 +9,27 @@
 }
 
 .post-pattern-circuitBoard {
-    @include postHeaderPattern('circuitBoard');
+    @include helper.postHeaderPattern('circuitBoard');
 }
 
 .post-pattern-overlappingCircles {
-    @include postHeaderPattern('overlappingCircles');
+    @include helper.postHeaderPattern('overlappingCircles');
 }
 
 .post-pattern-food {
-    @include postHeaderPattern('food');
+    @include helper.postHeaderPattern('food');
 }
 
 .post-pattern-glamorous {
-    @include postHeaderPattern('glamorous');
+    @include helper.postHeaderPattern('glamorous');
 }
 
 .post-pattern-ticTacToe {
-    @include postHeaderPattern('ticTacToe');
+    @include helper.postHeaderPattern('ticTacToe');
 }
 
 .post-pattern-seaOfClouds {
-    @include postHeaderPattern('seaOfClouds');
+    @include helper.postHeaderPattern('seaOfClouds');
 }
 
 .post-content {
@@ -41,7 +43,7 @@
 
     .post-subtitle {
         position: relative;
-        width: $post-content-w;
+        width: helper.$post-content-w;
         font-size: 18px;
         color: #585858;
         font-weight: normal;
@@ -72,14 +74,14 @@
     }
 
     .container {
-        width: $g-container-l;
+        width: helper.$g-container-l;
         margin: 0 auto;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
 
         .contents {
-            width: $post-content-w;
+            width: helper.$post-content-w;
             padding: 30px;
         }
     }
@@ -101,7 +103,7 @@
 }
 
 .post-wrapper {
-    width: $post-content-w;
+    width: helper.$post-content-w;
 }
 
 .post-header {
@@ -123,7 +125,7 @@
         margin: 150px 0 16px;
 
         .post-tag {
-            @include tagStyle;
+            @include helper.tagStyle;
             color: #fff;
             background-color: rgba(255, 255, 255, .26);
             box-shadow: none;
@@ -204,7 +206,7 @@
     color: #000000;
     line-height: 24px;
     z-index: 800;
-    background-color: $color-gray-border-lighter;
+    background-color: helper.$color-gray-border-lighter;
     border-radius: 10px;
 
     ul {
@@ -299,7 +301,7 @@
 }
 
 .bgcolor-default {
-    background-color: $color-theme-default;
+    background-color: helper.$color-theme-default;
 }
 
 .bgcolor-pink {
@@ -319,7 +321,7 @@
 
 .post-footer-item {
     margin: 0 auto;
-    width: $post-content-w;
+    width: helper.$post-content-w;
 }
 
 .author-detail {
@@ -456,7 +458,7 @@
 
 .read-next {
     display: flex;
-    width: $post-content-w;
+    width: helper.$post-content-w;
     margin: 60px auto;
 }
 

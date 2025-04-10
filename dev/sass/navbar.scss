@@ -1,3 +1,5 @@
+@use 'helper';
+
 .g-header {
     position: fixed;
     top: 0;
@@ -14,7 +16,7 @@
         float: left;
         margin-left: 2%;
         width: 70px;
-        height: $g-header-h;
+        height: helper.$g-header-h;
         width: 50px;
         height: 50px;
         background: url('../icons/star.png') no-repeat center;
@@ -230,7 +232,7 @@
                 }
 
                 a {
-                    color: $color-f-primary;
+                    color: helper.$color-f-primary;
                     display: block;
                     text-align: center;
                 }
@@ -249,7 +251,7 @@
 }
 
 .g-banner {
-    height: $g-banner-h;
+    height: helper.$g-banner-h;
     background-color: #2F3139;
     color: #fff;
     padding: 0 60px;
@@ -290,7 +292,7 @@
         padding-top: 190px;
         line-height: 38px;
         font-size: 42px;
-        font-family: $fonts;
+        font-family: helper.$fonts;
         font-weight: bold;
         line-height: 52px;
     }
@@ -317,9 +319,9 @@
 }
 
 .themeColor-default {
-    background-color: $color-theme-default;
+    background-color: helper.$color-theme-default;
 }
 
 .themeColor-pink {
-    background-color: $color-theme-pink;
+    background-color: helper.$color-theme-pink;
 }

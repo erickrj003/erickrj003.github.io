@@ -1,3 +1,5 @@
+@use "./helper";
+
 /*** Base ***/
 html, body {
     height: 100%;
@@ -11,17 +13,17 @@ time, mark, audio, video, iframe, main, header, footer {
     outline: 0 none;
 }
 body {
-    font-family: $fonts;
-    color: $color-f-secondary;
+    font-family: helper.$fonts;
+    color: helper.$color-f-secondary;
     -webkit-font-smoothing: antialiased;
-    background-color: $color-bg;
+    background-color: helper.$color-bg;
     overflow: visible;
 }
 ul {
     list-style-type: none;
 }
 a {
-    color: $color-f-primary;
+    color: helper.$color-f-primary;
     text-decoration: none;
     cursor: pointer;
     transition: .2s;

@@ -1,3 +1,5 @@
+@use "helper";
+
 @media screen and (min-width: 1920px) {
     .home-banner {
         height: 600px;
@@ -11,7 +13,7 @@
     }
 }
 
-@media screen and (max-width: $g-container-w) {
+@media screen and (max-width: helper.$g-container-w) {
     .g-container {
         width: auto;
     }
@@ -36,7 +38,7 @@
     }
 }
 
-@media screen and (max-width: $g-container-l) {
+@media screen and (max-width: helper.$g-container-l) {
     .post-content .container {
         width: 90%;
     }

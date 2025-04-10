@@ -1,14 +1,16 @@
+@use "./helper";
+
 /*** Main style ***/
 
-@import 'navbar';
-@import 'markdown';
-@import 'post';
-@import 'tools';
-@import 'theme';
-@import 'night';
+@use './navbar';
+@use './markdown';
+@use './post';
+@use './tools';
+@use './theme';
+@use './night';
 
 .g-container {
-    width: $g-container-w;
+    width: helper.$g-container-w;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
@@ -30,11 +32,11 @@ a {
 
 .home-content {
     margin: 40px auto 60px;
-    @include clearfix;
+    @include helper.clearfix;
 }
 
 .article-list {
-    width: $post-content-w;
+    width: helper.$post-content-w;
 
     .author-detail {
         top: 20px !important;
@@ -43,7 +45,7 @@ a {
     .article-item {
         width: 100%;
         margin-bottom: 16px;
-        @include cardStyle;
+        @include helper.cardStyle;
 
         &:last-child {
             margin-bottom: 0;
@@ -74,8 +76,8 @@ a {
             position: relative;
 
             .post-title {
-                font-family: $fonts;
-                color: $color-f-primary;
+                font-family: helper.$fonts;
+                color: helper.$color-f-primary;
                 font-size: 24px;
                 line-height: 32px;
 
@@ -97,7 +99,7 @@ a {
             .post-excerpt {
                 margin-top: 8px;
                 font-size: 16px;
-                font-family: 'Merriweather', $fonts;
+                font-family: 'Merriweather', helper.$fonts;
                 line-height: 26px;
                 word-break: break-all;
                 // color: #b8bdc3;
@@ -117,7 +119,7 @@ a {
             }
 
             .post-date {
-                @include timeStyle;
+                @include helper.timeStyle;
 
                 .icon {
                     width: 16px;
@@ -130,13 +132,13 @@ a {
 }
 
 .author-card {
-    @include authorCard;
+    @include helper.authorCard;
 }
 
 .article-item .post-meta .post-tag,
 .tags-card .tag,
 .tags-content .tag {
-    @include tagStyle;
+    @include helper.tagStyle;
 }
 
 .tags-card .links {
@@ -156,7 +158,7 @@ a {
 }
 
 .g-sidebar {
-    @include cardStyle;
+    @include helper.cardStyle;
 
     section {
         padding: 10px 0;
@@ -256,11 +258,11 @@ li#search {
     input,
     .search_item {
         font-size: 16px;
-        color: $color-f-primary;
+        color: helper.$color-f-primary;
     }
 
     input {
-        @include cardStyle;
+        @include helper.cardStyle;
         position: relative;
         padding: 12px 46px 12px 18px;
         margin: 0;
@@ -392,7 +394,7 @@ li#search {
 }
 
 .g-footer {
-    min-height: $g-footer-h;
+    min-height: helper.$g-footer-h;
     padding: 20px 0;
     border-top: 1px solid #E7EAF1;
     text-align: center;
@@ -401,7 +403,7 @@ li#search {
 
     .g-container {
         margin: 0 auto;
-        @include clearfix;
+        @include helper.clearfix;
 
         .g-left {
             width: 500px;
@@ -514,7 +516,7 @@ li#search {
 }
 
 .tags-content {
-    width: $post-content-w;
+    width: helper.$post-content-w;
     margin: -100px auto 0;
 }
 
@@ -522,7 +524,7 @@ li#search {
     padding: 40px 0;
 
     li {
-        @include cardStyle;
+        @include helper.cardStyle;
         margin-bottom: 12px;
 
         &:first-child {

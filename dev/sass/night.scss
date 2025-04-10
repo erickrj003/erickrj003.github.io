@@ -1,9 +1,10 @@
-// 夜间模式
+@use './helper';
+
 .night-mode {
-    background-color: $color-dark-primary;
+    background-color: helper.$color-dark-primary;
 
     .g-banner {
-        background-color: $color-dark-primary;
+        background-color: helper.$color-dark-primary;
         color: #C8CDD3;
     }
 
@@ -23,8 +24,8 @@
     .tags-card .tag,
     .tags-list li,
     .tags-list .tag {
-        color: $color-f-dark;
-        background-color: $color-dark-secondary;
+        color: helper.$color-f-dark;
+        background-color: helper.$color-dark-secondary;
         border-color: rgba(255, 255, 255, 0.1);
         box-shadow: none;
     }
@@ -40,7 +41,7 @@
             .post-title,
             .post-subtitle,
             .post-excerpt {
-                color: $color-f-dark;
+                color: helper.$color-f-dark;
             }
         }
 
@@ -48,7 +49,7 @@
 
             .post-tags,
             .post-date {
-                color: $color-f-dark;
+                color: helper.$color-f-dark;
             }
         }
     }
@@ -83,14 +84,9 @@
         }
     }
 
-    .avatar img {
-        filter: brightness(.6);
-        -webkit-filter: brightness(.6);
-    }
-
     .author-name,
     .bio {
-        color: $color-f-dark !important;
+        color: helper.$color-f-dark !important;
     }
 
     .search_result {
@@ -126,7 +122,7 @@
 
             .tag-name,
             .tag-post {
-                color: $color-f-dark;
+                color: helper.$color-f-dark;
             }
         }
     }
@@ -142,7 +138,7 @@
         background-color: transparent;
 
         section {
-            color: $color-f-dark;
+            color: helper.$color-f-dark;
 
             a {
                 color: #f8f8f8;
@@ -154,7 +150,7 @@
 
             .links {
                 a {
-                    color: $color-f-dark;
+                    color: helper.$color-f-dark;
 
                     &:before {
                         position: absolute;
@@ -172,7 +168,7 @@
     }
 
     .post-content {
-        background-color: $color-dark-primary;
+        background-color: helper.$color-dark-primary;
         border-color: rgba(255, 255, 255, .1);
 
         .post-subtitle {
@@ -194,7 +190,7 @@
     }
 
     .markdown-body {
-        color: $color-f-dark;
+        color: helper.$color-f-dark;
         background-color: transparent;
 
         img {
@@ -221,7 +217,7 @@
         }
 
         a {
-            color: $color-f-dark;
+            color: helper.$color-f-dark;
 
             &:not([ref="gallery"]):before {
                 position: absolute;
@@ -279,7 +275,7 @@
 
     :not(pre)>code[class*="language-"],
     pre[class*="language-"] {
-        // background-color: $color-dark-secondary;
+        // background-color: helper.$color-dark-secondary;
         background-color: #efefef;
     }
 

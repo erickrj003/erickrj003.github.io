@@ -1,7 +1,9 @@
 <header class="g-header" data-theme="{{ site.theme-color }}">
-    <div class="g-logo">
+    {% unless page.layout == 'homepage' %}
+    <div class="g-logo" style="background: url('{{ "/assets/icons/" | append: "default.svg" | relative_url }}') no-repeat center; background-size: 100% 100%;">
       <a href="{{ "/" | relative_url }}" aria-label="logo"></a>
     </div>
+    {% endunless %}
     <div class="menu-tools">
         {% if site.search and site.search_type == "docsearch" %}
             <div id="search-toggle"></div>

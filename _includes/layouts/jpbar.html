@@ -1,0 +1,189 @@
+{% assign lang = page.lang | default: site.default_lang %}
+{% assign locales = site.data.locales[lang] %}
+{% assign panel = locales.panel %}
+<aside class="g-sidebar-wrapper">
+    <div class="g-sidebar">
+        <style>
+            .upgotd {
+                color: #000000;
+                font-family: Arial, Helvetica, Verdana, sans-serif;
+            }
+            #jp_widget {
+                background-color: #EEE;
+                border: #CCCCCC 1px dashed;
+                text-align: center;
+                width: 215px;
+                font-size:12px;
+            }
+            #jp_widget a {
+                color: #000000 !important;
+                text-decoration: none;
+            }
+            #jp_widget a:hover {
+                color: #0000FF !important;
+                text-decoration: none;
+            }
+            .upgotd-title, .upgotd-footer {
+                padding: 3px;
+                background-color: #BBDDFF;
+            }
+            .upgotd-title, .upgotd-title a {
+                font-weight: bold; font-size:13px !important;
+                margin-bottom: 5px;
+            }
+            .upgotd-image {
+                text-align: center;
+            }
+            .upgotd-pray {
+                font-style: italic;
+                font-weight: normal;
+                padding: 3px 0px;
+                font-size: 12px;
+            }
+            .upgotd-people {
+                font-weight: normal;
+                font-size:12px !important;
+                padding-bottom:4px;
+            }
+            .upgotd-people a {
+                font-weight: bold;
+            }
+            .upgotd-table td {
+                font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+                font-size:11px;
+                font-weight: normal;
+                color: #000;
+                line-height: 14px;
+                text-align: left;
+                border: 0px;
+                background-color: #EEE;
+                margin: 0px;
+                padding: 0px 0px 0px 3px;
+            }
+            .upgotd-more, .upgotd-more a {
+                font-size: 10px;
+            }
+            .upgotd-footer, .upgotd-footer a {
+                font-weight: normal ;
+                font-size: 11px;
+                margin-top: 3px;
+            }
+            a#progress-scale-image img {
+                border: none;
+            }
+            .hidden {
+                display: none;
+            }
+        </style>
+        <script type="text/javascript">
+            var DOMAIN = 'https://api.joshuaproject.net';
+            var API_KEY = "{{ site.jp_api_key }}";
+            jQuery(document).ready(function($) {
+                $.ajax({
+                    url: DOMAIN+'/v1/people_groups/daily_unreached.json',
+                    dataType: 'json',
+                    data: {api_key: API_KEY},
+                    type: 'GET'
+                })
+                .done(function(data) {
+                    var unreached = data[0];
+                    /* Set the text of each class to the appropriate data */
+                    $('.country-name').text(unreached['Ctry']);
+                    $('.pg-language').text(unreached['PrimaryLanguageName']);
+                    $('.pg-name').text(unreached['PeopNameInCountry']);
+                    $('.pg-religion').text(unreached['PrimaryReligion']);
+                    $('.pg-scale').text(unreached['JPScale']);
+                    $('.pg-scale-text').text(unreached['JPScaleText']);
+                    /* Handle the two links that need URL's*/
+                    $('.country-link').attr('href', unreached['CountryURL']);
+                    $('.pg-link').attr('href', unreached['PeopleGroupURL']);
+                    /* Append the images */
+                    var pgSettings = {'height': '160px', 'width': '128px'};
+                    var pgImg = $('<img/>').attr('src', unreached['PeopleGroupPhotoURL']).css(pgSettings);
+                    $('#people-group-image').append(pgImg);
+                    var scaleImg = $('<img/>').attr('src', unreached['JPScaleImageURL']);
+                    $('#progress-scale-image').append(scaleImg);
+                    /* Set the Percent Evangelical */
+                    if (unreached['PercentEvangelical'] == null) {
+                        percent_evangelical = '0.00';
+                    } else {
+                        percent_evangelical = parseFloat(unreached['PercentEvangelical']).toFixed(2);
+                    };
+                    $('.pg-evangelical').text(percent_evangelical+'%');
+                    /* Set the Population */
+                    $('.pg-population').text(numberWithCommas(unreached['Population']));
+                    /* Fade in the widget */
+                    $('div#jp_widget').fadeIn('slow');
+                })
+                .fail(function(jqXHR, textStatus, errorThrown) {
+                    var pTagSettings = {'color': 'red', 'font-weight': 'bold'};
+                    var pTag = $('<p/>').text('There was an error: '+errorThrown).css(pTagSettings);
+                    $('body').prepend(pTag);
+                });
+            });
+            /* Number formating method. */
+            function numberWithCommas(x) {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            };
+        </script>
+        <div id="jp_widget">
+            <div class="upgotd upgotd-title">
+                <a href="https://joshuaproject.net/upgotdfeed.php" class="upgotd-link">Unreached of the Day</a>
+            </div>
+            <div class="upgotd-image">
+                <a href="#" class="upgotd-link pg-link" id="people-group-image">
+                </a>
+            </div>
+            <div class="upgotd upgotd-pray">Please pray for the ...</div>
+            <div class="upgotd upgotd-people">
+                <a
+                href="#"
+                class="upgotd-link pg-link pg-name">
+                </a> of
+                <a
+                href="#"
+                class="upgotd-link country-link country-name">
+                </a>
+            </div>
+            <table align="center" class="upgotd-table" cellpadding="0" cellspacing="0">
+                <tbody><tr>
+                    <td width="65">Population:</td>
+                    <td width="135" class="pg-population"></td>
+                </tr>
+                <tr>
+                    <td>Language:</td>
+                    <td class="pg-language"></td>
+                </tr>
+                <tr>
+                    <td>Religion:</td>
+                    <td class="pg-religion"></td>
+                </tr>
+                <tr>
+                    <td>Evangelical:</td>
+                    <td class="pg-evangelical"></td>
+                </tr>
+                <tr>
+                    <td>Status:</td>
+                    <td>
+                        <a
+                        href="https://joshuaproject.net/definitions.php?term=25"
+                        class="upgotd-link pg-scale-text">
+                        </a> (
+                        <a
+                        href="https://joshuaproject.net/global-progress-scale.php"
+                        class="upgotd-link pg-scale">
+                        </a> 
+                        <a
+                        href="https://joshuaproject.net/global-progress-scale.php"
+                        class="upgotd-link"
+                        id="progress-scale-image">
+                        </a>)
+                    </td>
+                </tr>
+            </tbody></table>
+            <div class="upgotd upgotd-footer">
+            Get this daily global vision feature by 
+            <a href="http://www.unreachedoftheday.org/unreached-email.php" class="upgotd-link"> by email</a>.
+            </div>
+        </div>
+</aside>

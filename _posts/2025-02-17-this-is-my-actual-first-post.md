@@ -10,12 +10,12 @@ pin: true
 Hello, and welcome to my little corner of the internet! My name is Erick Johnson, and if you want to read about me for some reason then you've come to the right place.
 
 ## A Little About Me
-On October 12, 2024, I married the love of my life, Stella. Together, we’ve made our home in Aurora, IL  living out the Great Adventure. Stella makes all of life worth so much more! Plus, without her, I'd have nobody to (purposely) lose to in Mario Kart on a regular basis.
+On October 12, 2024, I married the love of my life Stella. Together, we’ve made our home in Aurora, IL living out the Great Adventure. Stella makes all of life worth so much more! Plus, without her, I'd have nobody to (purposely) lose to in Mario Kart on a regular basis.
 
 ## What I Love
 I’m a man of many interests, and I’m passionate about using my skills and hobbies to make a positive impact in the world. Here are a few things that I anjoy doing:
 
-* Software Development: I love solving problems and creating solutions through code. Whether it’s building full-stack applications, automating tasks, or learning new technologies, software development is both a career and a creative outlet for me.
+* Software Development: I love solving problems and creating solutions through code. Between building full-stack applications, automating tasks, or learning new technologies, software development is both a career and a creative outlet for me.
 
 * Teaching: I'd say I'm a guy who knows a little bit about a lot of things. I've taught high school programming, competitive marching band, Bible studies, wrestling class, and probably other things too.
 
