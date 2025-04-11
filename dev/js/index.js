@@ -5,7 +5,7 @@ $(document).ready(function () {
     var baseurl = $("meta[property='og:baseurl']").attr('content');
     var lang = $("meta[property='og:lang']").attr('content');
     var logo = $('.g-logo');
-    var themeStyle = $('.g-banner').attr('data-theme');
+    var themeStyle = $('.g-banner').attr('data-theme') || 'default';
     logo.css({
         'background': 'url(' + baseurl + '/assets/icons/' + themeStyle + '.svg) no-repeat center',
         'background-size': '100% 100%'
@@ -67,7 +67,7 @@ $(document).ready(function () {
         var navText = nav.find('a');
         var scFlag = $(document).scrollTop();
         var logo = $('.g-logo');
-        var themeStyle = $('.g-banner').attr('data-theme');
+        var themeStyle = $('.g-banner').attr('data-theme') || 'default';
 
         $(document).scroll(function () {
             var scrollTop = $(this).scrollTop();

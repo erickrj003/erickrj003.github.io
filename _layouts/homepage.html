@@ -112,7 +112,8 @@ type: page
   /* Main Content */
   .main-content {
     flex: 1;
-    padding: 0 2rem 2rem 0;
+    padding: 1rem;
+    border-radius: 8px;
   }
   
   @media (max-width: 992px) {
@@ -211,6 +212,8 @@ type: page
     position: sticky;
     top: 2rem;
     align-self: flex-start;
+    padding: 1rem;
+    border-radius: 8px;
   }
   
   @media (max-width: 992px) {
@@ -300,11 +303,11 @@ type: page
     position: relative;
     z-index: 10;
   }
-
+/*
   .modern-homepage .g-logo {
-    display: none; /* Hide logo on homepage */
+    display: none; /* Hide logo on homepage 
   }
-
+*/
   .modern-homepage .menu-tools {
     position: absolute;
     right: 1.5rem;
@@ -405,60 +408,8 @@ type: page
   }
 
   /* Homepage-specific dark mode styles */
-  body.night-mode .modern-homepage .main-content,
-  body.night-mode .modern-homepage .sidebar,
-  body.night-mode .modern-homepage .featured-card,
-  body.night-mode .modern-homepage .quick-link-item,
-  body.night-mode .modern-homepage .welcome-message {
-    background-color: #2a2a2a;
-    color: var(--text-color);
-  }
-
-  body.night-mode .modern-homepage .content-section {
-    background-color: var(--light-bg);
-  }
-
-  body.night-mode .modern-homepage .featured-card-title,
-  body.night-mode .modern-homepage .sidebar-title,
-  body.night-mode .modern-homepage .quick-link-title {
-    color: var(--text-color);
-  }
-
-  body.night-mode .modern-homepage .featured-card-excerpt,
-  body.night-mode .modern-homepage .bio,
-  body.night-mode .modern-homepage .sidebar-list a {
-    color: #b0b0b0;
-  }
-
-  body.night-mode .modern-homepage .tag-link,
-  body.night-mode .modern-homepage .link-item {
-    background-color: rgba(74, 107, 255, 0.2);
-  }
-
-  body.night-mode .modern-homepage .tag-link:hover,
-  body.night-mode .modern-homepage .link-item:hover {
-    background-color: var(--primary-color);
-    color: var(--dark-bg);
-  }
-
-  body.night-mode .modern-homepage .jp-widget {
-    background-color: var(--light-bg);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  body.night-mode .modern-homepage .upgotd-title,
-  body.night-mode .modern-homepage .upgotd-footer {
-    background-color: rgba(74, 107, 255, 0.2);
-  }
-
-  body.night-mode .modern-homepage .upgotd-pray {
-    background-color: rgba(255, 107, 107, 0.2);
-  }
-
-  body.night-mode .modern-homepage .upgotd-table tr:nth-child(even) {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
-
+  /* Removing this duplicate section as it's defined more completely later */
+  
   /* Sidebar Title */
   .sidebar-title {
     font-size: 1.25rem;
@@ -720,7 +671,8 @@ type: page
     }
   }
   
-  .featured-card {
+  .featured-card, 
+  .main-content {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s ease, transform 0.6s ease;
@@ -827,6 +779,32 @@ type: page
   
   body.night-mode .modern-homepage .upgotd-more a {
     color: #b0b0b0;
+  }
+  
+  /* Additional dark mode style improvements for consistent spacing */
+  body.night-mode .modern-homepage .featured-card-link {
+    color: #738aff;
+  }
+  
+  body.night-mode .modern-homepage .featured-card-link:hover {
+    color: #94a8ff;
+  }
+  
+  body.night-mode .modern-homepage .quick-link-arrow {
+    color: #738aff;
+  }
+  
+  body.night-mode .modern-homepage .upgotd-table {
+    border-color: #3a3a3a;
+  }
+  
+  body.night-mode .modern-homepage .upgotd-table tr {
+    border-bottom-color: #3a3a3a;
+  }
+  
+  body.night-mode .modern-homepage .featured-card:hover,
+  body.night-mode .modern-homepage .quick-link-item:hover {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
   }
   
   @keyframes fadeInUp {
@@ -1111,7 +1089,7 @@ type: page
     
     // Animate elements on scroll
     const animateOnScroll = function() {
-      const elements = document.querySelectorAll('.featured-card, .sidebar');
+      const elements = document.querySelectorAll('.featured-card, .sidebar, .main-content');
       
       elements.forEach(element => {
         const elementPosition = element.getBoundingClientRect().top;
@@ -1125,7 +1103,7 @@ type: page
     };
     
     // Set initial styles for animation
-    document.querySelectorAll('.featured-card, .sidebar').forEach(element => {
+    document.querySelectorAll('.featured-card, .sidebar, .main-content').forEach(element => {
       element.style.opacity = '0';
       element.style.transform = 'translateY(20px)';
       element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
