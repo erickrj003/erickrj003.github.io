@@ -1,16 +1,18 @@
 ---
 layout: homepage
-home-title: Welcome!
-description: An online resource for following the Johnson Family Great Adventure
+home-title: Erick & Stella
+description: Johnson Family Great Adventure
 permalink: /
 cover: /assets/img/wheelbarrow.jpg
 ---
 
-## Hey there, this is Erick. 
+## Hey there, I'm Erick.
 
-### Click an option in the Blog dropdown to start reading. You can find blog posts by category, tag, or date - whatever makes the most sense to you.
+This site serves as both a personal journal and a platform to connect with others who share our interests in technology, faith, and global missions. Here you'll find:
 
-### If you're looking for a resume, you can find it underneath the About dropdown up top. 
+- **Blog Posts** on a bunch of topics that I find interesting
+- **Ministry Updates** and theological thoughts
+- **Professional Information** about my work background and resume
 
-### I'll be adding features and changing things up for a little while, but most of the design stuff is close to done. 
+Feel free to explore using the navigation above. You can browse posts by category, search for specific topics, or simply start with the most recent updates.
 

@@ -8,203 +8,1105 @@ type: page
 {% assign lang = page.lang | default: site.default_lang %}
 {% assign locales = site.data.locales[lang] %}
 
-<div class="modern-homepage" data-theme="{{ site.theme-color }}">
-  <div class="main-content">
-    <section class="hero-section">
-      <div class="hero-content">
-        <h1 class="hero-title">{{ page.home-title }}</h1>
-        <h2 class="hero-subtitle">{{ page.description }}</h2>
-      </div>
-      
-      {% if page.cover_author %}
-      <div class="cover-credit">
-        {% if page.cover_author_link %}
-        Photo by <a href="{{ page.cover_author_link }}" target="_blank">{{ page.cover_author }}</a>
-        {% else %}
-        Photo by {{ page.cover_author }}
-        {% endif %}
-      </div>
-      {% endif %}
-    </section>
+<style>
+  /* Base Layout Styles */
+  .modern-homepage {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #fff;
+    color: #2c3e50;
+  }
 
-    <section class="content-section">
-      <article class="markdown-body">
-        {% include plugins/i18n.html %}
-        {{ content | extlinks }}
-      </article>
-      
-      <div class="featured-section">
-        <h2 class="featured-title">Recent Posts</h2>
-        <div class="featured-grid">
-          {% for post in site.posts limit:3 %}
-          <div class="featured-card">
-            <div class="featured-card-img" style="background-image: url('{{ post.cover | default: '/assets/img/wheelbarrow.jpg' | relative_url }}')"></div>
-            <div class="featured-card-content">
-              <h3 class="featured-card-title">{{ post.title }}</h3>
-              <p class="featured-card-excerpt">{{ post.excerpt | strip_html | truncate: 150 }}</p>
-              <a href="{{ post.url | relative_url }}" class="featured-card-link">Read More →</a>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-    </section>
-  </div>
+  .content-section {
+    background-color: #f8f9fa;
+    padding: 3rem 0;
+  }
+
+  .content-container {
+    display: flex;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    gap: 2rem;
+  }
+
+  @media (max-width: 1200px) {
+    .content-container {
+      padding: 0 2rem;
+    }
+  }
   
-  <div class="sidebar">
-    <section class="author-card">
-      <div class="avatar">
-        <img src="{{ site.avatar | relative_url }}" alt="{{ site.author }}">
-      </div>
-      <div class="author-name" rel="author">{{ site.author }}</div>
-      <div class="bio">
-        <p>{{ site.bio }}</p>
-      </div>
-      
-      {% if site.sns.size > 0 %}
-      <div class="social-links">
-        {% for s in site.sns %}
-        <a href="{{ s[1] }}" target="_blank" aria-label="{{ s[0] }}" class="social-link">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-{{ s[0] }}"></use>
-          </svg>
-        </a>
-        {% endfor %}
-      </div>
-      {% endif %}
-    </section>
+  @media (max-width: 992px) {
+    .content-container {
+      flex-direction: column-reverse;
+      padding: 0 1.5rem;
+    }
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    text-align: center;
+    padding: 8rem 2rem;
+    background: linear-gradient(135deg, rgba(27, 126, 255, 0.5), rgba(27, 126, 255, 0.5)), url('{{ page.cover }}') center/cover no-repeat;
+    position: relative;
+    color: #fff;
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-attachment: fixed;
+    overflow: hidden;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    animation: fadeInUp 1.2s ease-out;
+    max-width: 900px;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
+  }
+  
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
+    z-index: 1;
+  }
+  
+  .hero-title {
+    font-size: 4.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
+    letter-spacing: 1px;
+  }
+  
+  .hero-subtitle {
+    font-size: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    font-weight: 500;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+    letter-spacing: 0.5px;
+  }
+  
+  .cover-credit {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
+  
+  .cover-credit a {
+    color: #fff;
+    text-decoration: underline;
+  }
+  
+  /* Main Content */
+  .main-content {
+    flex: 1;
+    padding: 0 2rem 2rem 0;
+  }
+  
+  @media (max-width: 992px) {
+    .main-content {
+      padding: 0;
+      margin-top: 2rem;
+    }
+  }
+  
+  .markdown-body {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+  }
+  
+  /* Featured Posts Section */
+  .featured-section {
+    margin-top: 2rem;
+  }
+  
+  .featured-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+  }
+  
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    .featured-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* Featured Cards */
+  .featured-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .featured-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .featured-card-img {
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .featured-card-content {
+    padding: 1.5rem;
+  }
+  
+  .featured-card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+  }
+  
+  .featured-card-excerpt {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+  
+  .featured-card-link {
+    display: inline-block;
+    color: #4a6bff;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .featured-card-link:hover {
+    color: #2b50ed;
+    text-decoration: underline;
+  }
+  
+  /* Sidebar Styles */
+  .sidebar {
+    width: 350px;
+    position: sticky;
+    top: 2rem;
+    align-self: flex-start;
+  }
+  
+  @media (max-width: 992px) {
+    .sidebar {
+      width: 100%;
+      position: relative;
+      top: 0;
+      margin-bottom: 2rem;
+    }
+  }
+  
+  .author-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+  }
+  
+  .avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .author-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+  }
+  
+  .bio {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+  
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    color: #4a6bff;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  
+  .social-link:hover {
+    background-color: #4a6bff;
+    color: #fff;
+  }
+  
+  .social-link .icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+
+  /* Header Styles for Homepage */
+  .modern-homepage .g-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 2rem 1rem;
+    background-color: transparent;
+    position: relative;
+    z-index: 10;
+  }
+
+  .modern-homepage .g-logo {
+    display: none; /* Hide logo on homepage */
+  }
+
+  .modern-homepage .menu-tools {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .modern-homepage .g-nav {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .modern-homepage .g-nav ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .modern-homepage .g-nav li {
+    text-align: center;
+  }
+
+  .modern-homepage .g-nav a {
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: color 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .modern-homepage .g-nav .dropdown-toggle::after {
+    margin-left: 0.5rem;
+  }
+
+  .modern-homepage .g-nav .dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 0.5rem 0;
+  }
+
+  .modern-homepage .g-nav .dropdown-menu li {
+    text-align: left;
+  }
+
+  .modern-homepage .g-nav .dropdown-menu a {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  /* Hide mobile-specific elements on desktop */
+  .modern-homepage .g-nav .mode,
+  .modern-homepage .g-nav .travelling,
+  .modern-homepage .g-nav #search {
+    display: none;
+  }
+
+  /* Responsive adjustments for homepage header */
+  @media (max-width: 768px) {
+    .modern-homepage .g-header {
+      padding: 1rem;
+    }
     
-    <div class="quick-links">
-      <a href="/blog" class="quick-link-item">
-        <div class="quick-link-content">
-          <div class="quick-link-title">All Blog Posts</div>
-          <div class="quick-link-description">Browse all articles and posts</div>
-        </div>
-      </a>
-      <a href="/categories" class="quick-link-item">
-        <div class="quick-link-content">
-          <div class="quick-link-title">Browse by Category</div>
-          <div class="quick-link-description">Explore posts by topic</div>
-        </div>
-      </a>
-      <a href="/tags" class="quick-link-item">
-        <div class="quick-link-content">
-          <div class="quick-link-title">Browse by Tag</div>
-          <div class="quick-link-description">Find posts by tags</div>
-        </div>
-      </a>
-      <a href="/about" class="quick-link-item">
-        <div class="quick-link-content">
-          <div class="quick-link-title">About Us</div>
-          <div class="quick-link-description">Learn more about me</div>
-        </div>
-      </a>
-      <a href="/cv" class="quick-link-item">
-        <div class="quick-link-content">
-          <div class="quick-link-title">Resume</div>
-          <div class="quick-link-description">View my professional experience</div>
-        </div>
-      </a>
+    .modern-homepage .menu-tools {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+    }
+
+    .modern-homepage .g-nav ul {
+      gap: 1.5rem;
+    }
+    
+    .modern-homepage .g-nav a {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    /* At smallest sizes, push nav down more and use less gap */
+    .modern-homepage .g-header {
+      padding-top: 4rem;
+    }
+    
+    .modern-homepage .g-nav ul {
+      gap: 1rem 1.5rem;
+    }
+  }
+
+  /* Homepage-specific dark mode styles */
+  body.night-mode .modern-homepage .main-content,
+  body.night-mode .modern-homepage .sidebar,
+  body.night-mode .modern-homepage .featured-card,
+  body.night-mode .modern-homepage .quick-link-item,
+  body.night-mode .modern-homepage .welcome-message {
+    background-color: #2a2a2a;
+    color: var(--text-color);
+  }
+
+  body.night-mode .modern-homepage .content-section {
+    background-color: var(--light-bg);
+  }
+
+  body.night-mode .modern-homepage .featured-card-title,
+  body.night-mode .modern-homepage .sidebar-title,
+  body.night-mode .modern-homepage .quick-link-title {
+    color: var(--text-color);
+  }
+
+  body.night-mode .modern-homepage .featured-card-excerpt,
+  body.night-mode .modern-homepage .bio,
+  body.night-mode .modern-homepage .sidebar-list a {
+    color: #b0b0b0;
+  }
+
+  body.night-mode .modern-homepage .tag-link,
+  body.night-mode .modern-homepage .link-item {
+    background-color: rgba(74, 107, 255, 0.2);
+  }
+
+  body.night-mode .modern-homepage .tag-link:hover,
+  body.night-mode .modern-homepage .link-item:hover {
+    background-color: var(--primary-color);
+    color: var(--dark-bg);
+  }
+
+  body.night-mode .modern-homepage .jp-widget {
+    background-color: var(--light-bg);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  body.night-mode .modern-homepage .upgotd-title,
+  body.night-mode .modern-homepage .upgotd-footer {
+    background-color: rgba(74, 107, 255, 0.2);
+  }
+
+  body.night-mode .modern-homepage .upgotd-pray {
+    background-color: rgba(255, 107, 107, 0.2);
+  }
+
+  body.night-mode .modern-homepage .upgotd-table tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  /* Sidebar Title */
+  .sidebar-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 2rem 0 1rem;
+    color: #2c3e50;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f0f0f0;
+  }
+  
+  /* Quick Links */
+  .quick-links {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .quick-link-item {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .quick-link-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .quick-link-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .quick-link-title {
+    font-weight: 600;
+    color: #2c3e50;
+  }
+  
+  .quick-link-arrow {
+    color: #4a6bff;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  /* Tags Cloud */
+  .tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .tag-link {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background-color: #f0f4ff;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #4a6bff;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  
+  .tag-link:hover {
+    background-color: #4a6bff;
+    color: #fff;
+  }
+  
+  .tag-link sup {
+    font-size: 0.7rem;
+    margin-left: 0.1rem;
+  }
+  
+  /* Joshua Project Widget */
+  .jp-widget-container {
+    margin-bottom: 2rem;
+  }
+  
+  .jp-widget {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .upgotd-title {
+    background-color: #4a6bff;
+    color: #fff;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  
+  .upgotd-title a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .upgotd-image {
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .upgotd-image img {
+    border-radius: 4px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .upgotd-map {
+    padding: 1rem;
+    border-top: 1px solid #f0f0f0;
+  }
+  
+  .upgotd-map h4 {
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+  }
+  
+  .map-container {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  .map-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .map-credits {
+    font-size: 0.75rem;
+    color: #6c757d;
+    text-align: right;
+  }
+  
+  .upgotd-people {
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-top: 1px solid #f0f0f0;
+    font-weight: 600;
+  }
+  
+  .upgotd-people a {
+    color: #4a6bff;
+    text-decoration: none;
+  }
+  
+  .upgotd-pray {
+    padding: 1rem;
+    background-color: #fff1f1;
+    border-top: 1px solid #f0f0f0;
+    font-style: italic;
+  }
+  
+  /* Table Styles */
+  .upgotd-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .upgotd-table tr {
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .upgotd-table tr:last-child {
+    border-bottom: none;
+  }
+  
+  .upgotd-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+  }
+  
+  .upgotd-table td {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .upgotd-table td:first-child {
+    font-weight: 600;
+    width: 40%;
+    color: #2c3e50;
+  }
+  
+  .scale-image-cell {
+    padding: 0.5rem 1rem;
+    text-align: center;
+  }
+  
+  /* Summary and Prayer Points */
+  .upgotd-summary,
+  .upgotd-pray:nth-of-type(2) {
+    padding: 1rem;
+    border-top: 1px solid #f0f0f0;
+  }
+  
+  .upgotd-summary h4,
+  .upgotd-pray h4 {
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+  }
+  
+  .upgotd-more {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid #f0f0f0;
+    font-size: 0.85rem;
+    text-align: center;
+  }
+  
+  .upgotd-more a {
+    color: #6c757d;
+    text-decoration: none;
+  }
+  
+  .upgotd-more a:hover {
+    color: #4a6bff;
+    text-decoration: underline;
+  }
+  
+  .upgotd-footer {
+    padding: 0.75rem 1rem;
+    background-color: #4a6bff;
+    text-align: center;
+  }
+  
+  .upgotd-footer a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  .upgotd-footer a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .featured-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  
+  .sidebar {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  
+  /* Dark Mode Styles */
+  body.night-mode .modern-homepage .main-content,
+  body.night-mode .modern-homepage .sidebar,
+  body.night-mode .modern-homepage .featured-card,
+  body.night-mode .modern-homepage .quick-link-item,
+  body.night-mode .modern-homepage .welcome-message {
+    background-color: #2a2a2a;
+    color: #e6e6e6;
+  }
+
+  body.night-mode .modern-homepage .content-section {
+    background-color: #1f1f1f;
+  }
+
+  body.night-mode .modern-homepage .featured-card-title,
+  body.night-mode .modern-homepage .sidebar-title,
+  body.night-mode .modern-homepage .quick-link-title {
+    color: #e6e6e6;
+  }
+
+  body.night-mode .modern-homepage .featured-card-excerpt,
+  body.night-mode .modern-homepage .bio,
+  body.night-mode .modern-homepage .sidebar-list a {
+    color: #b0b0b0;
+  }
+
+  body.night-mode .modern-homepage .tag-link,
+  body.night-mode .modern-homepage .link-item {
+    background-color: rgba(74, 107, 255, 0.2);
+  }
+
+  body.night-mode .modern-homepage .tag-link:hover,
+  body.night-mode .modern-homepage .link-item:hover {
+    background-color: #4a6bff;
+    color: #fff;
+  }
+
+  body.night-mode .modern-homepage .jp-widget {
+    background-color: #2a2a2a;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  body.night-mode .modern-homepage .upgotd-title,
+  body.night-mode .modern-homepage .upgotd-footer {
+    background-color: rgba(74, 107, 255, 0.6);
+  }
+
+  body.night-mode .modern-homepage .upgotd-pray {
+    background-color: rgba(255, 107, 107, 0.2);
+  }
+
+  body.night-mode .modern-homepage .upgotd-table tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  
+  body.night-mode .modern-homepage .upgotd-table td:first-child {
+    color: #e6e6e6;
+  }
+  
+  body.night-mode .modern-homepage .markdown-body,
+  body.night-mode .modern-homepage .author-card {
+    background-color: #2a2a2a;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  body.night-mode .modern-homepage .social-link {
+    background-color: #1f1f1f;
+  }
+  
+  body.night-mode .modern-homepage .sidebar-title {
+    border-bottom-color: #3a3a3a;
+  }
+  
+  body.night-mode .modern-homepage .quick-link-item {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  body.night-mode .modern-homepage .upgotd-map,
+  body.night-mode .modern-homepage .upgotd-summary,
+  body.night-mode .modern-homepage .upgotd-people,
+  body.night-mode .modern-homepage .upgotd-more,
+  body.night-mode .modern-homepage .upgotd-pray:nth-of-type(2) {
+    border-top-color: #3a3a3a;
+  }
+  
+  body.night-mode .modern-homepage .upgotd-people {
+    background-color: #252525;
+  }
+  
+  body.night-mode .modern-homepage .map-credits {
+    color: #b0b0b0;
+  }
+  
+  body.night-mode .modern-homepage .upgotd-more a {
+    color: #b0b0b0;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Content Section Titles */
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 2rem 0 1rem;
+    color: #2c3e50;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f0f0f0;
+  }
+
+  /* Quick Links Section */
+  .quick-links-section {
+    margin: 2.5rem 0;
+  }
+
+  .quick-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .quick-links {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Tags Section */
+  .tags-section {
+    margin: 2.5rem 0;
+  }
+
+  body.night-mode .modern-homepage .section-title {
+    color: #e6e6e6;
+    border-bottom-color: #3a3a3a;
+  }
+</style>
+
+<div class="modern-homepage" data-theme="{{ site.theme-color }}">
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">{{ page.home-title }}</h1>
+      <h2 class="hero-subtitle">{{ page.description }}</h2>
     </div>
     
-    {% if site.recommend-tags and site.tags.size>0 %}
-    <div class="tags-cloud">
-      {% assign max_tag_count = 0 %}
-      {% for tag in site.tags %}
-        {% if tag[1].size > max_tag_count %}
-        {% assign max_tag_count = tag[1].size %}
-        {% endif %}
-      {% endfor %}
-      
-      {% assign pnum = 0 %}
-      {% for i in (1..max_tag_count) reversed %}
-        {% for tag in site.tags %}
-          {% if tag[1].size == i %}
-            {% assign pnum = pnum | plus: 1 %}
-            {% if pnum > site.recommend-condition-size %}
-              {% break %}
-            {% endif %}
-            <a href="{{ '/tags/#tag-' | append: tag[0] | relative_url }}" class="tag-link">{{ tag[0] }}<sup>{{ i }}</sup></a>
-          {% endif %}
-        {% endfor %}
-        {% if pnum > site.recommend-condition-size %}
-          {% break %}
-        {% endif %}
-      {% endfor %}
+    {% if page.cover_author %}
+    <div class="cover-credit">
+      {% if page.cover_author_link %}
+      Photo by <a href="{{ page.cover_author_link }}" target="_blank">{{ page.cover_author }}</a>
+      {% else %}
+      Photo by {{ page.cover_author }}
+      {% endif %}
     </div>
     {% endif %}
+  </section>
 
-    <!-- Joshua Project Widget -->
-    <div class="jp-widget">
-      <div class="upgotd-title">
-        <a href="#" class="country-link"><span class="country-name">Loading...</span></a>
+  <section id="content" class="content-section">
+    <div class="content-container">
+      <div class="main-content">
+        <article class="markdown-body">
+          {% include plugins/i18n.html %}
+          {{ content | extlinks }}
+        </article>
+        
+        <div class="quick-links-section">
+          <h3 class="section-title">Quick Links</h3>
+          <div class="quick-links">
+            <a href="/blog" class="quick-link-item">
+              <div class="quick-link-content">
+                <div class="quick-link-title">All Blog Posts</div>
+                <div class="quick-link-arrow">→</div>
+              </div>
+            </a>
+            <a href="/categories" class="quick-link-item">
+              <div class="quick-link-content">
+                <div class="quick-link-title">Browse by Category</div>
+                <div class="quick-link-arrow">→</div>
+              </div>
+            </a>
+            <a href="/tags" class="quick-link-item">
+              <div class="quick-link-content">
+                <div class="quick-link-title">Browse by Tag</div>
+                <div class="quick-link-arrow">→</div>
+              </div>
+            </a>
+            <a href="/about" class="quick-link-item">
+              <div class="quick-link-content">
+                <div class="quick-link-title">About Us</div>
+                <div class="quick-link-arrow">→</div>
+              </div>
+            </a>
+            <a href="/cv" class="quick-link-item">
+              <div class="quick-link-content">
+                <div class="quick-link-title">Resume</div>
+                <div class="quick-link-arrow">→</div>
+              </div>
+            </a>
+          </div>
+        </div>
+        
+        {% if site.recommend-tags and site.tags.size>0 %}
+        <div class="tags-section">
+          <h3 class="section-title">Popular Tags</h3>
+          <div class="tags-cloud">
+            {% assign max_tag_count = 0 %}
+            {% for tag in site.tags %}
+              {% if tag[1].size > max_tag_count %}
+              {% assign max_tag_count = tag[1].size %}
+              {% endif %}
+            {% endfor %}
+            
+            {% assign pnum = 0 %}
+            {% for i in (1..max_tag_count) reversed %}
+              {% for tag in site.tags %}
+                {% if tag[1].size == i %}
+                  {% assign pnum = pnum | plus: 1 %}
+                  {% if pnum > site.recommend-condition-size %}
+                    {% break %}
+                  {% endif %}
+                  <a href="{{ '/tags/#tag-' | append: tag[0] | relative_url }}" class="tag-link">{{ tag[0] }}<sup>{{ i }}</sup></a>
+                {% endif %}
+              {% endfor %}
+              {% if pnum > site.recommend-condition-size %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+        
+        <div class="featured-section">
+          <h2 class="featured-title">Recent Posts</h2>
+          <div class="featured-grid">
+            {% for post in site.posts limit:3 %}
+            <div class="featured-card">
+              <div class="featured-card-img" data-bg="{{ post.cover | default: '/assets/img/wheelbarrow.jpg' | relative_url }}"></div>
+              <div class="featured-card-content">
+                <h3 class="featured-card-title">{{ post.title }}</h3>
+                <p class="featured-card-excerpt">{{ post.excerpt | strip_html | truncate: 150 }}</p>
+                <a href="{{ post.url | relative_url }}" class="featured-card-link">Read More →</a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
       </div>
-      <div class="upgotd-image">
-        <a href="#" class="pg-link">
-          <img src="https://api.joshuaproject.net/img/people_groups/placeholder.jpg" alt="People Group" class="pg-image" width="200" height="133">
-        </a>
-      </div>
-      <div class="upgotd-people">
-        <a href="#" class="pg-link"><span class="pg-name">Loading...</span></a> of <a href="#" class="country-link"><span class="country-name">Loading...</span></a>
-      </div>
-      <div class="upgotd-pray">
-        <span class="pg-prayer">Pray for the <span class="pg-name">Loading...</span> in <span class="country-name">Loading...</span></span>
-      </div>
-      <table class="upgotd-table">
-        <tr>
-          <td>Primary Language:</td>
-          <td><span class="pg-language">Loading...</span></td>
-        </tr>
-        <tr>
-          <td>Population:</td>
-          <td><span class="pg-population">Loading...</span></td>
-        </tr>
-        <tr>
-          <td>Primary Religion:</td>
-          <td><span class="pg-religion">Loading...</span></td>
-        </tr>
-        <tr>
-          <td>Percent Evangelical:</td>
-          <td><span class="pg-evangelical">Loading...</span></td>
-        </tr>
-        <tr>
-          <td>Progress Scale:</td>
-          <td><span class="pg-scale">Loading...</span> - <span class="pg-scale-text">Loading...</span></td>
-        </tr>
-      </table>
-      <div class="upgotd-footer">
-        <a href="https://joshuaproject.net/unreached/" target="_blank">More Unreached People Groups</a>
+      
+      <div class="sidebar">
+        <section class="author-card">
+          <div class="avatar">
+            <img src="{{ site.avatar | relative_url }}" alt="{{ site.author }}">
+          </div>
+          <div class="author-name" rel="author">{{ site.author }}</div>
+          <div class="bio">
+            <p>{{ site.bio }}</p>
+          </div>
+          
+          {% if site.sns.size > 0 %}
+          <div class="social-links">
+            {% for s in site.sns %}
+            <a href="{{ s[1] }}" target="_blank" aria-label="{{ s[0] }}" class="social-link">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-{{ s[0] }}"></use>
+              </svg>
+            </a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </section>
+        
+        <!-- Unreached People of the Day -->
+        <h3 class="sidebar-title">Unreached People of the Day</h3>
+        <div class="jp-widget-container">
+          <div id="jp_widget" class="jp-widget">
+            <div class="upgotd-title">
+              <a href="#" class="country-link"><span class="country-name">Loading...</span></a>
+            </div>
+            <div class="upgotd-image">
+              <a href="#" class="pg-link">
+                <img src="https://api.joshuaproject.net/img/people_groups/placeholder.jpg" alt="People Group" class="pg-image" width="200" height="133">
+              </a>
+            </div>
+            <div class="upgotd-map">
+              <h4>Population Density Map</h4>
+              <div class="map-container">
+                <img src="" alt="Population Density Map" class="pg-map-image">
+              </div>
+              <div class="map-credits">
+                <span class="map-credit-text"></span>
+                <a href="#" class="map-credit-link" target="_blank">View Source</a>
+              </div>
+            </div>
+            <div class="upgotd-people">
+              <a href="#" class="pg-link"><span class="pg-name">Loading...</span></a> of <a href="#" class="country-link"><span class="country-name">Loading...</span></a>
+            </div>
+            <div class="upgotd-pray">
+              <span class="pg-prayer">Pray for the <span class="pg-name">Loading...</span> in <span class="country-name">Loading...</span></span>
+            </div>
+            <table class="upgotd-table">
+              <tr>
+                <td>Primary Language:</td>
+                <td><span class="pg-language">Loading...</span></td>
+              </tr>
+              <tr>
+                <td>Population:</td>
+                <td><span class="pg-population">Loading...</span></td>
+              </tr>
+              <tr>
+                <td>Bible Status:</td>
+                <td><span class="pg-bible-status">Loading...</span></td>
+              </tr>
+              <tr>
+                <td>Frontier Status:</td>
+                <td><span class="pg-frontier">Loading...</span></td>
+              </tr>
+              <tr>
+                <td>Natural Name:</td>
+                <td><span class="pg-natural-name">Loading...</span></td>
+              </tr>
+              <tr>
+                <td>Pronunciation:</td>
+                <td><span class="pg-pronunciation">Loading...</span></td>
+              </tr>
+              <tr>
+                <td>Primary Religion:</td>
+                <td><span class="pg-religion">Loading...</span></td>
+              </tr>
+              <tr>
+                <td>Percent Evangelical:</td>
+                <td><span class="pg-evangelical">Loading...</span></td>
+              </tr>
+              <tr>
+                <td>Progress Scale:</td>
+                <td><span class="pg-scale">Loading...</span> - <span class="pg-scale-text">Loading...</span></td>
+              </tr>
+              <tr class="scale-image-row">
+                <td colspan="2" class="scale-image-cell">
+                  <img src="" alt="Progress Scale" class="pg-scale-image">
+                </td>
+              </tr>
+            </table>
+            <div class="upgotd-summary">
+              <h4>Summary</h4>
+              <p><span class="pg-summary">Loading...</span></p>
+            </div>
+            <div class="upgotd-pray">
+              <h4>Prayer Points</h4>
+              <p><span class="pg-prayer-points">Loading...</span></p>
+            </div>
+            <div class="upgotd-more">
+              <a href="https://joshuaproject.net" target="_blank">Data provided by the Joshua Project</a>
+            </div>
+            <div class="upgotd-footer">
+              <a href="https://joshuaproject.net/unreached/" target="_blank">More Unreached People Groups</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Post data processed by Jekyll
-    const postsData = [
-      {% for post in site.posts limit:3 %}
-      {
-        title: {{ post.title | jsonify }},
-        excerpt: {{ post.excerpt | strip_html | truncate: 150 | jsonify }},
-        url: "{{ post.url | relative_url }}",
-        cover: "{{ post.cover | default: '/assets/img/wheelbarrow.jpg' | relative_url }}",
-        date: "{{ post.date | date_to_xmlschema }}"
-      }{% unless forloop.last %},{% endunless %}
-      {% endfor %}
-    ];
-
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth'
-          });
-        }
-      });
+    // Set background images from data attributes
+    document.querySelectorAll('.featured-card-img[data-bg]').forEach(img => {
+      img.style.backgroundImage = `url(${img.getAttribute('data-bg')})`;
     });
     
     // Animate elements on scroll
@@ -233,24 +1135,18 @@ type: page
     window.addEventListener('load', animateOnScroll);
     window.addEventListener('scroll', animateOnScroll);
     
-    // Load featured posts
-    const featuredGrid = document.querySelector('.featured-grid');
-    if (featuredGrid) {
-      featuredGrid.innerHTML = ''; // Clear existing content
-      postsData.forEach(post => {
-        const card = document.createElement('div');
-        card.className = 'featured-card';
-        card.innerHTML = `
-          <div class="featured-card-img" style="background-image: url('${post.cover}')"></div>
-          <div class="featured-card-content">
-            <h3 class="featured-card-title">${post.title}</h3>
-            <p class="featured-card-excerpt">${post.excerpt}</p>
-            <a href="${post.url}" class="featured-card-link">Read More →</a>
-          </div>
-        `;
-        featuredGrid.appendChild(card);
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
       });
-    }
+    });
 
     // Joshua Project API Integration
     var DOMAIN = 'https://api.joshuaproject.net';
@@ -258,7 +1154,7 @@ type: page
     
     if (!API_KEY) {
       console.error('Joshua Project API key is not configured');
-      document.querySelector('.jp-widget').innerHTML = '<div class="upgotd-title">API key not configured</div>';
+      document.querySelector('#jp_widget').innerHTML = '<div class="upgotd-title">API key not configured</div>';
     } else {
       fetch(`${DOMAIN}/v1/people_groups/daily_unreached.json?api_key=${API_KEY}`)
         .then(response => {
@@ -280,6 +1176,13 @@ type: page
             document.querySelectorAll('.pg-evangelical').forEach(el => el.textContent = unreached['PercentEvangelical'].toFixed(2) + '%');
             document.querySelectorAll('.pg-scale').forEach(el => el.textContent = unreached['JPScale']);
             document.querySelectorAll('.pg-scale-text').forEach(el => el.textContent = unreached['JPScaleText']);
+            document.querySelectorAll('.pg-scale-image').forEach(el => el.src = unreached['JPScaleImageURL']);
+            document.querySelectorAll('.pg-bible-status').forEach(el => el.textContent = unreached['BibleStatus'] || 'Unknown');
+            document.querySelectorAll('.pg-frontier').forEach(el => el.textContent = unreached['Frontier'] ? 'Yes' : 'No');
+            document.querySelectorAll('.pg-natural-name').forEach(el => el.textContent = unreached['NaturalName'] || unreached['PeopNameInCountry']);
+            document.querySelectorAll('.pg-pronunciation').forEach(el => el.textContent = unreached['NaturalPronunciation'] || 'Not available');
+            document.querySelectorAll('.pg-summary').forEach(el => el.textContent = unreached['Summary'] || 'No summary available');
+            document.querySelectorAll('.pg-prayer-points').forEach(el => el.textContent = unreached['PrayForPG'] || 'No specific prayer points available');
             
             // Update links
             document.querySelectorAll('.country-link').forEach(el => el.href = unreached['CountryURL']);
@@ -291,13 +1194,33 @@ type: page
               pgImage.src = unreached['PeopleGroupPhotoURL'];
               pgImage.alt = unreached['PeopNameInCountry'];
             }
+
+            // Update map if available
+            const mapImage = document.querySelector('.pg-map-image');
+            const mapCreditText = document.querySelector('.map-credit-text');
+            const mapCreditLink = document.querySelector('.map-credit-link');
+            
+            if (mapImage && unreached['MapAddress']) {
+              mapImage.src = `https://joshuaproject.net/assets/media/profiles/maps/${unreached['MapAddress']}`;
+              mapImage.alt = `Population density map of ${unreached['PeopNameInCountry']}`;
+              
+              if (unreached['MapCredits']) {
+                mapCreditText.textContent = unreached['MapCredits'];
+              }
+              
+              if (unreached['MapCreditURL']) {
+                mapCreditLink.href = unreached['MapCreditURL'];
+              }
+            } else {
+              document.querySelector('.upgotd-map').style.display = 'none';
+            }
           } else {
             throw new Error('No data received from Joshua Project API');
           }
         })
         .catch(error => {
           console.error('Error fetching Joshua Project data:', error);
-          document.querySelector('.jp-widget').innerHTML = '<div class="upgotd-title">Error loading Joshua Project data</div>';
+          document.querySelector('#jp_widget').innerHTML = '<div class="upgotd-title">Error loading Joshua Project data</div>';
         });
     }
   });

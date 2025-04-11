@@ -4,8 +4,9 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: {
-        app: "./dev/app.js",
-        cv: "./dev/cv.js",
+        app: "./dev/js/app.js",
+        cv: "./dev/js/cv.js",
+        homepage: "./dev/js/homepage.js",
     },
     output: {
         filename: "[name].min.js",
