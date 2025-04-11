@@ -308,3 +308,5 @@ plugins: [jekyll-paginate-v2, jekyll-feed, jekyll-sitemap, premonition, h2o-ac-j
 # Remove legacy pagination settings
 # paginate: 10
 # paginate_path: "/blog/page:num/"
+
+jp_api_key: 3641ee77c4ea
