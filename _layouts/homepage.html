@@ -303,11 +303,11 @@ type: page
     position: relative;
     z-index: 10;
   }
-
+/*
   .modern-homepage .g-logo {
     display: none; /* Hide logo on homepage 
   }
-
+*/
   .modern-homepage .menu-tools {
     position: absolute;
     right: 1.5rem;
@@ -1145,7 +1145,7 @@ type: page
           if (data && data.length > 0) {
             const unreached = data[0];
             
-            // text content
+            // Update text content
             document.querySelectorAll('.country-name').forEach(el => el.textContent = unreached['Ctry']);
             document.querySelectorAll('.pg-language').forEach(el => el.textContent = unreached['PrimaryLanguageName']);
             document.querySelectorAll('.pg-population').forEach(el => el.textContent = unreached['Population'].toLocaleString());
@@ -1162,18 +1162,18 @@ type: page
             document.querySelectorAll('.pg-summary').forEach(el => el.textContent = unreached['Summary'] || 'No summary available');
             document.querySelectorAll('.pg-prayer-points').forEach(el => el.textContent = unreached['PrayForPG'] || 'No specific prayer points available');
             
-            // links
+            // Update links
             document.querySelectorAll('.country-link').forEach(el => el.href = unreached['CountryURL']);
             document.querySelectorAll('.pg-link').forEach(el => el.href = unreached['PeopleGroupURL']);
             
-            // image if there is one
+            // Update image if available
             const pgImage = document.querySelector('.pg-image');
             if (pgImage && unreached['PeopleGroupPhotoURL']) {
               pgImage.src = unreached['PeopleGroupPhotoURL'];
               pgImage.alt = unreached['PeopNameInCountry'];
             }
 
-            // map if there is one
+            // Update map if available
             const mapImage = document.querySelector('.pg-map-image');
             const mapCreditText = document.querySelector('.map-credit-text');
             const mapCreditLink = document.querySelector('.map-credit-link');
