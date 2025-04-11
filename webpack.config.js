@@ -4,21 +4,33 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: {
-        app: "./dev/app.js",
-        cv: "./dev/cv.js",
+        app: "./dev/js/app.js",
+        cv: "./dev/js/cv.js",
+        homepage: "./dev/js/homepage.js",
     },
     output: {
         filename: "[name].min.js",
         path: path.resolve(__dirname, "dist"),
+        clean: true
     },
     module: {
         rules: [
             {
-                test: /\.s[ac]ss$/i,
+                test: /\.scss$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    "css-loader",
-                    "sass-loader",
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    }
                 ]
             },
         ],
@@ -29,16 +41,22 @@ module.exports = {
         }),
         new CopyPlugin({
             patterns: [
-              { from: "dist/app.min.css", to: "../assets/css/app.min.css" },
-              { from: "dist/app.min.css.map", to: "../assets/css/app.min.css.map" },
-              { from: "dist/cv.min.css", to: "../assets/css/cv.min.css" },
-              { from: "dist/cv.min.css.map", to: "../assets/css/cv.min.css.map" },
-              { from: "dist/app.min.js", to: "../assets/js/app.min.js" },
-              { from: "dist/app.min.js.map", to: "../assets/js/app.min.js.map" },
-            ],
-            options: {
-              concurrency: 100,
-            },
+                {
+                    from: 'dist/*.min.css',
+                    to: 'assets/css/[name][ext]',
+                    noErrorOnMissing: true
+                },
+                {
+                    from: 'dist/*.min.js',
+                    to: 'assets/js/[name][ext]',
+                    noErrorOnMissing: true
+                },
+                {
+                    from: 'dist/*.map',
+                    to: 'assets/[ext]/[name][ext]',
+                    noErrorOnMissing: true
+                }
+            ]
         }),
     ],
     devtool: 'source-map',

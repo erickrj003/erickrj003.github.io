@@ -8,19 +8,17 @@
     --fg-color-title-lg: #e3eff7;
     --gradient-color-1: #00629b;
     --gradient-color-2: #023b5b;
-}
-
-:root[data-theme='dark'] {
-    --bg-color: #1a1a1a;
-    --bg-color-cv: #2d2d2d;
-    --fg-color: #4dabf7;
-    --fg-color-dark: #228be6;
-    --fg-color-body: rgba(255, 255, 255, 0.8);
-    --fg-color-title-sm: #a5d8ff;
-}
-
-:root[data-font='normal'] body {
-    font-family: 'Times New Roman', Times, serif;
+    &[data-theme='dark'] {
+        --bg-color: #1a1a1a;
+        --bg-color-cv: #2d2d2d;
+        --fg-color: #4dabf7;
+        --fg-color-dark: #228be6;
+        --fg-color-body: rgba(255, 255, 255, 0.8);
+        --fg-color-title-sm: #a5d8ff;
+    }
+    &[data-font='normal'] body {
+        font-family: "Times New Roman", Times, serif;
+    }
 }
 
 body {
@@ -28,7 +26,11 @@ body {
     line-height: 1.6;
     color: var(--fg-color-body);
     background-color: var(--bg-color);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--fg-color-body);
     transition: background-color 0.3s ease, color 0.3s ease;
+    /* text-align: justify; */  
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -114,7 +116,6 @@ body {
 
     .sidebar {
         margin: 0 0.5rem 0 0;
-
         .photo {
             img {
                 width: 200px;
@@ -131,7 +132,6 @@ body {
 
         .contact, .languages, .education, .skills {
             margin-bottom: 0.5rem;
-
             .title {
                 font-size: 1.1rem;
                 font-weight: 700;
@@ -149,9 +149,6 @@ body {
                 }
 
                 a {
-                    text-decoration: none;
-                    padding-top: 4px;
-                    padding-left: 4px;
                     color: var(--fg-color-body);
                     font-size: 0.95rem;
                     transition: color 0.3s ease;
@@ -161,6 +158,10 @@ body {
                         color: var(--fg-color-dark);
                     }
                 }
+            } 
+            .idiom {
+                color: var(--fg-color-body);
+                font-size: 14px;
             }
 
             .education-item {
@@ -180,9 +181,8 @@ body {
 
             .skill {
                 color: var(--fg-color-body);
-                font-size: 0.95rem;
+                font-size: 14px;
                 transition: color 0.3s ease;
-                margin: 0 0.5rem;
 
                 &:hover {
                     color: var(--fg-color-dark);
@@ -219,14 +219,11 @@ body {
             }
         }
         .experience-item {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
 
             &:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                transform: translateX(5px);
             }
 
             .role {
@@ -406,34 +403,35 @@ body {
 
 @media screen and (max-width: 1024px) {
 	body {
-		background-color: var(--bg-color-cv);
+		font-size: 14px;
 	}
 	.container {
-		box-shadow: none;
-        .container-block {
-            display: block;
-            sidebar div {
-                text-align: left;
-            }
-        }
-        
+		width: 90%;
+		padding: 20px;
+		.container-block {
+			grid-template-columns: 1fr;
+		}
+		.container-block sidebar div {
+			margin-bottom: 10px;
+		}
 	}
 }
 
 @media screen and (max-width: 768px) {
 	.container {
         header {
-            display: block;
+            flex-direction: column;
+            text-align: center;
             .title {
-                margin: 0 auto;
+                font-size: 1.5rem;
             }
             .motivation {
-                text-align: left;
+                font-size: 1rem;
             }
         }
         .container-block {
             p, li, .honor, .role, .details, .content {
-                text-align: left;
+                text-align: center;
             }
         }
 	}	
@@ -469,4 +467,41 @@ ul li::before {
 
 ul li:hover::before {
     transform: scale(1.5); /* Enlarge bullet on hover */
+}
+
+#scrollToTop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--fg-color);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(20px);
+    z-index: 1000;
+
+    &.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    &:hover {
+        background-color: var(--fg-color-dark);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

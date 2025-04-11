@@ -5,7 +5,7 @@ $(document).ready(function () {
     var baseurl = $("meta[property='og:baseurl']").attr('content');
     var lang = $("meta[property='og:lang']").attr('content');
     var logo = $('.g-logo');
-    var themeStyle = $('.g-banner').attr('data-theme');
+    var themeStyle = $('.g-banner').attr('data-theme') || 'default';
     logo.css({
         'background': 'url(' + baseurl + '/assets/icons/' + (themeStyle || 'default') + '.svg) no-repeat center',
         'background-size': '100% 100%'
