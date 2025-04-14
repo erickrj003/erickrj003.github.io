@@ -949,7 +949,7 @@ type: page
         <div class="featured-section">
           <h2 class="featured-title">Recent Posts</h2>
           <div class="featured-grid">
-            {% for post in site.posts limit:3 %}
+            {% for post in site.posts limit:10 %}
             <div class="featured-card">
               <div class="featured-card-img" data-bg="{{ post.cover | default: '/assets/img/wheelbarrow.jpg' | relative_url }}"></div>
               <div class="featured-card-content">
@@ -991,7 +991,7 @@ type: page
         <div class="jp-widget-container">
           <div id="jp_widget" class="jp-widget">
             <div class="upgotd-title">
-              <a href="#" class="country-link"><span class="country-name">Loading...</span></a>
+              <a href="#" class="pg-link"><span class="pg-name">Loading...</span></a> of <a href="#" class="country-link"><span class="country-name">Loading...</span></a>
             </div>
             <div class="upgotd-image">
               <a href="#" class="pg-link">
@@ -1007,9 +1007,6 @@ type: page
                 <span class="map-credit-text"></span>
                 <a href="#" class="map-credit-link" target="_blank">View Source</a>
               </div>
-            </div>
-            <div class="upgotd-people">
-              <a href="#" class="pg-link"><span class="pg-name">Loading...</span></a> of <a href="#" class="country-link"><span class="country-name">Loading...</span></a>
             </div>
             <div class="upgotd-pray">
               <span class="pg-prayer">Pray for the <span class="pg-name">Loading...</span> in <span class="country-name">Loading...</span></span>
@@ -1149,7 +1146,11 @@ type: page
             document.querySelectorAll('.pg-population').forEach(el => el.textContent = unreached['Population'].toLocaleString());
             document.querySelectorAll('.pg-name').forEach(el => el.textContent = unreached['PeopNameInCountry']);
             document.querySelectorAll('.pg-religion').forEach(el => el.textContent = unreached['PrimaryReligion']);
-            document.querySelectorAll('.pg-evangelical').forEach(el => el.textContent = unreached['PercentEvangelical'].toFixed(2) + '%');
+            if (unreached['PercentEvangelical'] === null) {
+              document.querySelectorAll('.pg-evangelical').forEach(el => el.textContent = '00.00%');
+            } else {
+              document.querySelectorAll('.pg-evangelical').forEach(el => el.textContent = unreached['PercentEvangelical'].toFixed(2) + '%');
+            }
             document.querySelectorAll('.pg-scale').forEach(el => el.textContent = unreached['JPScale']);
             document.querySelectorAll('.pg-scale-text').forEach(el => el.textContent = unreached['JPScaleText']);
             document.querySelectorAll('.pg-scale-image').forEach(el => el.src = unreached['JPScaleImageURL']);
