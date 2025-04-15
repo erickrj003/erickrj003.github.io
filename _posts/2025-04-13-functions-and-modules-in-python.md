@@ -134,8 +134,8 @@ first_name3 = name_func("Phanuel")
 ## Python Modules
 Think of Python modules as pre-built toolboxes:
 
-**Module**: A library of Python classes and functions that can be imported
-**Package**: A collection of related modules
+ - **Module**: A library of Python classes and functions that can be imported
+ - **Package**: A collection of related modules
 
 You can download modules via PIP (or PyPI) or just make your own!
 
