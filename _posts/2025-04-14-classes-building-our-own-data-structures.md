@@ -20,7 +20,7 @@ A **Class** is like a blueprint for creating objects. Think of it as a template 
 
 For example, if we were creating a video game, we might have a Player class that contains attributes like health, position, and inventory, along with methods like move, attack, and use_item.
 
-## Creating Your First Class
+### Creating Your First Class
 
 Mrs. Johnson really wants a dog, so let's start by creating a Dog class:
 
@@ -50,7 +50,7 @@ class Dog:
         return f"{self.name} is now {self.age} years old!"
 ```
 
-## Creating Objects from a Class
+### Creating Objects from a Class
 
 Once you've defined a class, you can create instances (objects) of that class:
 ```python
@@ -69,11 +69,11 @@ print(my_dog.is_sitting)    # Output: False
 
 Each Dog object has its own separate set of attributes, but they share the same methods.
 
-## The `self` Parameter
+### The `self` Parameter
 
 You might have noticed that methods in a class take a parameter called `self`. This parameter represents the specific instance of the class that's calling the method. When you call `my_dog.bark()`, Python automatically passes `my_dog` as the `self` parameter to the `bark` method.
 
-## A More Complex Example
+### A More Complex Example
 
 Let's create a BankAccount class to manage a simple bank account:
 ```python
@@ -130,7 +130,7 @@ print(account.show_transactions())
 # Withdrawal: -$30
 ```
 
-# Inheritance: Building on Existing Classes
+## Inheritance: Building on Existing Classes
 
 One of the most powerful features of OOP is **inheritance**, which allows you to create new classes based on existing ones. The new class (subclass) inherits attributes and methods from the existing class (superclass) and can add or override them.
 
@@ -167,7 +167,7 @@ print(savings.withdraw(1000))  # Output: Savings account must maintain a minimum
 print(savings.withdraw(500))   # Output: Withdrew $500. New balance: $550
 ```
 
-## Class Variables vs. Instance Variables
+### Class Variables vs. Instance Variables
 So far, we've been using instance variables (attached to self), which are unique to each object. Python also supports class variables, which are shared among all instances of a class:
 
 ```python
@@ -200,10 +200,9 @@ print(student1.display_info())  # Output: Jimmy is in grade 12 at Batavia High S
 print(student2.display_info())  # Output: Frank is in grade 10 at Batavia High School
 ```
 
-# Encapsulation: Protecting Data
+## Encapsulation: Protecting Data
 
 **Encapsulation** means bundling data and methods together and restricting direct access to some of an object's components. In Python, we use naming conventions to indicate that attributes or methods should be treated as public, private or protected.
-:
 
 ```python
 class CreditCard:
@@ -225,11 +224,7 @@ class CreditCard:
     def payment(self, amount):
         self.__balance -= amount
         return f"Payment of ${amount} received. New balance: ${self.__balance}"
-```
 
-Using our CreditCard class:
-
-```python
 card = CreditCard("1234-5678-9012-3456", "John Doe", 2000)
 
 print(card.holder)         # Works fine: John Doe
@@ -280,7 +275,7 @@ print(temp.celsius)     # Output: 10.0
 # temp.celsius = -300   # Raises ValueError: Temperature cannot be below absolute zero
 ```
 
-# Static Methods and Class Methods
+## Static Methods and Class Methods
 Python classes can also have methods that don't operate on instances:
 
  - **Static methods**: Don't access instance or class data
