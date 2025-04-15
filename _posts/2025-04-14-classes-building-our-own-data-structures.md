@@ -69,7 +69,7 @@ print(my_dog.is_sitting)    # Output: False
 
 Each Dog object has its own separate set of attributes, but they share the same methods.
 
-### The `self` Parameter
+### The self Parameter
 
 You might have noticed that methods in a class take a parameter called `self`. This parameter represents the specific instance of the class that's calling the method. When you call `my_dog.bark()`, Python automatically passes `my_dog` as the `self` parameter to the `bark` method.
 
