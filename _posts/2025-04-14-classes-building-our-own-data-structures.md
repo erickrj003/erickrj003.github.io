@@ -22,7 +22,7 @@ For example, if we were creating a video game, we might have a Player class that
 
 ### Creating Your First Class
 
-Mrs. Johnson really wants a dog, so let's start by creating a Dog class:
+Mrs. Johnson really wants a dog. I'm sure a digital Dog that lives in terminal memory will be good enough, right? Let's start by creating a Dog class:
 
 ```python
 class Dog:
@@ -55,14 +55,14 @@ class Dog:
 Once you've defined a class, you can create instances (objects) of that class:
 ```python
 # Create two dog objects
-my_dog = Dog("Rex", "German Shepherd", 3)
-your_dog = Dog("Buddy", "Golden Retriever", 2)
+my_dog = Dog("Snoopy", "Cocker Spaniel", 3)
+your_dog = Dog("Flinn", "French Poodle", 2)
 
 # Use the objects
-print(my_dog.name)          # Output: Rex
-print(your_dog.breed)       # Output: Golden Retriever
-print(my_dog.bark())        # Output: Rex says Woof!
-print(your_dog.sit())       # Output: Buddy is now sitting
+print(my_dog.name)          # Output: Snoopy
+print(your_dog.breed)       # Output: French Poodle
+print(my_dog.bark())        # Output: Snoopy says Woof!
+print(your_dog.sit())       # Output: Flinn is now sitting
 print(your_dog.is_sitting)  # Output: True
 print(my_dog.is_sitting)    # Output: False
 ```
