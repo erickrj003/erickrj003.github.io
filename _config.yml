@@ -42,6 +42,7 @@ nav:
   about:   
     # RSS: '/rss.xml'
     Resume: '/cv/'
+    about us: '/about/'
 
 
 # Gray for the whole site 全站灰色
