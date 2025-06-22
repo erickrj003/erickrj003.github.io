@@ -1122,13 +1122,13 @@ type: page
     var API_KEY = "{{ site.jp_api_key }}";
     
     if (!API_KEY) {
-      console.error('Joshua Project API key is not configured');
-      document.querySelector('#jp_widget').innerHTML = '<div class="upgotd-title">API key not configured</div>';
+      console.error('Joshua Project API key is invalid or not configured. Please let Erick know at erickrj003@gmail.com.');
+      document.querySelector('#jp_widget').innerHTML = '<div class="upgotd-title">Invalid Joshua Project API key.</div>';
     } else {
       fetch(`${DOMAIN}/v1/people_groups/daily_unreached.json?api_key=${API_KEY}`)
         .then(response => {
           if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`HTTPS error: ${response.status}`);
           }
           return response.json();
         })
@@ -1136,7 +1136,7 @@ type: page
           if (data && data.length > 0) {
             const unreached = data[0];
             
-            // Update text content
+            // Update JP Widget with data
             document.querySelectorAll('.country-name').forEach(el => el.textContent = unreached['Ctry']);
             document.querySelectorAll('.pg-language').forEach(el => el.textContent = unreached['PrimaryLanguageName']);
             document.querySelectorAll('.pg-population').forEach(el => el.textContent = unreached['Population'].toLocaleString());
@@ -1161,14 +1161,14 @@ type: page
             document.querySelectorAll('.country-link').forEach(el => el.href = unreached['CountryURL']);
             document.querySelectorAll('.pg-link').forEach(el => el.href = unreached['PeopleGroupURL']);
             
-            // Update image if available
+            // pgImage if available
             const pgImage = document.querySelector('.pg-image');
             if (pgImage && unreached['PeopleGroupPhotoURL']) {
               pgImage.src = unreached['PeopleGroupPhotoURL'];
               pgImage.alt = unreached['PeopNameInCountry'];
             }
 
-            // Update map if available
+            // mapImage if available
             const mapImage = document.querySelector('.pg-map-image');
             const mapCreditText = document.querySelector('.map-credit-text');
             const mapCreditLink = document.querySelector('.map-credit-link');
@@ -1188,7 +1188,7 @@ type: page
               document.querySelector('.upgotd-map').style.display = 'none';
             }
           } else {
-            throw new Error('No data received from Joshua Project API');
+            throw new Error('Call successful, but no data received from Joshua Project API.');
           }
         })
         .catch(error => {
