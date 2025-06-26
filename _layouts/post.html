@@ -100,6 +100,8 @@ type: post
                 {% include plugins/i18n.html %}
                 {{ page.content | extlinks }}
                 <div class="post-copyright">
+                    <!-- Removing copyright statement for now
+                    
                     <p>
                         <span>{{ copyright.statement.name }}：</span>
                         {{ copyright.statement.left }}
@@ -114,6 +116,7 @@ type: post
                         {{ copyright.statement.right2 }}
                     </p>
                     {% endif %}
+                -->
                     <p><span>{{ copyright.title }}：</span>《 {{ page.title }} 》</p>
                     <p><span>{{ copyright.link }}：</span><a href="{{ page.url | prepend: site.url }}" class="cplink">{{
                             page.url | prepend: site.url }}</a></p>
