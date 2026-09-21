@@ -38,7 +38,30 @@
   <meta name="theme-color" content="{{ site.pwa.color }}">
 
   {% include seo/meta.html %}
+  {% include seo/jsonld.html %}
 
   <link rel="alternate" type="application/atom+xml" title="{{ site.title }}"
         href="{{ '/feed.xml' | absolute_url }}">
+
+  {%- comment -%}
+  Smooth cross-document navigation. Both degrade silently where
+  unsupported, so there is no feature detection to maintain.
+  {%- endcomment -%}
+  <meta name="view-transition" content="same-origin">
+
+  <script type="speculationrules">
+  {
+    "prerender": [{
+      "where": {
+        "and": [
+          { "href_matches": "/*" },
+          { "not": { "href_matches": "/search/*" } },
+          { "not": { "selector_matches": "[rel~=nofollow]" } },
+          { "not": { "selector_matches": "[target=_blank]" } }
+        ]
+      },
+      "eagerness": "moderate"
+    }]
+  }
+  </script>
 </head>

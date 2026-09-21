@@ -46,11 +46,12 @@ own space.
         </div>
       </div>
 
-      <div class="relative order-1 min-h-64 lg:order-2">
-        <img src="{{ page.cover | default: '/assets/img/wheelbarrow.jpg' | relative_url }}"
-             alt="{{ page.cover_alt | default: 'Erick and Stella Johnson' }}"
-             width="1200" height="1000" fetchpriority="high"
-             class="h-full min-h-64 w-full object-cover">
+      <div class="relative order-1 min-h-64 lg:order-2 [&_img]:h-full [&_img]:min-h-64 [&_img]:w-full [&_img]:object-cover [&_picture]:block [&_picture]:h-full">
+        {% include image.html
+             src=page.cover
+             alt=page.cover_alt
+             sizes="(min-width: 1024px) 50vw, 100vw"
+             priority=true %}
         {%- if page.cover_author %}
         <p class="absolute right-3 bottom-3 rounded-full bg-mahogany-deep/70 px-3 py-1 font-small text-[11px] text-ink-dark backdrop-blur">
           Photo by

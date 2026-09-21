@@ -1,0 +1,48 @@
+{%- comment -%}
+Responsive <picture> for a generated image.
+
+  {% include image.html src="/assets/img/hero.jpg" alt="..."
+                        class="..." sizes="100vw" priority=true %}
+
+Reads _data/images.json, produced by `npm run build:img`. Falls back to a
+plain <img> for anything not in the manifest, so an unprocessed image still
+renders.
+
+Always emits width and height so the browser reserves the right space
+before the image arrives.
+{%- endcomment -%}
+
+{%- assign meta = site.data.images[include.src] -%}
+{%- assign sizes = include.sizes | default: '100vw' -%}
+{%- assign loading = 'lazy' -%}
+{%- assign fetchpriority = 'auto' -%}
+{%- if include.priority -%}
+  {%- assign loading = 'eager' -%}
+  {%- assign fetchpriority = 'high' -%}
+{%- endif -%}
+
+{%- if meta -%}
+<picture>
+  {%- for format in meta.sources -%}
+    {%- assign variants = format[1] -%}
+    {%- capture srcset -%}
+      {%- for v in variants -%}{{ v.url | relative_url }} {{ v.width }}w{% unless forloop.last %}, {% endunless %}{%- endfor -%}
+    {%- endcapture -%}
+    {%- if format[0] != 'jpg' %}
+  <source type="image/{{ format[0] }}" srcset="{{ srcset }}" sizes="{{ sizes }}">
+    {%- endif -%}
+  {%- endfor %}
+  <img src="{{ include.src | relative_url }}"
+       alt="{{ include.alt | escape }}"
+       width="{{ meta.width }}" height="{{ meta.height }}"
+       loading="{{ loading }}" decoding="async" fetchpriority="{{ fetchpriority }}"
+       {% if include.class %}class="{{ include.class }}"{% endif %}>
+</picture>
+{%- else -%}
+<img src="{{ include.src | relative_url }}"
+     alt="{{ include.alt | escape }}"
+     {% if include.width %}width="{{ include.width }}"{% endif %}
+     {% if include.height %}height="{{ include.height }}"{% endif %}
+     loading="{{ loading }}" decoding="async" fetchpriority="{{ fetchpriority }}"
+     {% if include.class %}class="{{ include.class }}"{% endif %}>
+{%- endif -%}

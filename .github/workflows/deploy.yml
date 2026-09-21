@@ -1,0 +1,75 @@
+name: Build and deploy
+
+# Replaces GitHub Pages' classic build. That build only runs Jekyll with an
+# allowlisted plugin set and no Node step, so it could not run Tailwind,
+# esbuild, the image pipeline or Pagefind.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let an in-flight deploy finish rather than cancelling it midway.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build assets
+        run: npm run build
+
+      - name: Build site
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+
+      - name: Build search index
+        run: npx pagefind --site _site
+
+      - name: Check links and markup
+        run: |
+          gem install html-proofer -v '~> 5.0'
+          htmlproofer _site \
+            --disable-external \
+            --ignore-urls "/^\/pagefind/" \
+            --allow-missing-href \
+            --no-enforce-https
+        continue-on-error: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

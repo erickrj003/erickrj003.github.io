@@ -2,12 +2,16 @@
 */.DS_Store
 
 node_modules
-package-lock.json
-Gemfile.lock
 .jekyll-cache
-
 _site
-
 *.gem
 
-dist
+# Build output. CI regenerates all of this from dev/ and assets/img/ via
+# `npm run build`, so it is not committed. Lockfiles ARE committed, because
+# `npm ci` and the Ruby setup action both require them.
+assets/css/app.css
+assets/js/app.js
+assets/fonts/*.woff2
+assets/img/generated/
+_data/images.json
+dev/css/fonts.generated.css

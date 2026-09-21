@@ -53,11 +53,12 @@ type: post
   </header>
 
   {%- if page.cover %}
-  <figure class="mx-auto mt-8 max-w-4xl">
-    <img src="{{ page.cover | relative_url }}"
-         alt="{{ page.title }}"
-         width="1600" height="900" fetchpriority="high"
-         class="aspect-video w-full rounded-2xl object-cover shadow-lg ring-1 ring-sky-brand/20">
+  <figure class="mx-auto mt-8 max-w-4xl [&_img]:aspect-video [&_img]:w-full [&_img]:rounded-2xl [&_img]:object-cover [&_img]:shadow-lg [&_img]:ring-1 [&_img]:ring-sky-brand/20">
+    {% include image.html
+         src=page.cover
+         alt=page.title
+         sizes="(min-width: 1024px) 896px, 100vw"
+         priority=true %}
     {%- if page.cover_author %}
     <figcaption class="mt-2 text-center font-small text-xs text-ink-dark-muted">
       Cover by

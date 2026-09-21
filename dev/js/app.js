@@ -9,6 +9,7 @@ import { initLightbox } from "./modules/lightbox.js";
 import { initCodeCopy } from "./modules/code-copy.js";
 import { initHeadingAnchors } from "./modules/headings.js";
 import { initReadingProgress } from "./modules/reading-progress.js";
+import { initSearchPage, initSearchShortcut } from "./modules/search.js";
 
 initLoadGate();
 initTheme();
@@ -23,3 +24,5 @@ initLightbox();
 initCodeCopy();
 initHeadingAnchors();
 initReadingProgress();
+initSearchPage();
+initSearchShortcut();

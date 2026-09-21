@@ -21,11 +21,11 @@ type: page
               data-src="{{ photo.src | relative_url }}"
               data-alt="{{ photo.alt | escape }}"
               data-caption="{{ photo.caption | escape }}"
-              class="group/photo block w-full overflow-hidden rounded-2xl ring-1 ring-white/10 focus:ring-2 focus:ring-sky-brand focus:outline-none">
-        <img src="{{ photo.src | relative_url }}"
-             alt="{{ photo.alt }}"
-             width="600" height="600" loading="lazy"
-             class="aspect-square w-full object-cover transition-transform duration-300 group-hover/photo:scale-105">
+              class="group/photo block w-full overflow-hidden rounded-2xl ring-1 ring-white/10 focus:ring-2 focus:ring-sky-brand focus:outline-none [&_img]:aspect-square [&_img]:w-full [&_img]:object-cover [&_img]:transition-transform [&_img]:duration-300 group-hover/photo:[&_img]:scale-105">
+        {% include image.html
+             src=photo.src
+             alt=photo.alt
+             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw" %}
       </button>
     </li>
     {%- endfor %}

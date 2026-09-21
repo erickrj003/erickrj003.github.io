@@ -4,13 +4,22 @@
 <body class="min-h-screen bg-mahogany font-body text-ink-dark antialiased">
 
   {% include icons.html %}
-  {% include layouts/nav-sidebar.html %}
+
+  {%- comment -%}
+  data-pagefind-ignore keeps the sidebar and footer out of the search index,
+  so results are not every page matching the word "Projects".
+  {%- endcomment -%}
+  <div data-pagefind-ignore>
+    {% include layouts/nav-sidebar.html %}
+  </div>
 
   <div class="content-offset flex min-h-screen flex-col lg:pl-sidebar">
-    <main id="main" class="flex-1">
+    <main id="main" class="flex-1" data-pagefind-body>
       {{ content }}
     </main>
-    {% include layouts/footer.html %}
+    <div data-pagefind-ignore>
+      {% include layouts/footer.html %}
+    </div>
   </div>
 
   <script type="module" src="{{ '/assets/js/app.js' | relative_url }}"></script>

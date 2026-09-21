@@ -122,3 +122,21 @@
     }
   }
 }
+
+/* Cross-document view transitions. The sidebar is given a stable name so it
+   stays put while the content area cross-fades. */
+@view-transition {
+  navigation: auto;
+}
+
+[data-sidebar] {
+  view-transition-name: sidebar;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

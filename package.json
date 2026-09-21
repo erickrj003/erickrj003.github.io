@@ -9,11 +9,14 @@
   },
   "type": "module",
   "scripts": {
-    "build": "npm run build:fonts && npm run build:css && npm run build:js",
+    "build": "npm run build:fonts && npm run build:img && npm run build:css && npm run build:js",
     "build:css": "tailwindcss -i dev/css/app.css -o assets/css/app.css --minify",
     "build:js": "node scripts/js.mjs",
     "build:fonts": "node scripts/fonts.mjs",
     "build:icons": "node scripts/icons.mjs",
+    "build:img": "node scripts/images.mjs",
+    "build:search": "pagefind --site _site",
+    "site": "npm run build && bundle exec jekyll build && npm run build:search",
     "watch": "concurrently -n css,js -c cyan,magenta \"npm:watch:css\" \"npm:watch:js\"",
     "watch:css": "tailwindcss -i dev/css/app.css -o assets/css/app.css --watch",
     "watch:js": "node scripts/js.mjs --watch"
@@ -23,6 +26,8 @@
     "@tailwindcss/typography": "^0.5.16",
     "concurrently": "^9.1.2",
     "esbuild": "^0.25.0",
+    "pagefind": "^1.5.2",
+    "sharp": "^0.35.4",
     "subset-font": "^2.4.0",
     "tailwindcss": "^4.1.14"
   }
