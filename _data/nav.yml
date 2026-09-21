@@ -1,0 +1,46 @@
+# Sidebar navigation. Order here is the order rendered.
+#
+#   title    label shown in the sidebar
+#   url      destination; omit when the item has children
+#   icon     symbol id from _includes/icons.html, minus the "icon-" prefix
+#   children optional dropdown entries
+#   external opens in a new tab and shows an external-link affordance
+
+- title: Home
+  url: /
+  icon: house
+
+- title: About
+  icon: user-round
+  children:
+    - title: About Us
+      url: /about/
+    - title: Resume
+      url: /cv/
+
+- title: Contact
+  url: /contact/
+  icon: mail
+
+- title: Blog
+  icon: newspaper
+  children:
+    - title: All Posts
+      url: /blog/
+    - title: Archives
+      url: /archives/
+    - title: Tags
+      url: /tags/
+
+- title: Projects
+  icon: boxes
+  children:
+    - title: Inazria Player's Guide
+      url: https://erickrj.tech/inazria-players-guide/
+      external: true
+    - title: Portfolio
+      url: /projects/portfolio/
+
+- title: Photos
+  url: /photos/
+  icon: images

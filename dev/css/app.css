@@ -1,0 +1,105 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Jekyll source dirs start with "_", so Tailwind's automatic detection skips
+   them. They have to be declared explicitly. */
+@source "../../_layouts";
+@source "../../_includes";
+@source "../../_posts";
+@source "../../pages";
+@source "../../*.markdown";
+
+/* Light/dark switches card surfaces only; the page background stays mahogany. */
+@custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
+
+@theme {
+  /* Brand. Sky and azure are sampled from the favicon. */
+  --color-sky-brand: #72b9fc;
+  --color-sky-soft: #aed3da;
+  --color-azure: #39a6fd;
+
+  /* Mahogany is the page background in both modes. */
+  --color-mahogany: #4a1c1c;
+  --color-mahogany-deep: #2e1010;
+  --color-mahogany-soft: #632a2a;
+
+  /* Card surfaces. These are what light/dark actually swaps. */
+  --color-surface: #fbf8f6;
+  --color-surface-muted: #efe7e3;
+  --color-surface-dark: #241417;
+  --color-surface-dark-muted: #321e21;
+
+  /* Foreground */
+  --color-ink: #2b1f1f;
+  --color-ink-muted: #6b5a5a;
+  --color-ink-dark: #f3e9e6;
+  --color-ink-dark-muted: #bda8a4;
+
+  /* Type */
+  --font-display: "Dosis", ui-rounded, system-ui, sans-serif;
+  --font-body: "Quicksand", ui-rounded, system-ui, sans-serif;
+  --font-small: "Jura", ui-rounded, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Layout. Desktop target is 1920x1080. */
+  --spacing-sidebar: 17.5rem;
+  --spacing-sidebar-collapsed: 4.5rem;
+  --container-content: 87.5rem;
+}
+
+/* Generated @font-face rules. Produced by scripts/fonts.mjs, do not edit. */
+@import "./fonts.generated.css";
+
+/* ---------------------------------------------------------------------------
+   The only hand-written CSS in the project. Everything else is utilities in
+   HTML. Rules live here when they cannot be expressed as a class: the load
+   gate, kramdown output we do not control, and platform APIs.
+   --------------------------------------------------------------------------- */
+
+@layer base {
+  html {
+    background-color: var(--color-mahogany);
+    color-scheme: dark;
+  }
+
+  body {
+    font-family: var(--font-body);
+  }
+
+  /* Page-load gate. Held until window.load so nothing paints piecemeal; see
+     dev/js/modules/load-gate.js for the release and its timeout failsafe. */
+  html.preload body {
+    opacity: 0;
+  }
+
+  body {
+    opacity: 1;
+    transition: opacity 200ms ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body {
+      transition: none;
+    }
+  }
+}
+
+@layer components {
+  /* Collapsed-rail state. These are structural rather than utilities because
+     the trigger lives on <html>/<aside> while the targets are descendants
+     and siblings, which no single Tailwind variant expresses cleanly. */
+  @media (width >= 64rem) {
+    [data-sidebar-collapsed] .content-offset {
+      padding-left: var(--spacing-sidebar-collapsed);
+    }
+
+    [data-sidebar][data-collapsed] [data-sidebar-label] {
+      display: none;
+    }
+
+    [data-sidebar][data-collapsed] nav a,
+    [data-sidebar][data-collapsed] nav summary {
+      justify-content: center;
+    }
+  }
+}

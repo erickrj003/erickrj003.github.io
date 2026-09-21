@@ -1,0 +1,157 @@
+{%- comment -%}
+Left sidebar navigation.
+
+Desktop: fixed 280px rail, collapsing to 72px (icons only).
+Mobile:  off-canvas drawer opened by a sticky avatar button attached to a
+         sky-blue rail down the left screen edge.
+
+Dropdowns are native <details>, so they work with no JavaScript and are
+keyboard accessible for free. A group is open on load when one of its
+children matches the current page.
+{%- endcomment -%}
+
+<a href="#main"
+   class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:rounded-lg focus:bg-sky-brand focus:px-4 focus:py-2 focus:font-body focus:font-semibold focus:text-mahogany-deep">
+  Skip to content
+</a>
+
+<!-- Mobile: sky rail down the screen edge + sticky open button -->
+<div class="fixed inset-y-0 left-0 z-40 w-[3px] bg-sky-brand lg:hidden" aria-hidden="true"></div>
+
+<button type="button"
+        data-drawer-open
+        aria-controls="sidebar"
+        aria-expanded="false"
+        class="fixed top-4 left-[3px] z-50 flex items-center gap-2 rounded-r-full bg-mahogany-deep/95 py-1.5 pr-3 pl-1.5 shadow-lg ring-1 ring-sky-brand/30 backdrop-blur lg:hidden">
+  <img src="{{ site.avatar | relative_url }}"
+       alt="Open navigation"
+       width="32" height="32"
+       class="size-8 rounded-full ring-2 ring-sky-brand">
+  <svg class="size-4 text-sky-brand" aria-hidden="true"><use href="#icon-menu"></use></svg>
+</button>
+
+<!-- Scrim, mobile only -->
+<div data-drawer-scrim hidden
+     class="fixed inset-0 z-40 bg-mahogany-deep/70 backdrop-blur-sm lg:hidden"></div>
+
+<aside id="sidebar"
+       data-sidebar
+       aria-label="Main navigation"
+       class="fixed inset-y-0 left-0 z-50 flex w-sidebar -translate-x-full flex-col
+              bg-mahogany-deep/95 ring-1 ring-sky-brand/15 backdrop-blur
+              transition-[transform,width] duration-300 ease-out
+              data-[open]:translate-x-0
+              lg:translate-x-0 lg:data-[collapsed]:w-sidebar-collapsed">
+
+  <!-- Author card -->
+  <div class="flex items-start gap-3 border-b border-sky-brand/15 p-4">
+    <a href="{{ '/' | relative_url }}" class="shrink-0" aria-label="{{ site.author }} — home">
+      <img src="{{ site.avatar | relative_url }}"
+           alt="{{ site.author }}"
+           width="48" height="48"
+           class="size-12 rounded-full ring-2 ring-sky-brand">
+    </a>
+
+    <div class="min-w-0 flex-1" data-sidebar-label>
+      <p class="truncate font-display text-lg leading-tight font-semibold text-sky-brand">{{ site.author }}</p>
+      <p class="mt-1 line-clamp-3 font-small text-[11px] leading-snug text-ink-dark-muted">{{ site.bio }}</p>
+    </div>
+
+    <button type="button"
+            data-sidebar-toggle
+            aria-controls="sidebar"
+            class="hidden shrink-0 rounded-md p-1.5 text-ink-dark-muted hover:bg-sky-brand/10 hover:text-sky-brand lg:block">
+      <svg class="size-4" aria-hidden="true"><use href="#icon-panel-left-close" data-collapse-icon></use></svg>
+      <span class="sr-only">Collapse sidebar</span>
+    </button>
+
+    <button type="button"
+            data-drawer-close
+            class="shrink-0 rounded-md p-1.5 text-ink-dark-muted hover:bg-sky-brand/10 hover:text-sky-brand lg:hidden">
+      <svg class="size-4" aria-hidden="true"><use href="#icon-x"></use></svg>
+      <span class="sr-only">Close navigation</span>
+    </button>
+  </div>
+
+  <!-- Nav -->
+  <nav class="flex-1 overflow-y-auto px-2 py-4" aria-label="Pages">
+    <ul class="space-y-0.5">
+      {%- for item in site.data.nav -%}
+        {%- assign is_current = false -%}
+        {%- if item.url and page.url == item.url -%}{%- assign is_current = true -%}{%- endif -%}
+
+        {%- if item.children -%}
+          {%- assign group_open = false -%}
+          {%- for child in item.children -%}
+            {%- if child.url == page.url -%}{%- assign group_open = true -%}{%- endif -%}
+          {%- endfor -%}
+
+          <li>
+            <details class="group/details" {% if group_open %}open{% endif %}>
+              <summary class="flex cursor-pointer list-none items-center gap-3 rounded-lg px-3 py-2 font-body text-sm font-medium text-ink-dark-muted transition-colors hover:bg-sky-brand/10 hover:text-sky-brand">
+                <svg class="size-[18px] shrink-0" aria-hidden="true"><use href="#icon-{{ item.icon }}"></use></svg>
+                <span class="flex-1 truncate" data-sidebar-label>{{ item.title }}</span>
+                <svg class="size-4 shrink-0 transition-transform group-open/details:rotate-180" aria-hidden="true" data-sidebar-label>
+                  <use href="#icon-chevron-down"></use>
+                </svg>
+              </summary>
+
+              <ul class="mt-0.5 ml-[26px] space-y-0.5 border-l border-sky-brand/20 pl-3" data-sidebar-label>
+                {%- for child in item.children -%}
+                  <li>
+                    <a href="{{ child.url | relative_url }}"
+                       {% if child.external %}target="_blank" rel="noopener"{% endif %}
+                       {% if child.url == page.url %}aria-current="page"{% endif %}
+                       class="flex items-center gap-1.5 rounded-md px-3 py-1.5 font-body text-[13px] text-ink-dark-muted transition-colors hover:bg-sky-brand/10 hover:text-sky-brand aria-[current=page]:bg-sky-brand/15 aria-[current=page]:font-semibold aria-[current=page]:text-sky-brand">
+                      <span class="truncate">{{ child.title }}</span>
+                      {%- if child.external -%}
+                        <svg class="size-3 shrink-0 opacity-60" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+                      {%- endif -%}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </details>
+          </li>
+
+        {%- else -%}
+          <li>
+            <a href="{{ item.url | relative_url }}"
+               {% if is_current %}aria-current="page"{% endif %}
+               class="flex items-center gap-3 rounded-lg px-3 py-2 font-body text-sm font-medium text-ink-dark-muted transition-colors hover:bg-sky-brand/10 hover:text-sky-brand aria-[current=page]:bg-sky-brand/15 aria-[current=page]:text-sky-brand">
+              <svg class="size-[18px] shrink-0" aria-hidden="true"><use href="#icon-{{ item.icon }}"></use></svg>
+              <span class="truncate" data-sidebar-label>{{ item.title }}</span>
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </nav>
+
+  <!-- Theme toggle + socials -->
+  <div class="border-t border-sky-brand/15 p-3">
+    <div class="flex flex-wrap items-center gap-1">
+      <button type="button"
+              data-theme-toggle
+              class="rounded-lg p-2 text-ink-dark-muted transition-colors hover:bg-sky-brand/10 hover:text-sky-brand"
+              aria-label="Toggle light and dark cards">
+        <svg class="size-[18px] dark:hidden" aria-hidden="true"><use href="#icon-moon"></use></svg>
+        <svg class="hidden size-[18px] dark:block" aria-hidden="true"><use href="#icon-sun"></use></svg>
+      </button>
+
+      {%- for s in site.sns -%}
+        <a href="{{ s[1] }}" target="_blank" rel="noopener me"
+           class="rounded-lg p-2 text-ink-dark-muted transition-colors hover:bg-sky-brand/10 hover:text-sky-brand"
+           aria-label="{{ s[0] | capitalize }}">
+          <svg class="size-[18px]" aria-hidden="true"><use href="#icon-{{ s[0] }}"></use></svg>
+        </a>
+      {%- endfor -%}
+
+      <a href="{{ '/feed.xml' | relative_url }}"
+         class="rounded-lg p-2 text-ink-dark-muted transition-colors hover:bg-sky-brand/10 hover:text-sky-brand"
+         aria-label="RSS feed">
+        <svg class="size-[18px]" aria-hidden="true"><use href="#icon-rss"></use></svg>
+      </a>
+    </div>
+  </div>
+</aside>

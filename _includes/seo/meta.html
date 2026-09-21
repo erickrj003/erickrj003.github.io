@@ -1,0 +1,73 @@
+{%- comment -%}
+Per-page SEO and social metadata.
+
+Replaces the old head.html block, which hardcoded site.description on every
+page, always claimed og:type "website", emitted no og:image at all, and had
+no Twitter card tags — so shared links rendered as bare text.
+{%- endcomment -%}
+
+{%- if page.description -%}
+  {%- assign meta_description = page.description -%}
+{%- elsif page.excerpt -%}
+  {%- assign meta_description = page.excerpt | strip_html | strip_newlines | truncate: 200 -%}
+{%- else -%}
+  {%- assign meta_description = site.description -%}
+{%- endif -%}
+
+{%- if page.title -%}
+  {%- assign meta_title = page.title | append: ' · ' | append: site.title -%}
+{%- else -%}
+  {%- assign meta_title = site.title -%}
+{%- endif -%}
+
+{%- assign social_image = page.image | default: page.cover | default: site.og_image -%}
+
+<meta name="description" content="{{ meta_description | escape }}">
+<meta name="author" content="{% if page.author %}{{ page.author }}{% else %}{{ site.author }}{% endif %}">
+{%- if page.tags.size > 0 %}
+<meta name="keywords" content="{{ page.tags | join: ', ' | escape }}">
+{%- elsif site.keyword %}
+<meta name="keywords" content="{{ site.keyword }}">
+{%- endif %}
+
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="{{ site.title }}">
+<meta property="og:title" content="{{ meta_title | escape }}">
+<meta property="og:description" content="{{ meta_description | escape }}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="{% if layout.type == 'post' %}article{% else %}website{% endif %}">
+{%- if social_image %}
+<meta property="og:image" content="{{ social_image | absolute_url }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ meta_title | escape }}">
+{%- endif %}
+
+{%- if layout.type == 'post' %}
+<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
+{%- if page.last_modified_at %}
+<meta property="article:modified_time" content="{{ page.last_modified_at | date_to_xmlschema }}">
+{%- endif %}
+<meta property="article:author" content="{% if page.author %}{{ page.author }}{% else %}{{ site.author }}{% endif %}">
+{%- for tag in page.tags %}
+<meta property="article:tag" content="{{ tag | escape }}">
+{%- endfor %}
+{%- endif %}
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="{% if social_image %}summary_large_image{% else %}summary{% endif %}">
+<meta name="twitter:title" content="{{ meta_title | escape }}">
+<meta name="twitter:description" content="{{ meta_description | escape }}">
+{%- if social_image %}
+<meta name="twitter:image" content="{{ social_image | absolute_url }}">
+{%- endif %}
+
+{%- if site.google_search and site.google_search != '' %}
+<meta name="google-site-verification" content="{{ site.google_search }}">
+{%- endif %}
+{%- if site.bing_verification and site.bing_verification != '' %}
+<meta name="msvalidate.01" content="{{ site.bing_verification }}">
+{%- endif %}
