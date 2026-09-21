@@ -3,195 +3,105 @@ layout: default
 type: post
 ---
 
-{% assign lang = page.lang | default: site.default_lang %}
-{% assign locales = site.data.locales[lang] %}
-{% assign post = locales.post %}
-<div class="g-banner post-header {{ site.postPatterns | prepend: 'post-pattern-' }} {{ site.theme-color | prepend: 'bgcolor-' }} {% unless page.cover %}post-no-cover{% endunless %}"
-    data-theme="{{ site.theme-color }}">
-    <div class="post-wrapper">
-        <div class="post-tags">
-            {% if page.tags.size > 0 %}
-            {% for tag in page.tags %}
-            <a href="{{ '/tags/#tag-' | append: tag | relative_url }}" class="post-tag">{{ tag }}</a>
-            {% endfor %}
-            {% endif %}
-        </div>
-        <h1>{{ page.title }}</h1>
-        <div class="post-meta">
-            <span class="post-meta-item">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-user"></use>
-                </svg>
-                {% if page.author %}{{ page.author }}{% else %}{{ site.author }}{% endif %}
-            </span>
-            <time class="post-meta-item" datetime="{{ page.date | date:" %y-%m-%d" }}">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-calendar"></use>
-                </svg>
-                <span class="create-at"></span>
-            </time>
-            <time class="post-meta-item" datetime="{{ page.date | date:" %y-%m-%d" }}">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-update"></use>
-                </svg>
-                <span class="update-at"></span>
-            </time>
-            <span class="post-meta-item">
-                <svg class="icon words" aria-hidden="true">
-                    <use xlink:href="#icon-words"></use>
-                </svg>
-                {% assign total_size = page.content | strip_html | strip_newlines | remove: " " | size %}
-                {{ post.cover.total.info }} {% if total_size < 1000 %} {{ total_size }} {% else %} {{ total_size |
-                    divided_by: 1000.0 | round: 1 }}k {% endif %} {{ post.cover.total.unit }} </span>
-                    <span class="post-meta-item">
-                        <svg class="icon time" aria-hidden="true">
-                            <use xlink:href="#icon-time"></use>
-                        </svg>
-                        {{ post.cover.time.info }} {{ page.content | strip_html | strip_newlines | remove: " " | size |
-                        divided_by: 350 | plus: 1 }} {{ post.cover.time.unit }}
-                    </span>
-                    {% if site.busuanzi %}
-                    <span class="post-meta-item">
-                        <svg class="icon pv" aria-hidden="true">
-                            <use xlink:href="#icon-pv"></use>
-                        </svg>
-                        {{ post.cover.view.info }} 
-                        {% if site.busuanzi_url %}
-                        <span id="busuanzi_page_pv"></span>
-                        {% else %}
-                        <span id="busuanzi_value_page_pv"></span>
-                        {% endif %}
-                        {{ post.cover.view.unit }}
-                    </span>
-                    {% endif %}
-                    {% if page.cover_author %}
-                    <span class="post-meta-item">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-image"></use>
-                        </svg>
-                        {% if page.cover_author_link %}
-                        {{ locales.cover }} <a href="{{ page.cover_author_link }}" target="_blank">{{ page.cover_author
-                            }}</a>
-                        {% else %}
-                        {{ locales.cover }} {{ page.cover_author }}
-                        {% endif %}
-                    </span>
-                    {% endif %}
-        </div>
+<article class="mx-auto w-full max-w-content px-5 py-10 lg:px-10 lg:py-14">
+
+  <header class="mx-auto max-w-3xl">
+    {%- if page.tags.size > 0 %}
+    <ul class="mb-4 flex flex-wrap gap-2">
+      {%- for tag in page.tags %}
+      <li>
+        <a href="{{ '/tags/#tag-' | append: tag | relative_url }}"
+           class="inline-block rounded-full bg-sky-brand/15 px-3 py-1 font-small text-xs font-medium tracking-wide text-sky-brand transition-colors hover:bg-sky-brand/25">
+          {{ tag }}
+        </a>
+      </li>
+      {%- endfor %}
+    </ul>
+    {%- endif %}
+
+    <h1 class="font-display text-4xl leading-tight font-semibold text-balance text-ink-dark lg:text-5xl">
+      {{ page.title }}
+    </h1>
+
+    {%- if page.subtitle %}
+    <p class="mt-3 font-body text-lg text-ink-dark-muted">{{ page.subtitle }}</p>
+    {%- endif %}
+
+    {%- comment -%}
+    Dates are rendered here by Liquid. They used to be left empty for a
+    client-side dayjs script to fill in, whose format string did not match
+    the RFC822 output Jekyll was configured to emit, so every post showed
+    "Invalid Date".
+    {%- endcomment -%}
+    <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 font-small text-sm text-ink-dark-muted">
+      <span class="flex items-center gap-1.5">
+        <svg class="size-4" aria-hidden="true"><use href="#icon-user-round"></use></svg>
+        {% if page.author %}{{ page.author }}{% else %}{{ site.author }}{% endif %}
+      </span>
+
+      <time class="flex items-center gap-1.5" datetime="{{ page.date | date_to_xmlschema }}">
+        <svg class="size-4" aria-hidden="true"><use href="#icon-calendar"></use></svg>
+        {{ page.date | date: "%B %-d, %Y" }}
+      </time>
+
+      {%- if page.last_modified_at %}
+      <span class="flex items-center gap-1.5">
+        Updated {{ page.last_modified_at | date: "%B %-d, %Y" }}
+      </span>
+      {%- endif %}
     </div>
-    {% if page.cover %}
-    <div class="filter"></div>
-    <div class="post-cover"
-        style="background: url('{{ page.cover | relative_url }}') center no-repeat; background-size: cover;"></div>
-    {% endif %}
-</div>
+  </header>
 
-<main class="post-content visible">
-    {% if page.subtitle %}
-    <h2 class="post-subtitle">{{ page.subtitle }}</h2>
-    {% endif %}
+  {%- if page.cover %}
+  <figure class="mx-auto mt-8 max-w-4xl">
+    <img src="{{ page.cover | relative_url }}"
+         alt="{{ page.title }}"
+         width="1600" height="900" fetchpriority="high"
+         class="aspect-video w-full rounded-2xl object-cover shadow-lg ring-1 ring-sky-brand/20">
+    {%- if page.cover_author %}
+    <figcaption class="mt-2 text-center font-small text-xs text-ink-dark-muted">
+      Cover by
+      {% if page.cover_author_link %}<a href="{{ page.cover_author_link }}" target="_blank" rel="noopener" class="underline hover:text-sky-brand">{{ page.cover_author }}</a>{% else %}{{ page.cover_author }}{% endif %}
+    </figcaption>
+    {%- endif %}
+  </figure>
+  {%- endif %}
 
-    {% assign copyright = post.copyright %}
+  <div class="mt-10 lg:flex lg:items-start lg:gap-10">
 
-    <div class="container">
-        {% include layouts/submenu.html %}
-        <div class="contents">
-            <article class="markdown-body post">
-                {% include plugins/i18n.html %}
-                {{ page.content | extlinks }}
-                <div class="post-copyright">
-                    <!-- Removing copyright statement for now
-                    
-                    <p>
-                        <span>{{ copyright.statement.name }}：</span>
-                        {{ copyright.statement.left }}
-                        <a href="{{ site.url }}" class="cplink">{{ site.title }}</a>
-                        {{ copyright.statement.middle }}
-                    </p>
-                    {% if site.cclicense %}
-                    <p>
-                        {{ copyright.statement.right1 }}
-                        <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="extlinks">CC
-                            BY-NC-SA 4.0</a>
-                        {{ copyright.statement.right2 }}
-                    </p>
-                    {% endif %}
-                -->
-                    <p><span>{{ copyright.title }}：</span>《 {{ page.title }} 》</p>
-                    <p><span>{{ copyright.link }}：</span><a href="{{ page.url | prepend: site.url }}" class="cplink">{{
-                            page.url | prepend: site.url }}</a></p>
-                    <p class="tips">{{ copyright.statement.outdate1 }} <span></span> {{ copyright.statement.outdate2 }}
-                    </p>
-                </div>
-            </article>
-        </div>
-        {% if page.content contains 'h1' or page.content contains 'h2' or page.content contains 'h3' or page.content
-        contains 'h4' or page.content contains 'h5' or page.content contains 'h6' and site.toc %}
-            <div class="table-of-contents">
-                <div class="toc-header"><h2>{{ post.outline }}</h2></div>
-                <div class="toc-body">
-                    {% include layouts/toc.html html=content %}
-                </div>
-        {% else %}
-            <div class="table-of-contents hidden">
-        {% endif %}
-            </div>
-        </div>
-        {% include plugins/others/social_block.html %}
-</main>
+    <div class="mx-auto min-w-0 max-w-3xl flex-1 rounded-2xl bg-surface p-6 shadow-lg ring-1 ring-black/5 lg:p-10 dark:bg-surface-dark dark:ring-white/10">
+      <div class="prose prose-lg max-w-none prose-headings:font-display prose-headings:font-semibold prose-a:text-azure prose-a:decoration-azure/40 hover:prose-a:decoration-azure prose-code:font-mono prose-code:before:content-none prose-code:after:content-none prose-pre:bg-mahogany-deep prose-img:rounded-xl dark:prose-invert">
+        {{ content }}
+      </div>
+    </div>
 
-<section class="author-detail">
-    <section class="post-footer-item author-card">
-        <div class="avatar">
-            <img src="{{ site.avatar | relative_url }}" alt="">
+    {%- assign has_headings = false -%}
+    {%- if page.content contains '<h2' or page.content contains '<h3' -%}{%- assign has_headings = true -%}{%- endif -%}
+    {%- if site.toc and has_headings %}
+    <aside class="mt-8 hidden w-64 shrink-0 lg:sticky lg:top-8 lg:mt-0 lg:block" aria-label="Table of contents">
+      <div class="rounded-2xl bg-surface/80 p-5 ring-1 ring-black/5 dark:bg-surface-dark/80 dark:ring-white/10">
+        <h2 class="mb-3 font-display text-sm font-semibold tracking-wide text-ink uppercase dark:text-ink-dark">
+          On this page
+        </h2>
+        <div class="toc font-body text-sm text-ink-muted dark:text-ink-dark-muted">
+          {% include layouts/toc.html html=content %}
         </div>
-        <div class="author-name" rel="author">{{ site.author }}</div>
-        <div class="bio">
-            <p>{{ site.bio }}</p>
-        </div>
-        {% if site.sns.size > 0 %}
-        <ul class="sns-links">
-            {% for s in site.sns %}
-            <li>
-                <a href="{{ s[1] }}" target="_blank" aria-label="{{ s[0] }}">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-{{ s[0] }}"></use>
-                    </svg>
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </section>
-    <section class="post-footer-item read-next">
-        {% if page.next.url %}
-        <div class="read-next-item">
-            <a href="{{ page.next.url | relative_url }}" class="read-next-link" aria-label="{{ page.next.title }}"></a>
-            <section>
-                <span>{{ page.next.title }}</span>
-                <p>{{ page.next.excerpt | strip_html | strip_newlines | truncate: 60}}</p>
-            </section>
-            {% if page.next.cover %}
-            <div class="filter"></div>
-            <img src="{{ page.next.cover | relative_url }}" alt="">
-            {% endif %}
-        </div>
-        {% endif %}
+      </div>
+    </aside>
+    {%- endif %}
+  </div>
 
-        {% if page.previous.url %}
-        <div class="read-next-item">
-            <a href="{{ page.previous.url | relative_url }}" class="read-next-link"
-                aria-label="{{ page.previous.title }}"></a>
-            <section>
-                <span>{{ page.previous.title }}</span>
-                <p>{{ page.previous.excerpt | strip_html | strip_newlines | truncate: 60}}</p>
-            </section>
-            {% if page.previous.cover %}
-            <div class="filter"></div>
-            <img src="{{ page.previous.cover | relative_url }}" alt="">
-            {% endif %}
-        </div>
-        {% endif %}
-    </section>
-    {% include plugins/comments/comments_block.html %}
-</section>
+  <section class="mx-auto mt-10 max-w-3xl rounded-2xl bg-surface p-6 shadow-lg ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
+    <div class="flex items-start gap-4">
+      <img src="{{ site.avatar | relative_url }}" alt="{{ site.author }}"
+           width="56" height="56" class="size-14 shrink-0 rounded-full ring-2 ring-sky-brand">
+      <div class="min-w-0">
+        <p class="font-display text-lg font-semibold text-ink dark:text-ink-dark" rel="author">{{ site.author }}</p>
+        <p class="mt-1 font-body text-sm text-ink-muted dark:text-ink-dark-muted">{{ site.bio }}</p>
+      </div>
+    </div>
+  </section>
+
+  {% include plugins/comments/comments_block.html %}
+
+</article>

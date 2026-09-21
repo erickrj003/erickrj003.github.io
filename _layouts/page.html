@@ -1,41 +1,38 @@
 ---
 layout: default
-home-title: Erick Johnson
-description: Default Page Layout
 type: page
 ---
 
-{% assign lang = page.lang | default: site.default_lang %}
-{% assign locales = site.data.locales[lang] %}
-<div class="g-banner home-banner {{ site.theme-color | prepend: 'banner-theme-' }}" data-theme="{{ site.theme-color }}"
-    style="{% if page.cover %}background: url({{ page.cover | relative_url }}) no-repeat center center; background-size: cover;{% endif %}">
-    <h2>{{ page.home-title }}</h2>
-    <h3>{{ page.description }}</h3>
-    {% if page.cover_author %}
-    <p class="meta-item">
-        <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-image"></use>
-        </svg>
-        {% if page.cover_author_link %}
-        {{ locales.cover }} <a href="{{ page.cover_author_link }}" target="_blank">{{ page.cover_author }}</a>
-        {% else %}
-        {{ locales.cover }} {{ page.cover_author }}
-        {% endif %}
-    </p>
-    {% endif %}
-</div>
+<div class="mx-auto w-full max-w-content px-5 py-10 lg:px-10 lg:py-14">
 
-<main class="g-container home-content">
-    <div class="article-list">
-        <div class="post-content" style="padding-left: 30px;padding-right: 30px;width: auto;">
-            <article class="markdown-body" style="width: auto;">
-                {% include plugins/i18n.html %}
-                {{ content | extlinks }}
-            </article>
-        </div>
-        <section class="author-detail">
-            {% include plugins/comments/comments_block.html %}
-        </section>
+  <header class="mx-auto max-w-3xl">
+    <h1 class="font-display text-4xl leading-tight font-semibold text-balance text-ink-dark lg:text-5xl">
+      {{ page.title | default: page.home-title }}
+    </h1>
+    {%- if page.description and page.description != 'Default Page Layout' %}
+    <p class="mt-3 font-body text-lg text-ink-dark-muted">{{ page.description }}</p>
+    {%- endif %}
+  </header>
+
+  {%- if page.cover %}
+  <figure class="mx-auto mt-8 max-w-4xl">
+    <img src="{{ page.cover | relative_url }}"
+         alt="{{ page.title | default: site.title }}"
+         width="1600" height="900" fetchpriority="high"
+         class="aspect-video w-full rounded-2xl object-cover shadow-lg ring-1 ring-sky-brand/20">
+    {%- if page.cover_author %}
+    <figcaption class="mt-2 text-center font-small text-xs text-ink-dark-muted">
+      Cover by
+      {% if page.cover_author_link %}<a href="{{ page.cover_author_link }}" target="_blank" rel="noopener" class="underline hover:text-sky-brand">{{ page.cover_author }}</a>{% else %}{{ page.cover_author }}{% endif %}
+    </figcaption>
+    {%- endif %}
+  </figure>
+  {%- endif %}
+
+  <div class="mx-auto mt-10 max-w-3xl rounded-2xl bg-surface p-6 shadow-lg ring-1 ring-black/5 lg:p-10 dark:bg-surface-dark dark:ring-white/10">
+    <div class="prose prose-lg max-w-none prose-headings:font-display prose-headings:font-semibold prose-a:text-azure prose-a:decoration-azure/40 hover:prose-a:decoration-azure prose-code:font-mono prose-code:before:content-none prose-code:after:content-none prose-pre:bg-mahogany-deep prose-img:rounded-xl dark:prose-invert">
+      {{ content }}
     </div>
-    {% include layouts/sidebar.html %}
-</main>
+  </div>
+
+</div>
