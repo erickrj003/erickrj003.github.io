@@ -1,132 +1,73 @@
 ---
-layout: page
-home-title: Johnson Blog Archive
-description: List of all our posts by date
-permalink: /archives.html
-cover: /assets/img/wheelbarrow.jpg
+layout: default
+type: page
+title: Archives
+description: Every post, newest first
 ---
 
-{% assign pin_posts = site.posts | where: "pin", "true" | sort: "date" | reverse %}
-{% assign unpin_posts = site.posts | where: "pin", nil | sort: "date" | reverse %}
-{% assign pin_posts_num = pin_posts | size %}
-{% assign unpin_posts_num = unpin_posts | size %}
-{% assign nyear = "1900" %}
-{% assign total_size = 0 %}
-{% assign lang = page.lang | default: site.default_lang %}
-{% assign locales = site.data.locales[lang] %}
-{% assign panel = locales.panel %}
+{%- comment -%}
+Posts grouped by year. The old version decorated each year heading with a
+Chinese zodiac animal icon and formatted dates as "%Y年%-m月%-d日"; both are
+gone along with the rest of the theme's CJK assumptions.
+{%- endcomment -%}
 
-{% for post in site.posts %}
-  {% assign post_size = post.content | strip_html | strip_newlines | remove: " " | size %}
-  {% assign total_size = total_size | plus:post_size %}
-{% endfor %}
+{%- assign pinned = site.posts | where: "pin", "true" | sort: "date" | reverse -%}
+{%- assign rest = site.posts | where_exp: "p", "p.pin != 'true'" | sort: "date" | reverse -%}
 
-{% assign lang = page.lang | default: site.default_lang %}
-{% assign locales = site.data.locales[lang] %}
-{% assign archives = locales.archives%}
+<div class="mx-auto w-full max-w-content px-5 py-10 lg:px-10 lg:py-14">
 
-<h2>{{ archives.title }}</h2>
+  <header class="mx-auto max-w-3xl">
+    <h1 class="font-display text-4xl leading-tight font-semibold text-ink-dark lg:text-5xl">{{ page.title }}</h1>
+    <p class="mt-3 font-body text-lg text-ink-dark-muted">
+      {{ site.posts | size }} post{% if site.posts.size != 1 %}s{% endif %}
+      {%- if pinned.size > 0 %}, {{ pinned.size }} pinned{% endif %}.
+    </p>
+  </header>
 
-<p>
-  {{ archives.total.info }} {{ site.posts | size }} {{ archives.total.unit }}
-  {% if pin_posts_num > 0 %}
-    {{ archives.pin.info }} {{pin_posts_num}} {{ archives.pin.unit }}
-  {% endif %}
-  {{ archives.words.info }} 
-  {% if total_size < 1000 %}
-   {{ total_size }} 
-  {% else %} 
-    {{ total_size | divided_by: 1000.0 | round: 1 }}k 
-  {% endif %}
-  {{ archives.words.unit }}
-</p>
+  <div class="mx-auto mt-8 max-w-3xl space-y-6">
 
-<div id="archive-heatmap">
-  <div id="ex-ghDay2" class="calendar-top">
-      <a id="ex-ghDay-prev2" class="button" href="#" aria-label="Calendar heatmap prev">
-          <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-left"></use>
-          </svg>       
-      </a>
-      <a id="ex-ghDay-next2" class="button" href="#" aria-label="Calendar heatmap next">
-          <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-right"></use>
-          </svg>
-      </a>
-      <a id="ex-ghDay-today2" class="button" href="#" aria-label="Calendar heatmap today">
-          <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-rotate"></use>
-          </svg>
-      </a>
-      <div class="legends">
-          <span class="text">{{panel.calendar_less}}</span>
-          <div id="ex-ghDay-legend2"></div>
-          <span class="text">{{panel.calendar_more}}</span>
-      </div>
+    {%- if pinned.size > 0 %}
+    <section class="rounded-2xl bg-surface p-6 shadow-lg ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
+      <h2 class="font-display text-xl font-semibold text-ink dark:text-ink-dark">Pinned</h2>
+      <ul class="mt-3 divide-y divide-ink/10 dark:divide-white/10">
+        {%- for post in pinned %}
+        <li class="py-2.5 first:pt-0 last:pb-0">
+          <a href="{{ post.url | relative_url }}" class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 hover:text-azure">
+            <span class="font-body text-ink dark:text-ink-dark">{{ post.title }}</span>
+            <time datetime="{{ post.date | date_to_xmlschema }}"
+                  class="font-small text-xs text-ink-muted dark:text-ink-dark-muted">{{ post.date | date: "%B %-d, %Y" }}</time>
+          </a>
+        </li>
+        {%- endfor %}
+      </ul>
+    </section>
+    {%- endif %}
+
+    {%- assign current_year = "" -%}
+    {%- for post in rest -%}
+      {%- assign year = post.date | date: '%Y' -%}
+      {%- if year != current_year -%}
+        {%- unless forloop.first %}
+      </ul>
+    </section>
+        {%- endunless %}
+        {%- assign current_year = year %}
+    <section class="rounded-2xl bg-surface p-6 shadow-lg ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
+      <h2 class="font-display text-xl font-semibold text-ink dark:text-ink-dark">{{ year }}</h2>
+      <ul class="mt-3 divide-y divide-ink/10 dark:divide-white/10">
+      {%- endif %}
+        <li class="py-2.5 first:pt-0 last:pb-0">
+          <a href="{{ post.url | relative_url }}" class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 hover:text-azure">
+            <span class="font-body text-ink dark:text-ink-dark">{{ post.title }}</span>
+            <time datetime="{{ post.date | date_to_xmlschema }}"
+                  class="font-small text-xs text-ink-muted dark:text-ink-dark-muted">{{ post.date | date: "%B %-d" }}</time>
+          </a>
+        </li>
+      {%- if forloop.last %}
+      </ul>
+    </section>
+      {%- endif %}
+    {%- endfor %}
+
   </div>
-</div>
-
-{% assign ssyears = "rat,ox,tiger,rabbit,dragon,snake,horse,goat,monkey,rooster,dog,pig" | split: "," %}
-
-<div id="archive-articles">
-  {% if pin_posts_num > 0 %}
-  <h3>{{ archives.pin.title }}</h3>
-  <ul>
-    {% for post in pin_posts %}
-      <li>
-        <p class="archives-title">
-          <span class="archives-date">
-            {% case site.formats.time %}
-            {% when 0 %}
-              {{ post.date | date: "%Y-%m-%d" }} 
-            {% when 1 %}
-              {{ post.date | date_to_string }}
-            {% else %}
-              {{ post.date | date: "%Y年%-m月%-d日"  }}
-            {% endcase %}
-          </span>
-          <a href="{{ post.url | prepend: site.baseurl }}"> {{ post.title }} </a>
-        </p>
-      </li>
-    {% endfor %}
-  {% endif %}
-  
-  {% if unpin_posts_num > 0%}
-    {% for post in unpin_posts %}
-      {% assign year = post.date | date: '%Y' %}
-      {% assign animal = year | minus:1900 | modulo:12 %}
-      {% if year != nyear %}
-        {% assign nyear = year %}
-        </ul>
-        <h3 class="year">{{ post.date | date: '%Y' }}
-          <span class="icon-item">
-            <svg class="icon animal" aria-hidden="true">
-              <use xlink:href="#icon-{{ ssyears[animal] }}"></use>
-            </svg>
-            <svg class="icon dz" aria-hidden="true">
-              <use xlink:href="#icon-{{ ssyears[animal]}}_dz"></use>
-            </svg>
-          </span>
-        </h3>
-        <ul>
-      {% endif %}
-  
-      <li>
-        <p class="archives-title">
-          <span class="archives-date">
-            {% case site.formats.time %}
-            {% when 0 %}
-              {{ post.date | date: "%m-%d" }} 
-            {% when 1 %}
-              {{ post.date | date_to_string }}
-            {% else %}
-              {{ post.date | date: "%-m月%-d日"  }}
-            {% endcase %}
-          </span>
-          <a href="{{ post.url | prepend: site.baseurl }}"> {{ post.title }} </a>
-        </p>
-      </li>
-    {% endfor %}
-  {% endif %}
-  </ul>
 </div>

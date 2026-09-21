@@ -1,76 +1,62 @@
 ---
-layout: page
-home-title: Johnson Family Blog
-description: Blog posts by category
-permalink: /categories.html
-cover: /assets/img/wheelbarrow.jpg
+title: Categories
+layout: default
+type: page
 ---
 
-{% assign category_posts_num = site.categories | size%}
-{% assign uncategory_posts = site.posts | where: "categories", empty | sort: "date" | reverse %}
-{% assign uncategory_posts_num = uncategory_posts | size %}
+{%- assign uncategorized = site.posts | where: "categories", empty -%}
 
-{% assign lang = page.lang | default: site.default_lang %}
-{% assign locales = site.data.locales[lang] %}
-{% assign categories = locales.categories%}
+<div class="mx-auto w-full max-w-content px-5 py-10 lg:px-10 lg:py-14">
 
-<h2>{{ categories.title }}</h2>
+  <header class="mx-auto max-w-4xl">
+    <h1 class="font-display text-4xl leading-tight font-semibold text-ink-dark lg:text-5xl">Categories</h1>
+    <p class="mt-3 font-body text-lg text-ink-dark-muted">
+      {{ site.categories | size }} categor{% if site.categories.size == 1 %}y{% else %}ies{% endif %}
+      across {{ site.posts | size }} posts.
+    </p>
+  </header>
 
-<p>
-  {{ categories.total.info }} {{ site.posts | size }} {{ categories.total.unit }} 
-  {% if category_posts_num > 0 %}
-    {{ categories.type.info }} {{ category_posts_num }} {{ categories.type.unit }}
-  {% endif %}
-  {% if uncategory_posts_num > 0 %} 
-    {{ categories.uncategory.info }} {{ uncategory_posts_num }} {{ categories.uncategory.unit }}
-  {% endif %}
-</p>
+  <div class="mx-auto mt-8 max-w-4xl space-y-6">
+    {%- assign sorted_categories = site.categories | sort %}
+    {%- for category in sorted_categories %}
+    <section id="category-{{ category[0] | slugify }}" class="scroll-mt-8 rounded-2xl bg-surface p-6 shadow-lg ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
+      <h2 class="flex items-center gap-2 font-display text-xl font-semibold text-ink dark:text-ink-dark">
+        <svg class="size-5 text-azure" aria-hidden="true"><use href="#icon-boxes"></use></svg>
+        {{ category[0] }}
+        <span class="font-small text-sm font-normal text-ink-muted dark:text-ink-dark-muted">{{ category[1].size }}</span>
+      </h2>
 
-<div id="archive-articles">
-{% for category in site.categories %}
-  {% assign category_name = category | first %}
-  <h3 class="category">{{ category[0] }}</h3>
-  <ul>
-  {% for post in site.categories[category_name] %}
-    <li>
-      <p class="archives-title">
-        <span class="archives-date">
-          {% case site.formats.time %}
-          {% when 0 %}
-            {{ post.date | date: "%Y-%m-%d" }} 
-          {% when 1 %}
-            {{ post.date | date_to_string }}
-          {% else %}
-            {{ post.date | date: "%Y年%-m月%-d日"  }}
-          {% endcase %}
-        </span>
-        <a href="{{ post.url | prepend: site.baseurl }}"> {{ post.title }} </a>
-      </p>
-    </li>
-  {% endfor %}
-  </ul>
-{% endfor %}
+      <ul class="mt-3 divide-y divide-ink/10 dark:divide-white/10">
+        {%- assign in_category = category[1] | sort: 'date' | reverse %}
+        {%- for post in in_category %}
+        <li class="py-2.5 first:pt-0 last:pb-0">
+          <a href="{{ post.url | relative_url }}" class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 hover:text-azure">
+            <span class="font-body text-ink dark:text-ink-dark">{{ post.title }}</span>
+            <time datetime="{{ post.date | date_to_xmlschema }}"
+                  class="font-small text-xs text-ink-muted dark:text-ink-dark-muted">{{ post.date | date: "%B %-d, %Y" }}</time>
+          </a>
+        </li>
+        {%- endfor %}
+      </ul>
+    </section>
+    {%- endfor %}
 
-{% if uncategory_posts_num > 0 %}
-  <h3 class="category">{{ categories.u_title }}</h3>
-  <ul>
-  {% for post in uncategory_posts %}
-    <li>
-      <p class="archives-title">
-        <span class="archives-date">
-          {% case site.formats.time %}
-          {% when 0 %}
-            {{ post.date | date: "%Y-%m-%d" }} 
-          {% when 1 %}
-            {{ post.date | date_to_string }}
-          {% else %}
-            {{ post.date | date: "%Y年%-m月%-d日"  }}
-          {% endcase %}
-        </span>
-        <a href="{{ post.url | prepend: site.baseurl }}"> {{ post.title }} </a>
-      </p>
-    </li>
-  {% endfor %}
-  </ul>
-{% endif %}
+    {%- if uncategorized.size > 0 %}
+    <section class="rounded-2xl bg-surface p-6 shadow-lg ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
+      <h2 class="font-display text-xl font-semibold text-ink dark:text-ink-dark">Uncategorized</h2>
+      <ul class="mt-3 divide-y divide-ink/10 dark:divide-white/10">
+        {%- for post in uncategorized %}
+        <li class="py-2.5 first:pt-0 last:pb-0">
+          <a href="{{ post.url | relative_url }}" class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 hover:text-azure">
+            <span class="font-body text-ink dark:text-ink-dark">{{ post.title }}</span>
+            <time datetime="{{ post.date | date_to_xmlschema }}"
+                  class="font-small text-xs text-ink-muted dark:text-ink-dark-muted">{{ post.date | date: "%B %-d, %Y" }}</time>
+          </a>
+        </li>
+        {%- endfor %}
+      </ul>
+    </section>
+    {%- endif %}
+  </div>
+
 </div>

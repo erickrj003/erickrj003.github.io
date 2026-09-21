@@ -1,0 +1,59 @@
+---
+layout: default
+type: page
+---
+
+<div class="mx-auto w-full max-w-content px-5 py-10 lg:px-10 lg:py-14">
+
+  <header class="mx-auto max-w-4xl">
+    <h1 class="font-display text-4xl leading-tight font-semibold text-ink-dark lg:text-5xl">{{ page.title }}</h1>
+    {%- if page.description %}
+    <p class="mt-3 font-body text-lg text-ink-dark-muted">{{ page.description }}</p>
+    {%- endif %}
+  </header>
+
+  {%- if site.data.photos.size > 0 %}
+  <ul class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+    {%- for photo in site.data.photos %}
+    <li>
+      <button type="button"
+              data-lightbox-open
+              data-src="{{ photo.src | relative_url }}"
+              data-alt="{{ photo.alt | escape }}"
+              data-caption="{{ photo.caption | escape }}"
+              class="group/photo block w-full overflow-hidden rounded-2xl ring-1 ring-white/10 focus:ring-2 focus:ring-sky-brand focus:outline-none">
+        <img src="{{ photo.src | relative_url }}"
+             alt="{{ photo.alt }}"
+             width="600" height="600" loading="lazy"
+             class="aspect-square w-full object-cover transition-transform duration-300 group-hover/photo:scale-105">
+      </button>
+    </li>
+    {%- endfor %}
+  </ul>
+  {%- else %}
+  <p class="mx-auto mt-8 max-w-4xl rounded-2xl bg-surface p-8 text-center font-body text-ink-muted dark:bg-surface-dark dark:text-ink-dark-muted">
+    No photos yet.
+  </p>
+  {%- endif %}
+
+</div>
+
+{%- comment -%}
+Native <dialog> lightbox. Replaces the Fancybox plugin, which swapped every
+image's src for a loading GIF and relied on lazysizes to put it back, which
+is what caused images to pop in.
+{%- endcomment -%}
+<dialog data-lightbox
+        class="max-h-[90dvh] max-w-[92vw] rounded-2xl bg-transparent p-0 backdrop:bg-mahogany-deep/85 backdrop:backdrop-blur-sm">
+  <figure class="relative">
+    <img data-lightbox-img src="" alt=""
+         class="max-h-[80dvh] max-w-[92vw] rounded-2xl object-contain">
+    <figcaption data-lightbox-caption
+                class="mt-2 text-center font-small text-sm text-ink-dark empty:hidden"></figcaption>
+    <button type="button" data-lightbox-close
+            class="absolute top-3 right-3 rounded-full bg-mahogany-deep/70 p-2 text-ink-dark backdrop-blur transition-colors hover:bg-mahogany-deep"
+            aria-label="Close image">
+      <svg class="size-5" aria-hidden="true"><use href="#icon-x"></use></svg>
+    </button>
+  </figure>
+</dialog>

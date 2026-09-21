@@ -1,0 +1,30 @@
+# Projects listed on /projects/portfolio/.
+#
+#   status   ongoing | shipped | paused — drives the badge colour
+#   url      optional link out
+#   tech     optional list of technologies
+
+- title: Inazria Player's Guide
+  status: ongoing
+  url: https://erickrj.tech/inazria-players-guide/
+  external: true
+  summary: >-
+    A living rulebook and worldbuilding companion, published as its own site
+    under this domain and maintained in a separate repository.
+  tech: [Jekyll, Markdown, GitHub Pages]
+
+- title: erickrj.tech
+  status: ongoing
+  url: https://github.com/erickrj003/erickrj.tech
+  external: true
+  summary: >-
+    This site. A static Jekyll blog with a hand-built Tailwind theme, an
+    automated font and image pipeline, and full-text search.
+  tech: [Jekyll, Tailwind CSS, esbuild, GitHub Actions]
+
+- title: Web Development Services
+  status: ongoing
+  summary: >-
+    Building and maintaining sites for small organisations, with a focus on
+    fast, accessible pages that are cheap to host and easy to update.
+  tech: [HTML, CSS, JavaScript, Jekyll]

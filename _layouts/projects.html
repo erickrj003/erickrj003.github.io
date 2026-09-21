@@ -1,0 +1,65 @@
+---
+layout: default
+type: page
+---
+
+{%- assign status_styles = "ongoing|bg-azure/15 text-azure,shipped|bg-emerald-500/15 text-emerald-600 dark:text-emerald-400,paused|bg-amber-500/15 text-amber-600 dark:text-amber-400" | split: "," -%}
+
+<div class="mx-auto w-full max-w-content px-5 py-10 lg:px-10 lg:py-14">
+
+  <header class="mx-auto max-w-4xl">
+    <h1 class="font-display text-4xl leading-tight font-semibold text-ink-dark lg:text-5xl">{{ page.title }}</h1>
+    {%- if page.description %}
+    <p class="mt-3 font-body text-lg text-ink-dark-muted">{{ page.description }}</p>
+    {%- endif %}
+  </header>
+
+  <ul class="mx-auto mt-8 grid max-w-4xl gap-6 md:grid-cols-2">
+    {%- for project in site.data.projects %}
+    <li class="flex flex-col rounded-3xl bg-surface p-7 shadow-xl ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
+
+      <div class="flex items-start justify-between gap-3">
+        <h2 class="font-display text-xl font-semibold text-ink dark:text-ink-dark">
+          {%- if project.url -%}
+          <a href="{{ project.url }}" {% if project.external %}target="_blank" rel="noopener"{% endif %}
+             class="hover:text-azure">{{ project.title }}</a>
+          {%- else -%}
+          {{ project.title }}
+          {%- endif -%}
+        </h2>
+
+        {%- if project.status %}
+          {%- assign badge = "bg-ink/10 text-ink-muted" -%}
+          {%- for style in status_styles -%}
+            {%- assign parts = style | split: "|" -%}
+            {%- if parts[0] == project.status -%}{%- assign badge = parts[1] -%}{%- endif -%}
+          {%- endfor -%}
+        <span class="shrink-0 rounded-full px-2.5 py-1 font-small text-[11px] font-semibold tracking-wide uppercase {{ badge }}">
+          {{ project.status }}
+        </span>
+        {%- endif %}
+      </div>
+
+      <p class="mt-3 flex-1 font-body text-sm text-ink-muted dark:text-ink-dark-muted">{{ project.summary }}</p>
+
+      {%- if project.tech %}
+      <ul class="mt-4 flex flex-wrap gap-1.5">
+        {%- for t in project.tech %}
+        <li class="rounded-full bg-ink/5 px-2.5 py-1 font-mono text-[11px] text-ink-muted dark:bg-white/5 dark:text-ink-dark-muted">{{ t }}</li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
+
+      {%- if project.url %}
+      <a href="{{ project.url }}" {% if project.external %}target="_blank" rel="noopener"{% endif %}
+         class="mt-5 inline-flex items-center gap-1.5 font-body text-sm font-semibold text-azure hover:text-sky-brand">
+        Visit
+        <svg class="size-3.5" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+      </a>
+      {%- endif %}
+
+    </li>
+    {%- endfor %}
+  </ul>
+
+</div>

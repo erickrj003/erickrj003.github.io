@@ -1,46 +1,57 @@
 ---
 title: Tags
 layout: default
+type: page
 ---
 
-<div class="g-banner tags-banner {{ site.postPatterns | prepend: 'post-pattern-' }}" data-theme="{{ site.theme-color }}">
-    <h2>TAGS</h2>
-</div>
+<div class="mx-auto w-full max-w-content px-5 py-10 lg:px-10 lg:py-14">
 
-<main class="tags-content">
+  <header class="mx-auto max-w-4xl">
+    <h1 class="font-display text-4xl leading-tight font-semibold text-ink-dark lg:text-5xl">Tags</h1>
+    <p class="mt-3 font-body text-lg text-ink-dark-muted">
+      {{ site.tags | size }} tag{% if site.tags.size != 1 %}s{% endif %} across {{ site.posts | size }} posts.
+    </p>
+  </header>
 
-    <ul class="tags-list">
-        
-        {% assign max_tag_count = 0 %}
-        {% for tag in site.tags %}
-            {% if tag[1].size > max_tag_count %}
-            {% assign max_tag_count = tag[1].size %}
-            {% endif %}
-        {% endfor %}
+  {%- assign sorted_tags = site.tags | sort %}
 
-        <li>
-        {% for i in (1..max_tag_count) reversed %}
-            {% for tag in site.tags %}
-                {% if tag[1].size == i %}
-                    <a href="{{ page.url }}#tag-{{ tag[0] }}" class="tag">
-                    {{ tag[0] }}<sup>{{ i }}</sup>
-                    </a>
-                {% endif %}
-            {% endfor %}
-        {% endfor %}
-        </li>
-        {% for i in (1..max_tag_count) reversed %}
-            {% for tag in site.tags %}
-                {% if tag[1].size == i %}
-                    <li>
-                        <span class="tag-name" id="tag-{{ tag[0] }}">「{{ tag[0] }}」</span>
-                        {% for post in tag[1] %}
-                        <a class="tag-post" href="{{ post.url | relative_url }}" title="{{ post.title }}">{{ post.title }}</a>
-                        {% endfor %}
-                    </li>
-                {% endif %}
-            {% endfor%}
-        {% endfor%}
-        
+  <div class="mx-auto mt-8 max-w-4xl rounded-2xl bg-surface p-6 shadow-lg ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
+    <ul class="flex flex-wrap gap-2">
+      {%- for tag in sorted_tags %}
+      <li>
+        <a href="#tag-{{ tag[0] | slugify }}"
+           class="inline-flex items-center gap-1.5 rounded-full bg-sky-brand/15 px-3.5 py-1.5 font-body text-sm font-medium text-azure transition-colors hover:bg-sky-brand/30">
+          {{ tag[0] }}
+          <span class="font-small text-xs text-ink-muted dark:text-ink-dark-muted">{{ tag[1].size }}</span>
+        </a>
+      </li>
+      {%- endfor %}
     </ul>
-</main>
+  </div>
+
+  <div class="mx-auto mt-8 max-w-4xl space-y-6">
+    {%- for tag in sorted_tags %}
+    <section id="tag-{{ tag[0] | slugify }}" class="scroll-mt-8 rounded-2xl bg-surface p-6 shadow-lg ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
+      <h2 class="flex items-center gap-2 font-display text-xl font-semibold text-ink dark:text-ink-dark">
+        <svg class="size-5 text-azure" aria-hidden="true"><use href="#icon-tag"></use></svg>
+        {{ tag[0] }}
+        <span class="font-small text-sm font-normal text-ink-muted dark:text-ink-dark-muted">{{ tag[1].size }}</span>
+      </h2>
+
+      <ul class="mt-3 divide-y divide-ink/10 dark:divide-white/10">
+        {%- assign tagged = tag[1] | sort: 'date' | reverse %}
+        {%- for post in tagged %}
+        <li class="py-2.5 first:pt-0 last:pb-0">
+          <a href="{{ post.url | relative_url }}" class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 hover:text-azure">
+            <span class="font-body text-ink dark:text-ink-dark">{{ post.title }}</span>
+            <time datetime="{{ post.date | date_to_xmlschema }}"
+                  class="font-small text-xs text-ink-muted dark:text-ink-dark-muted">{{ post.date | date: "%B %-d, %Y" }}</time>
+          </a>
+        </li>
+        {%- endfor %}
+      </ul>
+    </section>
+    {%- endfor %}
+  </div>
+
+</div>

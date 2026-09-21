@@ -102,4 +102,23 @@
       justify-content: center;
     }
   }
+
+  /* Reading progress. Where scroll-driven animations are supported this
+     runs off the main thread entirely; reading-progress.js only falls back
+     to a scroll listener when they are not. */
+  @supports (animation-timeline: scroll()) {
+    [data-reading-progress] {
+      animation: reading-progress linear;
+      animation-timeline: scroll(root block);
+    }
+  }
+
+  @keyframes reading-progress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
 }

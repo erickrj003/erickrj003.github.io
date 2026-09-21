@@ -4,8 +4,8 @@
   "description": "Personal website and blog",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#43e0ff",
+  "background_color": "#4A1C1C",
+  "theme_color": "#4A1C1C",
   "icons": [
     {
       "src": "/assets/img/touch/android-chrome-192x192.png",
@@ -18,4 +18,4 @@
       "type": "image/png"
     }
   ]
-} 
+}

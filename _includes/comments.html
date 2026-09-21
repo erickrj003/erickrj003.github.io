@@ -1,0 +1,36 @@
+{%- comment -%}
+Giscus comments, backed by GitHub Discussions.
+
+Replaces a 208-line dispatcher that supported six comment backends
+(Disqus, Waline, Artalk, Utterances, Twikoo, Giscus) with runtime switching
+between any two of them. Only Giscus is used here.
+
+Renders nothing until site.giscus.repo_id and category_id are filled in;
+see the README for how to get them.
+{%- endcomment -%}
+
+{%- assign g = site.giscus -%}
+{%- if g.repo and g.repo_id and g.category_id -%}
+
+<section class="mx-auto mt-10 max-w-3xl rounded-2xl bg-surface p-6 shadow-lg ring-1 ring-black/5 lg:p-8 dark:bg-surface-dark dark:ring-white/10">
+  <h2 class="font-display text-xl font-semibold text-ink dark:text-ink-dark">Comments</h2>
+  <div class="mt-4">
+    <script src="https://giscus.app/client.js"
+            data-repo="{{ g.repo }}"
+            data-repo-id="{{ g.repo_id }}"
+            data-category="{{ g.category | default: 'Announcements' }}"
+            data-category-id="{{ g.category_id }}"
+            data-mapping="{{ g.mapping | default: 'pathname' }}"
+            data-strict="1"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async></script>
+  </div>
+</section>
+
+{%- endif -%}

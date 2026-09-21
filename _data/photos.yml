@@ -1,0 +1,18 @@
+# Photo gallery. Add entries here and they appear on /photos/.
+#
+#   src      path under /assets/
+#   alt      required; describes the image for screen readers and search
+#   caption  optional line shown under the image in the lightbox
+#   date     optional, free text
+
+- src: /assets/img/wheelbarrow.jpg
+  alt: Erick and Stella with a wheelbarrow
+  caption: Where the Great Adventure started.
+
+- src: /assets/img/lake_background.jpg
+  alt: A calm lake at golden hour
+  caption: Somewhere worth slowing down for.
+
+- src: /assets/img/hero.jpg
+  alt: Erick and Stella Johnson
+  caption: The Johnsons.
