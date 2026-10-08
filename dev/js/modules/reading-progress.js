@@ -1,11 +1,3 @@
-/**
- * Thin progress bar across the top of a post, showing how far through the
- * article the reader is.
- *
- * Driven by a scroll-timeline in CSS where supported, so it costs no main
- * thread work; the JS path below is only a fallback for browsers without
- * animation-timeline.
- */
 export function initReadingProgress() {
   const article = document.querySelector("article .prose");
   if (!article) return;

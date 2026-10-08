@@ -1,0 +1,49 @@
+# About page copy and photos. The layout is _layouts/about.html.
+# Paragraphs accept Markdown links.
+
+cover:
+  src: /assets/img/last-day-of-school.jpg
+  alt: Erick and Stella
+
+intro:
+  - On October 12, 2024, I married my college trombone buddy, Stella. We are Olivet Nazarene University grads ('21 and '22). At the moment, we live and work in Aurora, IL, living out God's great adventure by saying yes to whatever the Lord has for us.
+  - We've also got a pretty cute Cockapoo named Rocky. Rocky's passions include fetch, the dog park, cuddles, ice cream and shredded chicken. He is still a puppy.
+
+companion:
+  src: /assets/img/baby_rocky_ice_cream.jpg
+  alt: Baby Rocky licking an ice cream cone (3 months old I think?)
+
+offers_title: What Can We Do For You?
+
+offers:
+  - title: Software Development
+    body: |
+      You can check out the [Resume](/cv/) tab to get an idea of what languages, frameworks, and concepts I'm familiar with, but I'm always happy to learn new things and work on worthwhile projects! Just shoot me an [email](mailto:erickrj003@gmail.com) and I'll get back to you ASAP.
+
+  - title: Teaching
+    body: |
+      I am a professional computer science teacher at the K-12 levels. I teach basic computer skills, basic IT skills, and introductory to advanced programming for high school and college students.
+    note: |
+      My extracurricular teaching background includes youth and high school wrestling, youth and adult BJJ, and high school and collegiate marching band. If you're looking for a teacher, coach, drill writer, or tech, please reach out!
+    closing: |
+      Stella has been a professional band director for various grade levels for over 3 years. She has done private lessons, developed programs from scratch, and is highly regarded by her peers in every workspace she participates in. Email her at [smbarrera987@gmail.com](mailto:smbarrera987@gmail.com)!
+
+offer_photo:
+  src: /assets/img/sarah-ricardo-wedding.jpg
+  alt: Erick and Stella
+
+commission:
+  kicker: The Global Great Commission
+  lead: |
+    Above all else, our lives are dedicated to worshiping our Lord Jesus Christ. The Lord has called all of us to join Him in fulfilling His Great Commission (Matthew 28:16-20). Sharing the Gospel to every tribe and tongue is not a suggestion—it's for all believers!
+  body: |
+    Fundamentally, Jesus calls us to do three things: pick up our crosses daily and follow Him, make disciples of every tribe, tongue, and nation, and love our neighbours. We believe that all Christians are called to do these things together as a family called the church.
+
+connect:
+  kicker: Let's Connect
+  invitation: Whether you want to work together, check in on us, or share a prayer request.
+  email: erickrj003@gmail.com
+  phone: +1-734-276-7944
+  phone_href: https://wa.me/17342767944
+  thanks: Thanks for stopping by!
+  signoff: Erick & Stella

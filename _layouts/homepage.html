@@ -5,160 +5,182 @@ type: page
 ---
 
 {%- comment -%}
-Three stacked sections: a welcome card pairing the landing photo with the
-intro copy, a two-up row of the Joshua Project card and a recent-posts card
-with search, and the shared footer from the default layout.
-
-The landing photo is a sized <img> inside a card rather than a full-bleed
-CSS background, so it is discoverable by the preloader and reserves its
-own space.
+One viewport on desktop: two columns. Welcome copy stays as tall as its
+text and the cover photo fills the rest. On short windows the photo stops
+at 8rem and the copy scrolls. Recent posts keeps its own height;
+the Joshua Project card uses whatever column space is left.
 {%- endcomment -%}
 
-<div class="mx-auto w-full max-w-content space-y-8 px-5 py-8 lg:px-10 lg:py-12">
+<div class="mx-auto flex w-full max-w-content flex-col gap-5 px-4 py-4 lg:min-h-0 lg:flex-1 lg:flex-row lg:px-6 lg:py-5">
 
-  <!-- 1. Welcome -->
-  <section class="overflow-hidden rounded-3xl bg-surface shadow-xl ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
-    <div class="grid items-stretch gap-0 lg:grid-cols-2">
-
-      <div class="order-2 flex flex-col justify-center p-8 lg:order-1 lg:p-12">
-        <p class="font-small text-sm tracking-[0.2em] text-azure uppercase">Welcome</p>
-        <h1 class="mt-3 font-display text-4xl leading-tight font-semibold text-balance text-ink lg:text-5xl dark:text-ink-dark">
-          {{ page.home-title }}
-        </h1>
-        {%- if page.description %}
-        <p class="mt-3 font-body text-lg text-ink-muted dark:text-ink-dark-muted">{{ page.description }}</p>
-        {%- endif %}
-
-        <div class="prose mt-5 max-w-none prose-headings:font-display prose-a:text-azure dark:prose-invert">
-          {{ content }}
-        </div>
-
-        <div class="mt-7 flex flex-wrap gap-3">
-          <a href="{{ '/blog/' | relative_url }}"
-             class="inline-flex items-center gap-2 rounded-full bg-azure px-5 py-2.5 font-body text-sm font-semibold text-white transition-colors hover:bg-sky-brand hover:text-mahogany-deep">
-            Read the blog
-            <svg class="size-4" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-          </a>
-          <a href="{{ '/about/' | relative_url }}"
-             class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-body text-sm font-semibold text-ink ring-1 ring-ink/20 transition-colors hover:bg-ink/5 dark:text-ink-dark dark:ring-white/20 dark:hover:bg-white/5">
-            About us
-          </a>
-        </div>
-      </div>
-
-      <div class="relative order-1 min-h-64 lg:order-2 [&_img]:h-full [&_img]:min-h-64 [&_img]:w-full [&_img]:object-cover [&_picture]:block [&_picture]:h-full">
+  <!-- Column 1: welcome + photo -->
+  <section class="card-lift flex min-h-0 flex-1 flex-col overflow-hidden panel">
+    <div class="relative min-h-48 flex-1 overflow-hidden sm:min-h-56 lg:min-h-32">
+      <div class="absolute inset-0 [&_img]:h-full [&_img]:w-full [&_img]:object-cover [&_picture]:block [&_picture]:h-full">
         {% include image.html
              src=page.cover
              alt=page.cover_alt
-             sizes="(min-width: 1024px) 50vw, 100vw"
+             sizes="(min-width: 1024px) 40vw, 100vw"
              priority=true %}
-        {%- if page.cover_author %}
-        <p class="absolute right-3 bottom-3 rounded-full bg-mahogany-deep/70 px-3 py-1 font-small text-[11px] text-ink-dark backdrop-blur">
-          Photo by
-          {% if page.cover_author_link %}<a href="{{ page.cover_author_link }}" target="_blank" rel="noopener" class="underline">{{ page.cover_author }}</a>{% else %}{{ page.cover_author }}{% endif %}
-        </p>
-        {%- endif %}
+      </div>
+      <div class="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-wood/90 to-transparent" aria-hidden="true"></div>
+      <p class="chip absolute bottom-3 left-4 z-10 max-w-[68%]">The Johnson Family Great Adventure</p>
+      {%- if page.cover_author %}
+      <p class="absolute right-3 bottom-3 z-10 rounded-full bg-wood-deep/70 px-3 py-1 font-small text-[11px] text-white backdrop-blur">
+        Photo by
+        {% if page.cover_author_link %}<a href="{{ page.cover_author_link }}" target="_blank" rel="noopener" class="underline">{{ page.cover_author }}</a>{% else %}{{ page.cover_author }}{% endif %}
+      </p>
+      {%- endif %}
+    </div>
+
+    <div class="p-6 lg:min-h-0 lg:overflow-y-auto lg:p-8">
+      <h1 class="font-display text-4xl leading-tight font-semibold text-balance text-content lg:text-5xl">
+        {{ page.home-title }}
+      </h1>
+      {%- if page.description %}
+      <p class="mt-2 font-body text-base text-muted">{{ page.description }}</p>
+      {%- endif %}
+
+      <div class="prose mt-4 max-w-none prose-headings:font-display prose-p:my-2 prose-li:my-0.5 prose-a:text-accent">
+        {{ content }}
       </div>
 
+      <div class="flex flex-wrap gap-3 pt-5">
+        <a href="{{ '/about/' | relative_url }}"
+           class="btn">
+          About us
+          <svg class="size-4" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- 2. Joshua Project + recent posts -->
-  <div class="grid gap-8 lg:grid-cols-2">
+  <!-- Column 2: JP + recent posts -->
+  <div class="flex min-h-0 flex-1 flex-col gap-5">
 
     <section data-jp-widget data-jp-loading data-api-key="{{ site.jp_api_key }}"
-             class="flex flex-col rounded-3xl bg-surface p-7 shadow-xl ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
+             class="card-lift flex min-h-0 flex-col overflow-hidden panel lg:shrink lg:grow-0">
 
-      <header class="flex items-baseline justify-between gap-3">
-        <h2 class="font-display text-2xl font-semibold text-ink dark:text-ink-dark">Unreached People of the Day</h2>
-      </header>
+      <div class="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
 
-      <p class="mt-1 font-small text-xs tracking-wide text-ink-muted uppercase dark:text-ink-dark-muted">
-        Pray for the <span class="pg-name">&hellip;</span> in <span class="country-name">&hellip;</span>
-      </p>
+        <div class="flex min-h-0 flex-col lg:overflow-y-auto lg:border-r lg:border-edge">
+          <figure class="relative flex shrink-0 justify-center">
+            <button type="button" data-jp-gallery-open
+                    class="relative block max-w-full cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
+                    aria-label="View people group photo">
+              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                   alt="" width="640" height="360"
+                   class="pg-image block h-auto w-auto max-w-full bg-card-muted">
+              <div class="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-wood/90 to-transparent" aria-hidden="true"></div>
+              <h2 class="chip pointer-events-none absolute bottom-2.5 left-3 z-10">Unreached People of the Day</h2>
+            </button>
+          </figure>
 
-      <figure class="mt-5">
-        <a href="#" class="pg-link block">
-          <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-               alt="" width="600" height="400"
-               class="pg-image aspect-[3/2] w-full rounded-2xl bg-ink/5 object-cover dark:bg-white/5">
-        </a>
-        <figcaption class="mt-2 font-display text-lg font-semibold text-ink dark:text-ink-dark">
-          <a href="#" class="pg-link hover:text-azure"><span class="pg-name">Loading&hellip;</span></a>
-          <span class="font-body text-sm font-normal text-ink-muted dark:text-ink-dark-muted">
-            of <a href="#" class="country-link hover:text-azure"><span class="country-name">&hellip;</span></a>
-          </span>
-        </figcaption>
-      </figure>
+          <div class="p-3 lg:p-4">
+            <p class="font-display text-base font-semibold leading-snug text-content">
+              <a href="#" class="pg-link hover:text-accent"><span class="pg-name">Loading&hellip;</span></a>
+              <span class="block font-body text-sm font-normal text-muted">
+                of <a href="#" class="country-link hover:text-accent"><span class="country-name">&hellip;</span></a>
+              </span>
+            </p>
 
-      <dl class="mt-5 grid grid-cols-2 gap-x-4 gap-y-2 font-body text-sm">
-        {%- assign jp_rows = "Primary Language|pg-language,Population|pg-population,Primary Religion|pg-religion,Percent Evangelical|pg-evangelical,Frontier People|pg-frontier,Progress Scale|pg-scale" | split: "," -%}
-        {%- for row in jp_rows -%}
-          {%- assign parts = row | split: "|" -%}
-          <dt class="font-small text-ink-muted dark:text-ink-dark-muted">{{ parts[0] }}</dt>
-          <dd class="font-medium text-ink dark:text-ink-dark"><span class="{{ parts[1] }}">&hellip;</span></dd>
-        {%- endfor -%}
-      </dl>
-
-      <details class="group/jp mt-5">
-        <summary class="flex cursor-pointer list-none items-center gap-2 font-body text-sm font-semibold text-azure hover:text-sky-brand">
-          Summary and prayer points
-          <svg class="size-4 transition-transform group-open/jp:rotate-180" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
-        </summary>
-        <div class="mt-3 space-y-3 font-body text-sm text-ink-muted dark:text-ink-dark-muted">
-          <p class="pg-summary">&hellip;</p>
-          <p class="pg-prayer-points">&hellip;</p>
+            <dl class="mt-2 space-y-1 font-body text-xs">
+              {%- assign jp_rows = "Language|pg-language,Population|pg-population,Religion|pg-religion,Evangelical|pg-evangelical,Bible|pg-bible-status,Frontier|pg-frontier,Natural name|pg-natural-name,Pronunciation|pg-pronunciation" | split: "," -%}
+              {%- for row in jp_rows -%}
+                {%- assign parts = row | split: "|" -%}
+                <div class="flex items-baseline justify-between gap-3">
+                  <dt class="shrink-0 font-small text-[10px] text-muted">{{ parts[0] }}</dt>
+                  <dd class="min-w-0 text-right font-medium text-content"><span class="{{ parts[1] }}">&hellip;</span></dd>
+                </div>
+              {%- endfor -%}
+              <div class="flex items-center justify-between gap-3">
+                <dt class="shrink-0 font-small text-[10px] text-muted">Progress</dt>
+                <dd class="flex min-w-0 items-center justify-end gap-2 font-medium text-content">
+                  <span class="pg-scale">&hellip;</span>
+                  <span class="font-normal text-muted">· <span class="pg-scale-text">&hellip;</span></span>
+                  <img class="pg-scale-image h-5 w-auto shrink-0" alt="" hidden>
+                </dd>
+              </div>
+            </dl>
+          </div>
         </div>
-      </details>
 
-      <div data-jp-map class="mt-5">
-        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-             alt="" width="600" height="400"
-             class="pg-map-image aspect-[3/2] w-full rounded-2xl bg-ink/5 object-cover dark:bg-white/5">
-        <p class="mt-1.5 font-small text-[11px] text-ink-muted dark:text-ink-dark-muted">
-          <span class="map-credit-text"></span>
-          <a href="#" target="_blank" rel="noopener" class="map-credit-link underline hover:text-azure">Source</a>
-        </p>
+        <div class="flex min-h-0 flex-col p-4 lg:p-5">
+          <div class="space-y-3 font-body text-sm text-muted lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
+            <p class="pg-summary">&hellip;</p>
+            <p class="pg-prayer-points">&hellip;</p>
+          </div>
+          <a href="https://joshuaproject.net/unreached/" target="_blank" rel="noopener"
+             class="mt-3 inline-flex shrink-0 items-center gap-1.5 font-body text-xs font-semibold text-accent hover:text-accent-hover">
+            Data from the Joshua Project
+            <svg class="size-3" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+          </a>
+        </div>
       </div>
-
-      <a href="https://joshuaproject.net/unreached/" target="_blank" rel="noopener"
-         class="mt-auto inline-flex items-center gap-1.5 pt-5 font-body text-sm font-semibold text-azure hover:text-sky-brand">
-        Data from the Joshua Project
-        <svg class="size-3.5" aria-hidden="true"><use href="#icon-external-link"></use></svg>
-      </a>
     </section>
 
-    <section class="flex flex-col rounded-3xl bg-surface p-7 shadow-xl ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
+    <dialog data-jp-gallery
+            class="m-auto max-h-[100dvh] max-w-[100vw] bg-transparent p-4 backdrop:bg-wood-deep/85 backdrop:backdrop-blur-sm">
+      <div class="relative flex items-center justify-center gap-3">
+        <button type="button" data-jp-gallery-prev
+                class="shrink-0 rounded-full bg-wood-deep/70 p-2 text-white backdrop-blur transition-colors hover:bg-wood-deep"
+                aria-label="Previous photo">
+          <svg class="size-6" aria-hidden="true"><use href="#icon-chevron-left"></use></svg>
+        </button>
+        <figure class="relative min-w-0">
+          <img data-jp-gallery-img src="" alt=""
+               class="h-auto max-h-[78dvh] w-auto max-w-[86vw] rounded-2xl">
+          <figcaption class="mt-2 text-center font-small text-sm text-white">
+            <span data-jp-gallery-caption class="empty:hidden"></span>
+            <span data-jp-gallery-count class="mt-1 block text-white/70"></span>
+          </figcaption>
+          <button type="button" data-jp-gallery-close
+                  class="absolute top-3 right-3 rounded-full bg-wood-deep/70 p-2 text-white backdrop-blur transition-colors hover:bg-wood-deep"
+                  aria-label="Close gallery">
+            <svg class="size-5" aria-hidden="true"><use href="#icon-x"></use></svg>
+          </button>
+        </figure>
+        <button type="button" data-jp-gallery-next
+                class="shrink-0 rounded-full bg-wood-deep/70 p-2 text-white backdrop-blur transition-colors hover:bg-wood-deep"
+                aria-label="Next photo">
+          <svg class="size-6" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
+        </button>
+      </div>
+    </dialog>
 
-      <h2 class="font-display text-2xl font-semibold text-ink dark:text-ink-dark">Recent Posts</h2>
+    <section class="card-lift flex min-h-0 flex-1 flex-col overflow-hidden panel p-5 lg:min-h-56 lg:p-6">
 
-      <form action="{{ '/search/' | relative_url }}" method="get" role="search" class="mt-4">
+      <h2 class="shrink-0 font-display text-2xl font-semibold text-content">Recent Posts</h2>
+
+      <form action="{{ '/search/' | relative_url }}" method="get" role="search" class="mt-3 shrink-0">
         <label for="home-search" class="sr-only">Search posts</label>
         <div class="relative">
-          <svg class="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-ink-muted dark:text-ink-dark-muted" aria-hidden="true">
-            <use href="#icon-search"></use>
-          </svg>
+          <svg class="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted" aria-hidden="true">
+            <use href="#icon-search"></use></svg>
           <input type="search" id="home-search" name="q" placeholder="Search posts&hellip;"
-                 class="w-full rounded-full bg-ink/5 py-2.5 pr-4 pl-10 font-body text-sm text-ink placeholder:text-ink-muted focus:ring-2 focus:ring-azure focus:outline-none dark:bg-white/5 dark:text-ink-dark dark:placeholder:text-ink-dark-muted">
+                 class="w-full rounded-full bg-card-muted py-2.5 pr-4 pl-10 font-body text-sm text-content placeholder:text-muted ring-1 ring-edge focus:ring-2 focus:ring-accent focus:outline-none">
         </div>
       </form>
 
-      <ul class="mt-5 flex-1 divide-y divide-ink/10 dark:divide-white/10">
-        {%- for post in site.posts limit: 6 %}
-        <li class="group/post py-3.5 first:pt-0">
-          <a href="{{ post.url | relative_url }}" class="flex items-start gap-4">
-            <img src="{{ post.cover | default: '/assets/img/wheelbarrow.jpg' | relative_url }}"
-                 alt="" width="112" height="84" loading="lazy"
-                 class="hidden size-16 shrink-0 rounded-xl object-cover sm:block">
+      <ul class="mt-3 min-h-0 flex-1 divide-y divide-edge overflow-y-auto">
+        {%- for post in site.posts limit: 4 %}
+        <li class="group/post py-2.5 first:pt-0">
+          <a href="{{ post.url | relative_url }}" class="flex items-center gap-3">
+            {%- if post.cover %}
+            <img src="{{ post.cover | relative_url }}"
+                 alt="" width="80" height="60" loading="lazy"
+                 class="hidden size-12 shrink-0 rounded-lg object-cover sm:block">
+            {%- else %}
+            <img src="{{ site.favicon | relative_url }}"
+                 alt="" width="256" height="256" loading="lazy"
+                 class="hidden size-12 shrink-0 rounded-lg object-contain p-1 sm:block">
+            {%- endif %}
             <span class="min-w-0 flex-1">
-              <span class="block font-display text-base leading-snug font-semibold text-ink group-hover/post:text-azure dark:text-ink-dark">
+              <span class="block font-display text-sm leading-snug font-semibold text-content group-hover/post:text-accent">
                 {{ post.title }}
               </span>
-              <span class="mt-1 block font-body text-sm text-ink-muted line-clamp-2 dark:text-ink-dark-muted">
-                {{ post.excerpt | strip_html | strip_newlines | truncate: 110 }}
-              </span>
               <time datetime="{{ post.date | date_to_xmlschema }}"
-                    class="mt-1.5 block font-small text-xs text-ink-muted dark:text-ink-dark-muted">
+                    class="mt-0.5 block font-small text-[11px] text-muted">
                 {{ post.date | date: "%B %-d, %Y" }}
               </time>
             </span>
@@ -168,12 +190,11 @@ own space.
       </ul>
 
       <a href="{{ '/blog/' | relative_url }}"
-         class="mt-auto inline-flex items-center gap-1.5 pt-5 font-body text-sm font-semibold text-azure hover:text-sky-brand">
+         class="mt-3 inline-flex shrink-0 items-center gap-1.5 font-body text-xs font-semibold text-accent hover:text-accent-hover">
         All posts
-        <svg class="size-4" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
+        <svg class="size-3.5" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
       </a>
     </section>
 
   </div>
-
 </div>

@@ -1,9 +1,3 @@
-/**
- * Gives every article heading a permalink anchor.
- *
- * kramdown already emits ids via auto_ids, so this only adds the visible
- * affordance for linking to a section.
- */
 export function initHeadingAnchors() {
   const headings = document.querySelectorAll(".prose h2[id], .prose h3[id], .prose h4[id]");
 

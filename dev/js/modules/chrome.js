@@ -1,4 +1,3 @@
-/** Footer copyright year, rendered as a range once the site is older than a year. */
 export function initFooterYear() {
   const el = document.querySelector("[data-footer-year]");
   if (!el) return;
@@ -9,7 +8,6 @@ export function initFooterYear() {
   else if (Number.isFinite(since)) el.textContent = String(since);
 }
 
-/** "This site has been running for ..." counter in the footer. */
 export function initAliveTime() {
   const el = document.querySelector("[data-alivetime]");
   if (!el) return;
@@ -32,7 +30,6 @@ export function initAliveTime() {
   setInterval(tick, 1000);
 }
 
-/** Back-to-top button, revealed after the first viewport of scrolling. */
 export function initBackToTop() {
   const btn = document.querySelector("[data-back-to-top]");
   if (!btn) return;
@@ -43,9 +40,8 @@ export function initBackToTop() {
     window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
   });
 
-  // A sentinel beats a scroll listener here: no per-frame work on the main thread.
   const sentinel = document.createElement("div");
-  sentinel.style.cssText = "position:absolute;top:100vh;height:1px;width:1px;pointer-events:none";
+  sentinel.style.cssText = "position:absolute;top:calc(100dvh - 1px);height:1px;width:1px;pointer-events:none";
   document.body.prepend(sentinel);
 
   new IntersectionObserver(([entry]) => {

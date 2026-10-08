@@ -1,9 +1,3 @@
-/**
- * Submits the Web3Forms contact form via fetch so visitors stay on the page.
- *
- * Web3Forms accepts a normal form POST too, so if JavaScript is unavailable
- * the form still works and simply redirects.
- */
 export function initContactForm() {
   const form = document.querySelector("[data-contact]");
   if (!form) return;

@@ -1,16 +1,13 @@
 ---
 layout: homepage
-home-title: Erick & Stella
-description: Johnson Family Great Adventure
+home-title: We Are the Johnsons!
 permalink: /
 cover: /assets/img/wheelbarrow.jpg
 cover_alt: Erick and Stella Johnson
 ---
 
-Hey guys, it's Erick. This is a website for us to post about life, articles
-for my programming students, or other interesting things I find that I want
-to talk about.
+Hey there, my name's Erick. In the wheelbarrow there is my wife, Stella. This is a website for us to write about all kinds of stuff: newsletters, programming learning content for my students, projects I make or find interesting, or really anything in-between. Learn more about the Johnsons in [About Us](/about/).
 
-- Browse our latest posts in **Recent Posts**, just below.
-- Use the sidebar to jump to the blog, archives, tags, or our photos.
-- Want to chat? [Send us a message](/contact/) or email **erickrj003@gmail.com**.
+Check out the [Blog](/blog/) to find stuff to read. If you're looking for something I've worked on, see [Projects](/projects/).
+
+Want to chat? [Send us a message](/contact/) or email **erickrj003@gmail.com**.

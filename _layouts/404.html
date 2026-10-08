@@ -5,7 +5,7 @@ type: page
 
 <div class="mx-auto flex min-h-[70vh] w-full max-w-content flex-col items-center justify-center px-5 py-16 text-center">
 
-  <p class="font-display text-8xl leading-none font-bold text-sky-brand lg:text-9xl">404</p>
+  <p class="font-display text-8xl leading-none font-bold text-sky-on-page lg:text-9xl">404</p>
 
   <h1 class="mt-4 font-display text-3xl font-semibold text-ink-dark lg:text-4xl">
     {{ page.description | default: "We can't find that page" }}
@@ -22,7 +22,7 @@ type: page
       Back home
     </a>
     <a href="{{ '/blog/' | relative_url }}"
-       class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-body text-sm font-semibold text-ink-dark ring-1 ring-white/20 transition-colors hover:bg-white/5">
+       class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-body text-sm font-semibold text-ink-dark ring-1 ring-edge-strong transition-colors hover:bg-edge">
       <svg class="size-4" aria-hidden="true"><use href="#icon-newspaper"></use></svg>
       All posts
     </a>

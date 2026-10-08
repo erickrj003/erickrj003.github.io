@@ -1,20 +1,8 @@
 import { writeFile } from "node:fs/promises";
 
-/**
- * Builds _includes/icons.html, an inline SVG sprite that replaces the
- * third-party Alibaba CDN iconfont the theme used to load on every page.
- *
- * Run manually with `npm run build:icons` when the icon set changes; the
- * generated sprite is committed, so CI never needs to reach the network.
- *
- * Lucide is ISC licensed, Simple Icons is CC0.
- */
-
 const LUCIDE = "https://cdn.jsdelivr.net/npm/lucide-static@latest/icons";
 const SIMPLE = "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons";
 
-// `id` defaults to the icon name; override where the template expects
-// something else (site.sns keys, for instance).
 const UI = [
   "house",
   "user-round",
@@ -57,7 +45,6 @@ const BRANDS = [
   { name: "youtube" },
 ];
 
-/** Pulls out everything between <svg ...> and </svg>. */
 function innerSvg(markup) {
   const open = markup.indexOf(">", markup.indexOf("<svg"));
   const close = markup.lastIndexOf("</svg>");

@@ -2,17 +2,6 @@ import { readdir, mkdir, writeFile, stat } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
-/**
- * Generates responsive AVIF/WebP/JPEG variants for everything in
- * assets/img/ and writes _data/images.json describing them.
- *
- * _includes/image.html reads that manifest as site.data.images to emit a
- * <picture> with the right srcset and intrinsic width/height, so images
- * reserve their space before they load and nothing shifts.
- *
- * Originals stay untouched and are still served as the <img> fallback.
- */
-
 const SOURCE_DIR = "assets/img";
 const OUT_DIR = "assets/img/generated";
 const WIDTHS = [480, 768, 1200, 1600];
@@ -23,7 +12,6 @@ const FORMATS = [
 ];
 
 const INPUT_PATTERN = /\.(jpe?g|png)$/i;
-// Icons and tiny UI assets gain nothing from resizing.
 const SKIP = /^(loading\.gif|placeholder|h3)/i;
 
 function bytes(n) {
@@ -75,8 +63,6 @@ for (const name of sources) {
     }
   }
 
-  // Compare the original against the AVIF at the same width, which is what
-  // a modern browser will actually download.
   const widest = Math.max(...widths);
   const { size: avifSize } = await stat(path.join(OUT_DIR, `${stem}-${widest}.avif`));
 

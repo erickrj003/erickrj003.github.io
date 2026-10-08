@@ -48,7 +48,7 @@
   tech-experience:
     - role: "Computer Science Teacher"
       company: "Mooseheart Child City & School"
-      time: "2024.5 - Present"
+      time: "2024.5 - 2026.8"
       details:
         - "Developed computer science curriculum for K-12 learning environment, including Python programming, Frontend Web Design and general Information Technology for high school."
         - "Managed various K-12 classrooms at a school particularly meant for students from underpriviledged backgrounds, which typically imply poor behavioural conditions or learning disadvantages."
@@ -94,6 +94,16 @@
         - "Trained new employees and managed/supervised their work."
       tech: "IT Help Desk, Windows, Project Management"
   other-experience:
+    - role: "Software Engineering Content Expert"
+      company: "Mercor"
+      time: "2026.9 - Present"
+      details:
+        - "My team of software engineering experts design and create high-quality datasets for use in machine learning models, including those by OpenAI and Anthropic, using languages like Python, PHP, JavaScript, HTML/CSS and more."
+    - role: "Assistant Wrestling Coach"
+      company: "Aurora Central Catholic High School"
+      time: "2025.11 - Present"
+      details:
+        - "Coached matches, lead practices, provided individualized instruction, and helped with team management."
     - role: "Brazilian Jiu-Jitsu Wrestling Instructor"
       company: "Cho Jiu Jitsu"
       time: "2025.1 - Present"
@@ -101,13 +111,19 @@
         - "I teach a wrestling for BJJ class at my local gym. I leverage my BJJ blue belt, Judo green belt and over a decade of wrestling experience to help BJJ guys take there competition takedowns to the next level."
     - role: "Head Wrestling Coach"
       company: "Mooseheart Child City & School"
-      time: "2024.11 - Present"
+      time: "2024.11 - 2025.2"
       details:
         - "Head coach for the Mooseheart Red Ramblers high school wrestling team."
-        - "I also teach and coach the Rambler Wrestling Club for younger students in a co-ed environment."
+        - "I also taught and coached the Rambler Wrestling Club for younger students in a co-ed environment."
+    - role: "Data Annotator"
+      company: "DataAnnotation"
+      time: "2024.1 - Present"
+      details:
+        - "Train LLM's by carefully annotating usage data about various topics, but specifically in STEM fields and software engineering"
+        - "Develop careful prompts to guide various ML models to write more effective code in languages like Python, PHP, Perl, JavaScript, HTML/CSS, Ruby and more."
     - role: "Visual Staff/Technical Instructor"
       company: "Herscher High School"
-      time: "2023.07 - Present"
+      time: "2023.07 - 2024.11"
       details:
         - "Team leader for visual instruction and design for a local high school marching band."
         - "Developed choreography, drill spots, and visual marching/dancing curriculum alongside specialized brass instrumental instruction."
@@ -118,9 +134,3 @@
       details:
         - "Assisted in building an indoor (later outdoor) marching band from the ground up be creating show concepts, drill, and visual marching/dancing curriculum."
         - "I leverage my history of high school marching band, college marching band, and Drum Corps International experience as alumni of both the Madison Scouts and the Boston Crusaders."
-    - role: "Data Annotator"
-      company: "DataAnnotation"
-      time: "2024.1 - Present"
-      details:
-        - "Train LLM's by carefully annotating usage data about various topics, but specifically in STEM fields and software engineering"
-        - "Develop careful prompts to guide various ML models to write more effective code in languages like Python, PHP, Perl, JavaScript, HTML/CSS, Ruby and more."

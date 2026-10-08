@@ -9,8 +9,9 @@
   },
   "type": "module",
   "scripts": {
-    "build": "npm run build:fonts && npm run build:img && npm run build:css && npm run build:js",
+    "build": "npm run build:fonts && npm run build:textures && npm run build:img && npm run build:css && npm run build:js",
     "build:css": "tailwindcss -i dev/css/app.css -o assets/css/app.css --minify",
+    "build:textures": "node scripts/textures.mjs",
     "build:js": "node scripts/js.mjs",
     "build:fonts": "node scripts/fonts.mjs",
     "build:icons": "node scripts/icons.mjs",

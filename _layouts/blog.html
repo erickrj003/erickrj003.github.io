@@ -4,76 +4,78 @@ type: page
 ---
 
 {%- comment -%}
-Post index: every post, newest first.
-
-This used to run on jekyll-paginate-v2, which was broken in two separate
-ways. The pagination front matter sat on this layout where the plugin never
-looked, so `paginator` was always nil and a hand-rolled slice silently
-capped the list at ten posts with no way to reach the rest. The plugin also
-writes its first page to an unreachable path under this permalink setup.
-
-Since the plugin is not on the GitHub Pages allowlist either, it is gone.
-Tags, categories, archives and search all provide discovery; if the post
-count ever makes one page unwieldy, revisit it then.
+Post index: every post, newest first. The right-hand card is the old
+theme sidebar, restyled to match the rest of the site.
 {%- endcomment -%}
 
 {%- assign posts = site.posts -%}
 
-<div class="mx-auto w-full max-w-content px-5 py-10 lg:px-10 lg:py-14">
+<div class="page-wrap">
 
-  <header class="mx-auto max-w-4xl">
-    <h1 class="font-display text-4xl leading-tight font-semibold text-ink-dark lg:text-5xl">
+  <header>
+    <h1 class="page-title">
       {{ page.title | default: 'Blog' }}
     </h1>
     {%- if page.description %}
-    <p class="mt-3 font-body text-lg text-ink-dark-muted">{{ page.description }}</p>
+    <p class="page-lead">{{ page.description }}</p>
     {%- endif %}
-    <p class="mt-2 font-small text-sm text-ink-dark-muted/80">
+    <p class="mt-2 font-small text-sm text-muted-on-page">
       {{ site.posts | size }} post{% if site.posts.size != 1 %}s{% endif %}
     </p>
   </header>
 
-  <ul class="mx-auto mt-10 grid max-w-4xl gap-6">
-    {%- for post in posts %}
-    <li>
-      <article class="group/card overflow-hidden rounded-2xl bg-surface shadow-lg ring-1 ring-black/5 transition-shadow hover:shadow-xl sm:flex dark:bg-surface-dark dark:ring-white/10">
+  <div class="page-grid">
 
-        <a href="{{ post.url | relative_url }}" class="block shrink-0 sm:w-64" tabindex="-1" aria-hidden="true">
-          <img src="{{ post.cover | default: '/assets/img/wheelbarrow.jpg' | relative_url }}"
-               alt="" width="512" height="384" loading="lazy"
-               class="h-44 w-full object-cover sm:h-full">
-        </a>
+    <ul class="grid gap-6">
+      {%- for post in posts %}
+      <li>
+        <article class="card card-lift group/card overflow-hidden sm:flex">
 
-        <div class="flex min-w-0 flex-1 flex-col p-6">
-          {%- if post.pin %}
-          <p class="mb-2 font-small text-xs font-semibold tracking-wide text-azure uppercase">Pinned</p>
-          {%- endif %}
+          <a href="{{ post.url | relative_url }}" class="flex shrink-0 items-center justify-center sm:w-56" tabindex="-1" aria-hidden="true">
+            {%- if post.cover %}
+            <img src="{{ post.cover | relative_url }}"
+                 alt="" width="512" height="384" loading="lazy"
+                 class="h-44 w-full object-cover sm:h-full">
+            {%- else %}
+            <img src="{{ site.favicon | relative_url }}"
+                 alt="" width="256" height="256" loading="lazy"
+                 class="h-44 w-full object-contain p-6 sm:h-full sm:p-8">
+            {%- endif %}
+          </a>
 
-          <h2 class="font-display text-xl leading-snug font-semibold text-ink dark:text-ink-dark">
-            <a href="{{ post.url | relative_url }}" class="group-hover/card:text-azure">{{ post.title }}</a>
-          </h2>
+          <div class="flex min-w-0 flex-1 flex-col p-6">
+            {%- if post.pin %}
+            <p class="mb-2 font-small text-xs font-semibold tracking-wide text-accent uppercase">Pinned</p>
+            {%- endif %}
 
-          <p class="mt-2 flex-1 font-body text-sm text-ink-muted line-clamp-3 dark:text-ink-dark-muted">
-            {{ post.excerpt | strip_html | strip_newlines | truncate: 180 }}
-          </p>
+            <h2 class="font-display text-xl leading-snug font-semibold text-content">
+              <a href="{{ post.url | relative_url }}" class="group-hover/card:text-accent">{{ post.title }}</a>
+            </h2>
 
-          <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 font-small text-xs text-ink-muted dark:text-ink-dark-muted">
-            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %-d, %Y" }}</time>
-            {%- if post.author %}<span>{{ post.author }}</span>{%- endif %}
-            {%- for tag in post.tags limit: 3 %}
-            <a href="{{ '/tags/#tag-' | append: tag | relative_url }}"
-               class="rounded-full bg-sky-brand/15 px-2.5 py-0.5 font-medium text-azure hover:bg-sky-brand/25">{{ tag }}</a>
-            {%- endfor %}
+            <p class="mt-2 flex-1 font-body text-sm text-muted line-clamp-3">
+              {{ post.excerpt | strip_html | strip_newlines | truncate: 180 }}
+            </p>
+
+            <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 font-small text-xs text-muted">
+              <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %-d, %Y" }}</time>
+              {%- if post.author %}<span>{{ post.author }}</span>{%- endif %}
+              {%- for tag in post.tags limit: 3 %}
+              <a href="{{ '/tags/#tag-' | append: tag | slugify | relative_url }}"
+                 class="rounded-full bg-accent-soft px-2.5 py-0.5 font-medium text-accent hover:bg-accent hover:text-on-accent">{{ tag }}</a>
+              {%- endfor %}
+            </div>
           </div>
-        </div>
 
-      </article>
-    </li>
-    {%- else %}
-    <li class="rounded-2xl bg-surface p-8 text-center font-body text-ink-muted dark:bg-surface-dark dark:text-ink-dark-muted">
-      No posts yet.
-    </li>
-    {%- endfor %}
-  </ul>
+        </article>
+      </li>
+      {%- else %}
+      <li class="card p-8 text-center font-body text-muted">
+        No posts yet.
+      </li>
+      {%- endfor %}
+    </ul>
 
+    {% include layouts/blog-aside.html %}
+
+  </div>
 </div>

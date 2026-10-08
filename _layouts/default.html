@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" class="preload">
+<html lang="en"{% if page.url == '/' %} class="preload"{% endif %}>
 {% include layouts/head.html %}
-<body class="min-h-screen bg-mahogany font-body text-ink-dark antialiased">
+<body class="min-h-screen font-body text-on-page antialiased"{% if page.url == '/' %} data-home{% endif %}>
 
   {% include icons.html %}
 
@@ -13,7 +13,7 @@
     {% include layouts/nav-sidebar.html %}
   </div>
 
-  <div class="content-offset flex min-h-screen flex-col lg:pl-sidebar">
+  <div class="content-offset flex min-h-screen flex-col">
     <main id="main" class="flex-1" data-pagefind-body>
       {{ content }}
     </main>

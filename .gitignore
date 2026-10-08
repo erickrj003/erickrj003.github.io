@@ -13,5 +13,6 @@ assets/css/app.css
 assets/js/app.js
 assets/fonts/*.woff2
 assets/img/generated/
+assets/img/textures/
 _data/images.json
 dev/css/fonts.generated.css

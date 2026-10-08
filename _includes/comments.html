@@ -12,8 +12,8 @@ see the README for how to get them.
 {%- assign g = site.giscus -%}
 {%- if g.repo and g.repo_id and g.category_id -%}
 
-<section class="mx-auto mt-10 max-w-3xl rounded-2xl bg-surface p-6 shadow-lg ring-1 ring-black/5 lg:p-8 dark:bg-surface-dark dark:ring-white/10">
-  <h2 class="font-display text-xl font-semibold text-ink dark:text-ink-dark">Comments</h2>
+<section class="mt-8 card p-6 lg:p-8">
+  <h2 class="font-display text-xl font-semibold text-content">Comments</h2>
   <div class="mt-4">
     <script src="https://giscus.app/client.js"
             data-repo="{{ g.repo }}"

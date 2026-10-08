@@ -3,15 +3,20 @@ layout: default
 type: post
 ---
 
-<article class="mx-auto w-full max-w-content px-5 py-10 lg:px-10 lg:py-14">
+<article class="page-wrap">
 
-  <header class="mx-auto max-w-3xl">
+  <header>
+    <a href="{{ '/blog/' | relative_url }}"
+       class="mb-6 inline-flex items-center gap-1.5 font-body text-sm font-semibold text-accent hover:text-accent-hover">
+      <svg class="size-4" aria-hidden="true"><use href="#icon-chevron-left"></use></svg>
+      Back to posts
+    </a>
     {%- if page.tags.size > 0 %}
     <ul class="mb-4 flex flex-wrap gap-2">
       {%- for tag in page.tags %}
       <li>
-        <a href="{{ '/tags/#tag-' | append: tag | relative_url }}"
-           class="inline-block rounded-full bg-sky-brand/15 px-3 py-1 font-small text-xs font-medium tracking-wide text-sky-brand transition-colors hover:bg-sky-brand/25">
+        <a href="{{ '/tags/' | relative_url }}#tag-{{ tag | slugify }}"
+           class="inline-block rounded-full bg-accent-soft px-3 py-1 font-small text-xs font-medium text-accent transition-colors hover:bg-accent hover:text-on-accent">
           {{ tag }}
         </a>
       </li>
@@ -19,12 +24,12 @@ type: post
     </ul>
     {%- endif %}
 
-    <h1 class="font-display text-4xl leading-tight font-semibold text-balance text-ink-dark lg:text-5xl">
+    <h1 class="page-title">
       {{ page.title }}
     </h1>
 
     {%- if page.subtitle %}
-    <p class="mt-3 font-body text-lg text-ink-dark-muted">{{ page.subtitle }}</p>
+    <p class="mt-3 font-body text-lg text-muted-on-page">{{ page.subtitle }}</p>
     {%- endif %}
 
     {%- comment -%}
@@ -33,7 +38,7 @@ type: post
     the RFC822 output Jekyll was configured to emit, so every post showed
     "Invalid Date".
     {%- endcomment -%}
-    <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 font-small text-sm text-ink-dark-muted">
+    <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 font-small text-sm text-muted-on-page">
       <span class="flex items-center gap-1.5">
         <svg class="size-4" aria-hidden="true"><use href="#icon-user-round"></use></svg>
         {% if page.author %}{{ page.author }}{% else %}{{ site.author }}{% endif %}
@@ -45,64 +50,77 @@ type: post
       </time>
 
       {%- if page.last_modified_at %}
-      <span class="flex items-center gap-1.5">
-        Updated {{ page.last_modified_at | date: "%B %-d, %Y" }}
-      </span>
+      <time class="flex items-center gap-1.5" datetime="{{ page.last_modified_at | date_to_xmlschema }}">
+        <svg class="size-4" aria-hidden="true"><use href="#icon-calendar"></use></svg>
+        Updated on {{ page.last_modified_at | date: "%B %-d, %Y" }}
+      </time>
       {%- endif %}
     </div>
   </header>
 
-  {%- if page.cover %}
-  <figure class="mx-auto mt-8 max-w-4xl [&_img]:aspect-video [&_img]:w-full [&_img]:rounded-2xl [&_img]:object-cover [&_img]:shadow-lg [&_img]:ring-1 [&_img]:ring-sky-brand/20">
-    {% include image.html
-         src=page.cover
-         alt=page.title
-         sizes="(min-width: 1024px) 896px, 100vw"
-         priority=true %}
-    {%- if page.cover_author %}
-    <figcaption class="mt-2 text-center font-small text-xs text-ink-dark-muted">
-      Cover by
-      {% if page.cover_author_link %}<a href="{{ page.cover_author_link }}" target="_blank" rel="noopener" class="underline hover:text-sky-brand">{{ page.cover_author }}</a>{% else %}{{ page.cover_author }}{% endif %}
-    </figcaption>
-    {%- endif %}
-  </figure>
-  {%- endif %}
+  {%- comment -%}
+  A contents list earns the sticky column once a post has more than a
+  couple of sections. Shorter posts stay a single column.
+  {%- endcomment -%}
+  {%- assign h2_count = content | split: '<h2' | size | minus: 1 -%}
+  {%- assign h3_count = content | split: '<h3' | size | minus: 1 -%}
+  {%- assign heading_count = h2_count | plus: h3_count -%}
+  {%- assign show_toc = false -%}
+  {%- if site.toc and heading_count > 2 -%}{%- assign show_toc = true -%}{%- endif -%}
 
-  <div class="mt-10 lg:flex lg:items-start lg:gap-10">
+  <div class="page-grid{% unless show_toc %} page-grid-solo{% endunless %}">
 
-    <div class="mx-auto min-w-0 max-w-3xl flex-1 rounded-2xl bg-surface p-6 shadow-lg ring-1 ring-black/5 lg:p-10 dark:bg-surface-dark dark:ring-white/10">
-      <div class="prose prose-lg max-w-none prose-headings:font-display prose-headings:font-semibold prose-a:text-azure prose-a:decoration-azure/40 hover:prose-a:decoration-azure prose-code:font-mono prose-code:before:content-none prose-code:after:content-none prose-pre:bg-mahogany-deep prose-img:rounded-xl dark:prose-invert">
-        {{ content }}
-      </div>
-    </div>
+    <div class="min-w-0 {% unless show_toc %}mx-auto max-w-3xl{% endunless %}">
 
-    {%- assign has_headings = false -%}
-    {%- if page.content contains '<h2' or page.content contains '<h3' -%}{%- assign has_headings = true -%}{%- endif -%}
-    {%- if site.toc and has_headings %}
-    <aside class="mt-8 hidden w-64 shrink-0 lg:sticky lg:top-8 lg:mt-0 lg:block" aria-label="Table of contents">
-      <div class="rounded-2xl bg-surface/80 p-5 ring-1 ring-black/5 dark:bg-surface-dark/80 dark:ring-white/10">
-        <h2 class="mb-3 font-display text-sm font-semibold tracking-wide text-ink uppercase dark:text-ink-dark">
-          On this page
-        </h2>
-        <div class="toc font-body text-sm text-ink-muted dark:text-ink-dark-muted">
-          {% include layouts/toc.html html=content %}
+      <div class="card p-6 lg:p-10">
+        {%- assign cover_in_body = false -%}
+        {%- if page.cover and content contains page.cover -%}
+          {%- assign cover_in_body = true -%}
+        {%- endif -%}
+        {%- if page.cover and cover_in_body == false %}
+        {%- assign cover_alt = page.cover_alt | default: page.title %}
+        <figure class="mb-8">
+          {% include image.html
+               src=page.cover
+               alt=cover_alt
+               class="mx-auto h-auto w-auto max-w-full rounded-2xl"
+               sizes="(min-width: 1024px) 40rem, 100vw"
+               priority=true %}
+          {%- if page.cover_author %}
+          <figcaption class="mt-2 text-center font-small text-xs text-muted">
+            Cover by
+            {% if page.cover_author_link %}<a href="{{ page.cover_author_link }}" target="_blank" rel="noopener" class="underline hover:text-accent">{{ page.cover_author }}</a>{% else %}{{ page.cover_author }}{% endif %}
+          </figcaption>
+          {%- endif %}
+        </figure>
+        {%- endif %}
+
+        <div class="post-body prose prose-lg max-w-none prose-headings:font-display prose-headings:font-semibold prose-a:text-accent prose-a:decoration-accent/40 hover:prose-a:decoration-accent prose-code:font-mono prose-code:before:content-none prose-code:after:content-none prose-pre:bg-page prose-img:rounded-xl">
+          {{ content }}
         </div>
       </div>
+
+      <a href="{{ '/blog/' | relative_url }}"
+         class="mt-8 inline-flex items-center gap-1.5 font-body text-sm font-semibold text-accent hover:text-accent-hover">
+        <svg class="size-4" aria-hidden="true"><use href="#icon-chevron-left"></use></svg>
+        Back to posts
+      </a>
+
+      {% include comments.html %}
+
+    </div>
+
+    {%- if show_toc %}
+    <aside class="lg:sticky lg:top-6">
+      <nav class="card p-5" aria-label="On this page">
+        <h2 class="font-small text-xs font-semibold tracking-[0.15em] text-accent uppercase">On this page</h2>
+        <div class="toc mt-3">
+          {% include layouts/toc.html html=content h_min=2 h_max=3 %}
+        </div>
+      </nav>
     </aside>
     {%- endif %}
+
   </div>
-
-  <section class="mx-auto mt-10 max-w-3xl rounded-2xl bg-surface p-6 shadow-lg ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
-    <div class="flex items-start gap-4">
-      <img src="{{ site.avatar | relative_url }}" alt="{{ site.author }}"
-           width="56" height="56" class="size-14 shrink-0 rounded-full ring-2 ring-sky-brand">
-      <div class="min-w-0">
-        <p class="font-display text-lg font-semibold text-ink dark:text-ink-dark" rel="author">{{ site.author }}</p>
-        <p class="mt-1 font-body text-sm text-ink-muted dark:text-ink-dark-muted">{{ site.bio }}</p>
-      </div>
-    </div>
-  </section>
-
-  {% include comments.html %}
 
 </article>

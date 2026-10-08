@@ -1,0 +1,100 @@
+---
+layout: default
+type: page
+---
+
+{%- assign about = site.data.about -%}
+
+<div class="page-wrap">
+
+  <header>
+    <h1 class="page-title">{{ page.title }}</h1>
+  </header>
+
+  <div class="page-grid">
+
+    <div class="stack-page min-w-0">
+
+      <div class="split gap-5">
+        {%- if about.cover.src %}
+        <figure class="card card-lift portrait">
+          {% include image.html
+               src=about.cover.src
+               alt=about.cover.alt
+               sizes="(min-width: 1280px) 18rem, 20rem"
+               priority=true %}
+        </figure>
+        {%- endif %}
+
+        <div class="col-main gap-5">
+          <section class="card card-lift p-6 xl:p-8">
+            {%- for paragraph in about.intro %}
+            <p class="copy">{{ paragraph }}</p>
+            {%- endfor %}
+          </section>
+
+          {%- if about.companion.src %}
+          <figure class="card card-lift media">
+            {% include image.html
+                 src=about.companion.src
+                 alt=about.companion.alt
+                 sizes="(min-width: 1280px) 40rem, 100vw" %}
+          </figure>
+          {%- endif %}
+        </div>
+      </div>
+
+      <section>
+        <h2 class="section-title">{{ about.offers_title }}</h2>
+        <div class="split mt-4 gap-4">
+          <div class="col-main gap-4">
+            {%- for offer in about.offers %}
+            <article class="card card-lift flex flex-col p-6">
+              <h3 class="kicker">{{ offer.title }}</h3>
+              {%- if offer.body %}
+              <div class="copy-block">{{ offer.body | markdownify }}</div>
+              {%- endif %}
+              {%- if offer.note %}
+              <p class="note">{{ offer.note }}</p>
+              {%- endif %}
+              {%- if offer.closing %}
+              <div class="copy-block">{{ offer.closing | markdownify }}</div>
+              {%- endif %}
+            </article>
+            {%- endfor %}
+          </div>
+
+          {%- if about.offer_photo.src %}
+          <figure class="card card-lift portrait">
+            {% include image.html
+                 src=about.offer_photo.src
+                 alt=about.offer_photo.alt
+                 sizes="(min-width: 1280px) 18rem, 20rem" %}
+          </figure>
+          {%- endif %}
+        </div>
+      </section>
+
+      <section class="stripe">
+        <h2 class="kicker kicker-sky">{{ about.commission.kicker }}</h2>
+        <p class="lede mt-3">{{ about.commission.lead }}</p>
+        <p class="lede mt-3">{{ about.commission.body }}</p>
+      </section>
+
+      <section class="card card-lift p-6 lg:p-8">
+        <h2 class="kicker">{{ about.connect.kicker }}</h2>
+        <p class="body">{{ about.connect.invitation }}</p>
+        <div class="mt-5 flex flex-wrap gap-3">
+          <a href="mailto:{{ about.connect.email }}" class="btn">{{ about.connect.email }}</a>
+          <a href="{{ about.connect.phone_href }}" class="btn btn-quiet">{{ about.connect.phone }}</a>
+        </div>
+        <p class="body">{{ about.connect.thanks }}</p>
+        <p class="signoff">{{ about.connect.signoff }}</p>
+      </section>
+
+    </div>
+
+    {% include layouts/blog-aside.html %}
+
+  </div>
+</div>

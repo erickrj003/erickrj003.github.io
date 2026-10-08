@@ -1,24 +1,13 @@
-{%- comment -%}
-Mailchimp signup, hand-written.
-
-Mailchimp's own embed ships a jQuery-dependent validation script and a
-stylesheet that fights the site theme; neither is included here. The form
-posts directly to Mailchimp and works with JavaScript disabled, and
-newsletter.js upgrades it to submit in place via JSONP.
-
-`b_*` is Mailchimp's honeypot: real people never see it, bots fill it in.
-{%- endcomment -%}
-
 {%- assign mc = site.mailchimp -%}
 {%- if mc.u and mc.id -%}
 
-<section class="rounded-3xl bg-surface p-7 shadow-xl ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
+<section class="card p-6 lg:p-8">
   <div class="flex items-start gap-3">
-    <svg class="mt-0.5 size-6 shrink-0 text-azure" aria-hidden="true"><use href="#icon-send"></use></svg>
+    <svg class="mt-0.5 size-6 shrink-0 text-accent" aria-hidden="true"><use href="#icon-send"></use></svg>
     <div>
-      <h2 class="font-display text-2xl font-semibold text-ink dark:text-ink-dark">{{ include.title | default: 'Newsletter' }}</h2>
-      <p class="mt-1 font-body text-sm text-ink-muted dark:text-ink-dark-muted">
-        {{ include.blurb | default: 'Updates on our journey, new posts, and prayer requests. No spam, unsubscribe any time.' }}
+      <h2 class="font-display text-2xl font-semibold text-content">{{ include.title | default: 'Newsletter' }}</h2>
+      <p class="mt-1 font-body text-sm text-muted">
+        {{ include.blurb | default: 'Join our team! Subscribe to the newsletter to hear all about what's going on with us.' }}
       </p>
     </div>
   </div>
@@ -30,24 +19,24 @@ newsletter.js upgrades it to submit in place via JSONP.
 
     <div class="grid gap-3 sm:grid-cols-2">
       <div>
-        <label for="mce-FNAME" class="mb-1 block font-small text-xs font-medium text-ink-muted dark:text-ink-dark-muted">First name</label>
+        <label for="mce-FNAME" class="mb-1 block font-small text-xs font-medium text-muted">First name</label>
         <input type="text" name="FNAME" id="mce-FNAME" autocomplete="given-name"
-               class="w-full rounded-xl bg-ink/5 px-3.5 py-2.5 font-body text-sm text-ink placeholder:text-ink-muted focus:ring-2 focus:ring-azure focus:outline-none dark:bg-white/5 dark:text-ink-dark">
+               class="w-full rounded-xl bg-card-muted px-3.5 py-2.5 font-body text-sm text-content placeholder:text-muted ring-1 ring-edge focus:ring-2 focus:ring-accent focus:outline-none">
       </div>
       <div>
-        <label for="mce-LNAME" class="mb-1 block font-small text-xs font-medium text-ink-muted dark:text-ink-dark-muted">Last name</label>
+        <label for="mce-LNAME" class="mb-1 block font-small text-xs font-medium text-muted">Last name</label>
         <input type="text" name="LNAME" id="mce-LNAME" autocomplete="family-name"
-               class="w-full rounded-xl bg-ink/5 px-3.5 py-2.5 font-body text-sm text-ink placeholder:text-ink-muted focus:ring-2 focus:ring-azure focus:outline-none dark:bg-white/5 dark:text-ink-dark">
+               class="w-full rounded-xl bg-card-muted px-3.5 py-2.5 font-body text-sm text-content placeholder:text-muted ring-1 ring-edge focus:ring-2 focus:ring-accent focus:outline-none">
       </div>
     </div>
 
     <div>
-      <label for="mce-EMAIL" class="mb-1 block font-small text-xs font-medium text-ink-muted dark:text-ink-dark-muted">
-        Email <span class="text-azure" aria-hidden="true">*</span>
+      <label for="mce-EMAIL" class="mb-1 block font-small text-xs font-medium text-muted">
+        Email <span class="text-accent" aria-hidden="true">*</span>
       </label>
       <input type="email" name="EMAIL" id="mce-EMAIL" required autocomplete="email"
              placeholder="you@example.com"
-             class="w-full rounded-xl bg-ink/5 px-3.5 py-2.5 font-body text-sm text-ink placeholder:text-ink-muted focus:ring-2 focus:ring-azure focus:outline-none dark:bg-white/5 dark:text-ink-dark">
+             class="w-full rounded-xl bg-card-muted px-3.5 py-2.5 font-body text-sm text-content placeholder:text-muted ring-1 ring-edge focus:ring-2 focus:ring-accent focus:outline-none">
     </div>
 
     {%- if mc.honeypot %}
@@ -57,12 +46,12 @@ newsletter.js upgrades it to submit in place via JSONP.
     {%- endif %}
 
     <button type="submit" name="subscribe"
-            class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-azure px-5 py-2.5 font-body text-sm font-semibold text-white transition-colors hover:bg-sky-brand hover:text-mahogany-deep sm:w-auto">
+            class="btn w-full sm:w-auto">
       Subscribe
     </button>
 
     <p data-newsletter-status role="status" aria-live="polite"
-       class="font-body text-sm text-ink-muted empty:hidden dark:text-ink-dark-muted"></p>
+       class="font-body text-sm text-muted empty:hidden"></p>
   </form>
 </section>
 

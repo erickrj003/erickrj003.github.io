@@ -1,9 +1,3 @@
-/**
- * Adds a copy button to every code block.
- *
- * Uses the async clipboard API directly; the old build shipped clipboard.js
- * for this, which is unnecessary in any browser released since 2020.
- */
 export function initCodeCopy() {
   const blocks = document.querySelectorAll(".prose pre");
   if (!blocks.length || !navigator.clipboard) return;

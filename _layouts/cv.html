@@ -11,47 +11,45 @@ its own stylesheet, its own dark-mode toggle and three CDN dependencies
 _data/cv.yml as before.
 {%- endcomment -%}
 
-<div class="mx-auto w-full max-w-content px-5 py-10 lg:px-10 lg:py-14">
+<div class="mx-auto grid w-full max-w-content items-start gap-8 px-5 py-10 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-10 lg:px-10 lg:py-14">
   {%- for cv in site.data.cv %}
 
-  <article class="mx-auto max-w-5xl overflow-hidden rounded-3xl bg-surface shadow-xl ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
+  <header class="lg:sticky lg:top-8">
+    {%- if cv.photo %}
+    <img src="{{ cv.photo | relative_url }}" alt="{{ cv.name }}"
+         width="112" height="112" class="size-28 rounded-2xl object-cover ring-2 ring-sky-brand">
+    {%- endif %}
 
-    <header class="flex flex-wrap items-center gap-6 border-b border-ink/10 p-8 dark:border-white/10">
-      {%- if cv.photo %}
-      <img src="{{ cv.photo | relative_url }}" alt="{{ cv.name }}"
-           width="112" height="112" class="size-28 shrink-0 rounded-2xl object-cover ring-2 ring-sky-brand">
-      {%- endif %}
+    <h1 class="page-title mt-4">{{ cv.name }}</h1>
+    {%- if cv.motivation %}
+    <p class="mt-2 font-body text-lg text-sky-on-page">{{ cv.motivation }}</p>
+    {%- endif %}
 
-      <div class="min-w-0 flex-1">
-        <h1 class="font-display text-3xl font-semibold text-ink lg:text-4xl dark:text-ink-dark">{{ cv.name }}</h1>
-        {%- if cv.motivation %}
-        <p class="mt-1 font-body text-lg text-azure">{{ cv.motivation }}</p>
-        {%- endif %}
-
-        <ul class="mt-3 flex flex-wrap items-center gap-2">
+    <ul class="mt-4 flex flex-wrap items-center gap-2">
           {%- if cv.email %}
           <li><a href="mailto:{{ cv.email }}" aria-label="Email"
-                 class="flex size-9 items-center justify-center rounded-lg bg-ink/5 text-ink-muted transition-colors hover:bg-azure hover:text-white dark:bg-white/5 dark:text-ink-dark-muted">
+                 class="flex size-9 items-center justify-center rounded-lg bg-edge text-on-page transition-colors hover:bg-sky-brand hover:text-wood-deep">
             <svg class="size-4" aria-hidden="true"><use href="#icon-mail"></use></svg></a></li>
           {%- endif %}
           {%- if cv.github %}
           <li><a href="https://github.com/{{ cv.github }}" target="_blank" rel="noopener" aria-label="GitHub"
-                 class="flex size-9 items-center justify-center rounded-lg bg-ink/5 text-ink-muted transition-colors hover:bg-azure hover:text-white dark:bg-white/5 dark:text-ink-dark-muted">
+                 class="flex size-9 items-center justify-center rounded-lg bg-edge text-on-page transition-colors hover:bg-sky-brand hover:text-wood-deep">
             <svg class="size-4" aria-hidden="true"><use href="#icon-github"></use></svg></a></li>
           {%- endif %}
           {%- if cv.linkedin %}
           <li><a href="https://www.linkedin.com/in/{{ cv.linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn"
-                 class="flex size-9 items-center justify-center rounded-lg bg-ink/5 text-ink-muted transition-colors hover:bg-azure hover:text-white dark:bg-white/5 dark:text-ink-dark-muted">
+                 class="flex size-9 items-center justify-center rounded-lg bg-edge text-on-page transition-colors hover:bg-sky-brand hover:text-wood-deep">
             <svg class="size-4" aria-hidden="true"><use href="#icon-linkedin"></use></svg></a></li>
           {%- endif %}
           {%- if cv.website %}
           <li><a href="{{ cv.website }}" target="_blank" rel="noopener" aria-label="Website"
-                 class="flex size-9 items-center justify-center rounded-lg bg-ink/5 text-ink-muted transition-colors hover:bg-azure hover:text-white dark:bg-white/5 dark:text-ink-dark-muted">
+                 class="flex size-9 items-center justify-center rounded-lg bg-edge text-on-page transition-colors hover:bg-sky-brand hover:text-wood-deep">
             <svg class="size-4" aria-hidden="true"><use href="#icon-external-link"></use></svg></a></li>
           {%- endif %}
-        </ul>
-      </div>
-    </header>
+    </ul>
+  </header>
+
+  <article class="min-w-0 overflow-hidden rounded-3xl bg-surface shadow-card ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
 
     <div class="grid gap-8 p-8 lg:grid-cols-[18rem_1fr]">
 
@@ -114,7 +112,8 @@ _data/cv.yml as before.
         {%- assign experience_groups = "tech-experience|Technical Experience,other-experience|Other and Part-Time Experience" | split: "," %}
         {%- for group in experience_groups %}
           {%- assign parts = group | split: "|" %}
-          {%- assign entries = cv[parts[0]] %}
+          {%- assign section_key = parts[0] %}
+          {%- assign entries = cv[section_key] %}
           {%- if entries %}
           <section>
             <h2 class="font-display text-xl font-semibold text-ink dark:text-ink-dark">{{ parts[1] }}</h2>

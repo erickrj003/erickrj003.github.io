@@ -1,4 +1,3 @@
-import { initLoadGate } from "./modules/load-gate.js";
 import { initTheme } from "./modules/theme.js";
 import { initSidebar } from "./modules/sidebar.js";
 import { initFooterYear, initAliveTime, initBackToTop } from "./modules/chrome.js";
@@ -11,7 +10,6 @@ import { initHeadingAnchors } from "./modules/headings.js";
 import { initReadingProgress } from "./modules/reading-progress.js";
 import { initSearchPage, initSearchShortcut } from "./modules/search.js";
 
-initLoadGate();
 initTheme();
 initSidebar();
 initFooterYear();

@@ -4,10 +4,6 @@
 
   <title>{% if page.title %}{{ page.title }} &middot; {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
 
-  {%- comment -%}
-  Applied before first paint so the correct card surfaces are in place and
-  there is no flash of the wrong theme. Inline and blocking on purpose.
-  {%- endcomment -%}
   <script>
     (function () {
       try {

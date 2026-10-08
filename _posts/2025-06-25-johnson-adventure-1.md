@@ -13,10 +13,16 @@ It is with great excitement that Erick and I get to present to you our first new
 
 We are writing to you from SE Asia! We have been here for 2 weeks now and the Lord has done great things in our journey so far. Erick and I have found that God is at work here in this country in ways that we were shocked to witness. Although this place is a closed country to missionaries and has less than 2% of evangelical Christians (making it an unreached country), God’s presence and work is evident here. There are local churches here in the capital city and locals who are fervent believers wanting to see their country turn towards the Lord.
 
-### Meeting New Friends
+## Meeting New Friends
 
-As we have been exploring different places, God placed us in conversations and situations He has used to bless us with.  
-Below **[photo not available]** is a picture of a friend we met as we were sitting by the lake. This little boy came up to us to practice his English. We got to have some fellowship with him and his dad.
+As we have been exploring different places, God placed us in conversations and situations He has used to bless us with.
+
+{% if page.cover %}
+{% assign cover_alt = page.cover_alt | default: "The boy by the lake" %}
+{% include image.html src=page.cover alt=cover_alt class="mx-auto h-auto w-auto max-w-full" sizes="(min-width: 1024px) 36rem, 100vw" %}
+{% endif %}
+
+This little boy came up to us while we were sitting by the lake to practice his English. We got to have some fellowship with him and his dad.
 
 Three days after arriving in the capital city, we met a Christian couple who started a coffee shop with the mission of supporting former drug addicts after rehabilitation, providing a home and a job by working in the coffee shop. At this coffee shop, we met Rusell, a Christian counselor specializing in marriages and parenting (he is also from Monee, IL! Small world).
 
@@ -24,7 +30,7 @@ We got to attend a local language-speaking church. There we met the Smiths, who 
 
 Then we met a couple, the Deals, that focus primarily on church planting and travel to indigenous churches out in the northern villages and focus on Christian leadership.
 
-### The Work at Hand
+## The Work at Hand
 
 There are several missionaries here creating a path to reach locals and all the different agencies work together to fulfill the one common purpose: **The Great Commission**.
 
@@ -44,7 +50,7 @@ In just one week, we plan on going to South Asia and exploring what God is doing
 
 ---
 
-### Prayer Requests
+## Prayer Requests
 
 As we wrap up our last 2 weeks here in the capital city, we would love for you to partner with us in prayer:
 

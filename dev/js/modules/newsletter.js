@@ -1,11 +1,4 @@
-/**
- * Submits the Mailchimp form in place instead of opening a new tab.
- *
- * Mailchimp has no CORS-enabled endpoint for embedded forms, so the only
- * way to read a response from the browser is its JSONP variant. If anything
- * goes wrong we fall back to a normal submit, which is why the form keeps
- * its action and target="_blank" in the markup.
- */
+// Mailchimp has no CORS endpoint, so this uses their JSONP post-json URL.
 export function initNewsletter() {
   const form = document.querySelector("[data-newsletter]");
   if (!form) return;
@@ -46,7 +39,6 @@ export function initNewsletter() {
       button.disabled = false;
     };
 
-    // Mailchimp returns result: "success" | "error" with an HTML message.
     window[callback] = (data) => {
       const ok = data?.result === "success";
       const text = (data?.msg || "").replace(/<[^>]*>/g, "");
@@ -58,7 +50,7 @@ export function initNewsletter() {
     script.onerror = () => {
       cleanup();
       say("");
-      form.submit(); // fall back to the plain, no-JS path
+      form.submit();
     };
 
     script.src = url;

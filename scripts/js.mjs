@@ -6,8 +6,7 @@ const options = {
   bundle: true,
   format: "esm",
   target: ["es2022"],
-  // Pagefind generates these into _site at build time; they must stay a
-  // runtime URL rather than something esbuild tries to resolve on disk.
+  // esbuild must not bundle /pagefind/*; those files do not exist during jekyll serve.
   external: ["/pagefind/*"],
   minify: true,
   sourcemap: false,

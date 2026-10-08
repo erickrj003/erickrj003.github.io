@@ -1,4 +1,4 @@
-# Projects listed on /projects/portfolio/.
+# Projects listed on /projects/.
 #
 #   status   ongoing | shipped | paused — drives the badge colour
 #   url      optional link out
@@ -9,22 +9,27 @@
   url: https://erickrj.tech/inazria-players-guide/
   external: true
   summary: >-
-    A living rulebook and worldbuilding companion, published as its own site
-    under this domain and maintained in a separate repository.
-  tech: [Jekyll, Markdown, GitHub Pages]
+    The player's guide to my ongoing fantasy homebrew project. Inazria is built on D&D 5e with an overhauled class structure, all-new races, and an expansive, living world.
+  tech: [Jekyll, Obsidian, Markdown, GitHub Pages]
 
 - title: erickrj.tech
-  status: ongoing
+  status: complete
   url: https://github.com/erickrj003/erickrj.tech
   external: true
   summary: >-
-    This site. A static Jekyll blog with a hand-built Tailwind theme, an
-    automated font and image pipeline, and full-text search.
-  tech: [Jekyll, Tailwind CSS, esbuild, GitHub Actions]
+    You're looking at it! This is a static Jekyll blog built with Tailwind. Hosted for free, thanks to GitHub Pages.
+  tech: [Jekyll, Tailwind CSS, vanilla JavaScript, esbuild, GitHub Pages]
+
+- title: Today's Worldwide Rock
+  status: complete
+  url: https://github.com/erickrj003/twr_fr
+  external: true
+  summary: >-
+    Today's Worldwide Rock is a Flask web-app that tweets once a day about a rock song chosen from among any country around the globe. A country, genre and song are all chosen at random and presented on a daily basis on Twitter at @twr_rock. Due to costs and changes to the X API, TWR was retired (but it could make a comeback someday!)
+  tech: [Flask, Python, SQL, Docker, AWS, Spotify API, X API]
 
 - title: Web Development Services
   status: ongoing
   summary: >-
-    Building and maintaining sites for small organisations, with a focus on
-    fast, accessible pages that are cheap to host and easy to update.
-  tech: [HTML, CSS, JavaScript, Jekyll]
+    Building and maintaining sites for organisations of all kinds. My goal is to build web applications that are affordable, easy to maintain, and built to last.
+  tech: [Laravel, Tailwind CSS, Flask, Python, Angular, SQL, Docker]

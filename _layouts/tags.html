@@ -4,54 +4,61 @@ layout: default
 type: page
 ---
 
-<div class="mx-auto w-full max-w-content px-5 py-10 lg:px-10 lg:py-14">
+<div class="page-wrap">
 
-  <header class="mx-auto max-w-4xl">
-    <h1 class="font-display text-4xl leading-tight font-semibold text-ink-dark lg:text-5xl">Tags</h1>
-    <p class="mt-3 font-body text-lg text-ink-dark-muted">
+  <header>
+    <h1 class="page-title">Tags</h1>
+    <p class="page-lead">
       {{ site.tags | size }} tag{% if site.tags.size != 1 %}s{% endif %} across {{ site.posts | size }} posts.
     </p>
   </header>
 
   {%- assign sorted_tags = site.tags | sort %}
 
-  <div class="mx-auto mt-8 max-w-4xl rounded-2xl bg-surface p-6 shadow-lg ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
-    <ul class="flex flex-wrap gap-2">
+  <div class="page-grid">
+
+    <div class="min-w-0 space-y-6">
+
+      <div class="card p-6">
+        <ul class="flex flex-wrap gap-2">
+          {%- for tag in sorted_tags %}
+          <li>
+            <a href="#tag-{{ tag[0] | slugify }}"
+               class="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3.5 py-1.5 font-body text-sm font-medium text-accent transition-colors hover:bg-accent hover:text-on-accent">
+              {{ tag[0] }}
+              <span class="font-small text-xs">{{ tag[1].size }}</span>
+            </a>
+          </li>
+          {%- endfor %}
+        </ul>
+      </div>
+
       {%- for tag in sorted_tags %}
-      <li>
-        <a href="#tag-{{ tag[0] | slugify }}"
-           class="inline-flex items-center gap-1.5 rounded-full bg-sky-brand/15 px-3.5 py-1.5 font-body text-sm font-medium text-azure transition-colors hover:bg-sky-brand/30">
+      <section id="tag-{{ tag[0] | slugify }}" class="scroll-mt-8 card p-6">
+        <h2 class="flex items-center gap-2 font-display text-xl font-semibold text-content">
+          <svg class="size-5 text-accent" aria-hidden="true"><use href="#icon-tag"></use></svg>
           {{ tag[0] }}
-          <span class="font-small text-xs text-ink-muted dark:text-ink-dark-muted">{{ tag[1].size }}</span>
-        </a>
-      </li>
+          <span class="font-small text-sm font-normal text-muted">{{ tag[1].size }}</span>
+        </h2>
+
+        <ul class="mt-3 divide-y divide-edge">
+          {%- assign tagged = tag[1] | sort: 'date' | reverse %}
+          {%- for post in tagged %}
+          <li class="py-2.5 first:pt-0 last:pb-0">
+            <a href="{{ post.url | relative_url }}" class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 hover:text-accent">
+              <span class="font-body text-content">{{ post.title }}</span>
+              <time datetime="{{ post.date | date_to_xmlschema }}"
+                    class="font-small text-xs text-muted">{{ post.date | date: "%B %-d, %Y" }}</time>
+            </a>
+          </li>
+          {%- endfor %}
+        </ul>
+      </section>
       {%- endfor %}
-    </ul>
+
+    </div>
+
+    {% include layouts/blog-aside.html %}
+
   </div>
-
-  <div class="mx-auto mt-8 max-w-4xl space-y-6">
-    {%- for tag in sorted_tags %}
-    <section id="tag-{{ tag[0] | slugify }}" class="scroll-mt-8 rounded-2xl bg-surface p-6 shadow-lg ring-1 ring-black/5 dark:bg-surface-dark dark:ring-white/10">
-      <h2 class="flex items-center gap-2 font-display text-xl font-semibold text-ink dark:text-ink-dark">
-        <svg class="size-5 text-azure" aria-hidden="true"><use href="#icon-tag"></use></svg>
-        {{ tag[0] }}
-        <span class="font-small text-sm font-normal text-ink-muted dark:text-ink-dark-muted">{{ tag[1].size }}</span>
-      </h2>
-
-      <ul class="mt-3 divide-y divide-ink/10 dark:divide-white/10">
-        {%- assign tagged = tag[1] | sort: 'date' | reverse %}
-        {%- for post in tagged %}
-        <li class="py-2.5 first:pt-0 last:pb-0">
-          <a href="{{ post.url | relative_url }}" class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 hover:text-azure">
-            <span class="font-body text-ink dark:text-ink-dark">{{ post.title }}</span>
-            <time datetime="{{ post.date | date_to_xmlschema }}"
-                  class="font-small text-xs text-ink-muted dark:text-ink-dark-muted">{{ post.date | date: "%B %-d, %Y" }}</time>
-          </a>
-        </li>
-        {%- endfor %}
-      </ul>
-    </section>
-    {%- endfor %}
-  </div>
-
 </div>

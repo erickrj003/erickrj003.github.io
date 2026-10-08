@@ -1,15 +1,6 @@
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import subsetFont from "subset-font";
 
-/**
- * Subsets the committed variable-font originals in dev/fonts/ down to Latin
- * and emits woff2 into assets/fonts/, plus the @font-face rules that
- * dev/css/app.css imports.
- *
- * The originals stay in the repo as the source of truth; only the generated
- * woff2 is ever served.
- */
-
 const FAMILIES = [
   { file: "Dosis[wght].ttf", family: "Dosis", out: "dosis", weight: "200 800" },
   { file: "Quicksand[wght].ttf", family: "Quicksand", out: "quicksand", weight: "300 700" },
@@ -22,7 +13,6 @@ const UNICODE_RANGE =
   "U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, " +
   "U+2193, U+2212, U+2215, U+FEFF, U+FFFD";
 
-/** Every character the UNICODE_RANGE above covers, as a string for harfbuzz. */
 function subsetCharacters() {
   const ranges = [
     [0x0020, 0x00ff],
@@ -63,8 +53,6 @@ let subsetTotal = 0;
 for (const { file, family, out, weight } of FAMILIES) {
   const original = await readFile(`dev/fonts/${file}`);
 
-  // Omitting `variationAxes` leaves the weight axis intact, so one file
-  // serves every weight in the range.
   const subset = await subsetFont(original, characters, { targetFormat: "woff2" });
 
   await writeFile(`assets/fonts/${out}.woff2`, subset);

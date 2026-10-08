@@ -1,11 +1,7 @@
+import { storageGet, storageSet } from "../storage.js";
+
 const COLLAPSE_KEY = "sidebar-collapsed";
 
-/**
- * Desktop: the rail collapses to icons only, persisted across navigations.
- * Mobile: the same element becomes an off-canvas drawer.
- *
- * Dropdown groups are native <details>, so they need no JavaScript at all.
- */
 export function initSidebar() {
   const sidebar = document.querySelector("[data-sidebar]");
   if (!sidebar) return;
@@ -16,8 +12,6 @@ export function initSidebar() {
   const closeBtn = document.querySelector("[data-drawer-close]");
   const collapseBtn = document.querySelector("[data-sidebar-toggle]");
   const collapseIcon = document.querySelector("[data-collapse-icon]");
-
-  /* ----- desktop collapse ----- */
 
   const applyCollapsed = (collapsed) => {
     sidebar.toggleAttribute("data-collapsed", collapsed);
@@ -30,30 +24,20 @@ export function initSidebar() {
     }
   };
 
-  try {
-    if (localStorage.getItem(COLLAPSE_KEY) === "true") applyCollapsed(true);
-  } catch {
-    /* storage unavailable; start expanded */
-  }
+  if (storageGet(COLLAPSE_KEY) === "true") applyCollapsed(true);
 
   collapseBtn?.addEventListener("click", () => {
     const collapsed = !sidebar.hasAttribute("data-collapsed");
     applyCollapsed(collapsed);
-    try {
-      localStorage.setItem(COLLAPSE_KEY, String(collapsed));
-    } catch {
-      /* ignore */
-    }
+    storageSet(COLLAPSE_KEY, String(collapsed));
   });
-
-  /* ----- mobile drawer ----- */
 
   const setDrawer = (open) => {
     sidebar.toggleAttribute("data-open", open);
-    if (scrim) scrim.hidden = !open;
+    scrim?.toggleAttribute("data-open", open);
     openBtn?.setAttribute("aria-expanded", String(open));
     document.body.style.overflow = open ? "hidden" : "";
-    if (open) sidebar.querySelector("a, button")?.focus();
+    if (open) sidebar.querySelector("[data-drawer-close]")?.focus();
     else openBtn?.focus();
   };
 
@@ -65,13 +49,10 @@ export function initSidebar() {
     if (e.key === "Escape" && sidebar.hasAttribute("data-open")) setDrawer(false);
   });
 
-  // Following a link inside the drawer should close it.
   sidebar.addEventListener("click", (e) => {
     if (e.target.closest("a") && sidebar.hasAttribute("data-open")) setDrawer(false);
   });
 
-  // Leaving mobile width while the drawer is open would otherwise strand
-  // the scrim and the locked body scroll.
   matchMedia("(min-width: 64rem)").addEventListener("change", (e) => {
     if (e.matches) setDrawer(false);
   });
