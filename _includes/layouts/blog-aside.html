@@ -78,7 +78,7 @@ resume. Carries author stats, popular tags, latest posts, and search.
               {%- assign pnum = pnum | plus: 1 -%}
               {%- if pnum > site.recommend-condition-size -%}{%- break -%}{%- endif -%}
               <li>
-                <a href="{{ '/tags/#tag-' | append: tag[0] | slugify | relative_url }}"
+                <a href="{{ '/tags/' | relative_url }}#tag-{{ tag[0] | slugify }}"
                    class="inline-flex items-center gap-1 rounded-full bg-accent-soft px-2.5 py-1 font-body text-xs font-medium text-accent hover:bg-accent hover:text-on-accent">
                   {{ tag[0] }}<sup class="font-small">{{ i }}</sup>
                 </a>

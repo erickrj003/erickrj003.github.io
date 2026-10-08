@@ -746,8 +746,6 @@
   }
 }
 
-/* Homepage stays one viewport on desktop. Unlayered so the footer
-   margin and padding utilities do not add a page scrollbar. */
 @media (width >= 64rem) {
   [data-home] .content-offset {
     height: 100dvh;
