@@ -6,12 +6,16 @@
 
   <script>
     (function () {
+      var root = document.documentElement;
       try {
         var saved = localStorage.getItem('mode');
         var mode = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.dataset.mode = mode;
+        root.dataset.mode = mode;
+        if (localStorage.getItem('sidebar-collapsed') === 'true') {
+          root.setAttribute('data-sidebar-collapsed', '');
+        }
       } catch (e) {
-        document.documentElement.dataset.mode = 'light';
+        root.dataset.mode = 'light';
       }
     })();
   </script>

@@ -12,6 +12,13 @@
   <div data-pagefind-ignore>
     {% include layouts/nav-sidebar.html %}
   </div>
+  <script>
+    (function () {
+      if (!document.documentElement.hasAttribute('data-sidebar-collapsed')) return;
+      var sidebar = document.querySelector('[data-sidebar]');
+      if (sidebar) sidebar.setAttribute('data-collapsed', '');
+    })();
+  </script>
 
   <div class="content-offset flex min-h-screen flex-col">
     <main id="main" class="flex-1" data-pagefind-body>

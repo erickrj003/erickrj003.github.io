@@ -1,4 +1,4 @@
-import { storageGet, storageSet } from "../storage.js";
+import { storageSet } from "../storage.js";
 
 const COLLAPSE_KEY = "sidebar-collapsed";
 
@@ -24,7 +24,8 @@ export function initSidebar() {
     }
   };
 
-  if (storageGet(COLLAPSE_KEY) === "true") applyCollapsed(true);
+  // Head / early script may already have set the attributes; sync the toggle UI.
+  applyCollapsed(root.hasAttribute("data-sidebar-collapsed"));
 
   collapseBtn?.addEventListener("click", () => {
     const collapsed = !sidebar.hasAttribute("data-collapsed");
