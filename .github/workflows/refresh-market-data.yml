@@ -1,0 +1,35 @@
+name: Refresh Vanguard market data
+
+on:
+  schedule:
+    - cron: '30 22 * * 1-5'   # ~6:30pm ET, after the close and EOD adjustments
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Fetch raw market data
+        run: node scripts/fetch-market-data.mjs
+        env:
+          ALPHAVANTAGE_KEY: ${{ secrets.ALPHAVANTAGE_KEY }}
+      - name: Commit if changed
+        run: |
+          if [ -z "$(git status --porcelain data/)" ]; then echo "No changes"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/market-data.json
+          git commit -m "data: refresh market data $(date -u +%F)"
+          git push
